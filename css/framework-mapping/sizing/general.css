@@ -1,0 +1,28 @@
+body {
+  /* Container */
+  --harvey-components-jan-25_sizing-general---container--small: var(--_sizing-general---container--small);
+  --harvey-components-jan-25_sizing-general---container--medium: var(--_sizing-general---container--medium);
+  --harvey-components-jan-25_sizing-general---container--large: var(--_sizing-general---container--large);
+
+  /* Sizing/Gutters */
+  --harvey-components-jan-25_sizing-general---gutters--standard: var(--_sizing-general---gutters--standard);
+
+  /* Max width */
+  --harvey-components-jan-25_sizing-general---max-width--xxxxtiny: var(--_sizing-general---max-width--xxxxtiny);
+  --harvey-components-jan-25_sizing-general---max-width--xxxtiny: var(--_sizing-general---max-width--xxxtiny);
+  --harvey-components-jan-25_sizing-general---max-width--xxtiny: var(--_sizing-general---max-width--xxtiny);
+  --harvey-components-jan-25_sizing-general---max-width--xtiny: var(--_sizing-general---max-width--xtiny);
+  --harvey-components-jan-25_sizing-general---max-width--tiny: var(--_sizing-general---max-width--tiny);
+  --harvey-components-jan-25_sizing-general---max-width--xxxsmall: var(--_sizing-general---max-width--xxxsmall);
+  --harvey-components-jan-25_sizing-general---max-width--xxsmall: var(--_sizing-general---max-width--xxsmall);
+  --harvey-components-jan-25_sizing-general---max-width--xsmall: var(--_sizing-general---max-width--xsmall);
+  --harvey-components-jan-25_sizing-general---max-width--small: var(--_sizing-general---max-width--small);
+  --harvey-components-jan-25_sizing-general---max-width--medium: var(--_sizing-general---max-width--medium);
+  --harvey-components-jan-25_sizing-general---max-width--large: var(--_sizing-general---max-width--large);
+  --harvey-components-jan-25_sizing-general---max-width--xlarge: var(--_sizing-general---max-width--xlarge);
+  --harvey-components-jan-25_sizing-general---max-width--xxlarge: var(--_sizing-general---max-width--xxlarge);
+  --harvey-components-jan-25_sizing-general---max-width--custom-1: var(--_sizing-general---max-width--custom-1);
+  --harvey-components-jan-25_sizing-general---max-width--custom-2: var(--_sizing-general---max-width--custom-2);
+  --harvey-components-jan-25_sizing-general---max-width--custom-3: var(--_sizing-general---max-width--custom-3);
+  --harvey-components-jan-25_sizing-general---max-width--tooltip: var(--_sizing-general---max-width--tooltip);
+}

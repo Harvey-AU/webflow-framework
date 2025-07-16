@@ -1,0 +1,106 @@
+:root {
+  /* Mobile */
+  --_sizing-fluid-scaling---mobile--vw-from: calc(1 / 100);
+  --_sizing-fluid-scaling---mobile--vw-to: calc(479 / 100);
+  --_sizing-fluid-scaling---mobile--coefficient: calc(
+    (var(--_sizing-fluid-scaling---mobile--font-size-large) - var(--_sizing-fluid-scaling---mobile--font-size-small)) /
+      (var(--_sizing-fluid-scaling---mobile--vw-to) - var(--_sizing-fluid-scaling---mobile--vw-from))
+  );
+  --_sizing-fluid-scaling---mobile--base: calc(
+    (
+        var(--_sizing-fluid-scaling---mobile--font-size-small) - var(--_sizing-fluid-scaling---mobile--vw-from) *
+          var(--_sizing-fluid-scaling---mobile--coefficient)
+      ) / var(--_sizing-fluid-scaling---base-html-size)
+  );
+
+  /* Tablet */
+  --_sizing-fluid-scaling---tablet--vw-from: calc(479 / 100);
+  --_sizing-fluid-scaling---tablet--vw-to: calc(990 / 100);
+  --_sizing-fluid-scaling---tablet--coefficient: calc(
+    (var(--_sizing-fluid-scaling---tablet--font-size-large) - var(--_sizing-fluid-scaling---tablet--font-size-small)) /
+      (var(--_sizing-fluid-scaling---tablet--vw-to) - var(--_sizing-fluid-scaling---tablet--vw-from))
+  );
+  --_sizing-fluid-scaling---tablet--base: calc(
+    (
+        var(--_sizing-fluid-scaling---tablet--font-size-small) - var(--_sizing-fluid-scaling---tablet--vw-from) *
+          var(--_sizing-fluid-scaling---tablet--coefficient)
+      ) / var(--_sizing-fluid-scaling---base-html-size)
+  );
+
+  /* Laptop */
+  --_sizing-fluid-scaling---laptop--vw-from: calc(990 / 100);
+  --_sizing-fluid-scaling---laptop--vw-to: calc(1440 / 100);
+  --_sizing-fluid-scaling---laptop--coefficient: calc(
+    (var(--_sizing-fluid-scaling---laptop--font-size-large) - var(--_sizing-fluid-scaling---laptop--font-size-small)) /
+      (var(--_sizing-fluid-scaling---laptop--vw-to) - var(--_sizing-fluid-scaling---laptop--vw-from))
+  );
+  --_sizing-fluid-scaling---laptop--base: calc(
+    (
+        var(--_sizing-fluid-scaling---laptop--font-size-small) - var(--_sizing-fluid-scaling---laptop--vw-from) *
+          var(--_sizing-fluid-scaling---laptop--coefficient)
+      ) / var(--_sizing-fluid-scaling---base-html-size)
+  );
+
+  /* Desktop */
+  --_sizing-fluid-scaling---desktop--vw-from: calc(1440 / 100);
+  --_sizing-fluid-scaling---desktop--vw-to: calc(1920 / 100);
+  --_sizing-fluid-scaling---desktop--coefficient: calc(
+    (var(--_sizing-fluid-scaling---desktop--font-size-large) - var(--_sizing-fluid-scaling---desktop--font-size-small)) /
+      (var(--_sizing-fluid-scaling---desktop--vw-to) - var(--_sizing-fluid-scaling---desktop--vw-from))
+  );
+  --_sizing-fluid-scaling---desktop--base: calc(
+    (
+        var(--_sizing-fluid-scaling---desktop--font-size-small) - var(--_sizing-fluid-scaling---desktop--vw-from) *
+          var(--_sizing-fluid-scaling---desktop--coefficient)
+      ) / var(--_sizing-fluid-scaling---base-html-size)
+  );
+
+  /* Desktop Large */
+  --_sizing-fluid-scaling---desktop-large--vw-from: calc(1920 / 100);
+  --_sizing-fluid-scaling---desktop-large--vw-to: calc(2400 / 100);
+  --_sizing-fluid-scaling---desktop-large--coefficient: calc(
+    (var(--_sizing-fluid-scaling---desktop-large--font-size-large) - var(--_sizing-fluid-scaling---desktop-large--font-size-small)) /
+      (var(--_sizing-fluid-scaling---desktop-large--vw-to) - var(--_sizing-fluid-scaling---desktop-large--vw-from))
+  );
+  --_sizing-fluid-scaling---desktop-large--base: calc(
+    (
+        var(--_sizing-fluid-scaling---desktop-large--font-size-small) - var(--_sizing-fluid-scaling---desktop-large--vw-from) *
+          var(--_sizing-fluid-scaling---desktop-large--coefficient)
+      ) / var(--_sizing-fluid-scaling---base-html-size)
+  );
+
+  --_root-font-size: calc(
+    var(--_sizing-fluid-scaling---desktop-large--base) + var(--_sizing-fluid-scaling---desktop-large--coefficient) *
+      var(--_sizing-fluid-scaling---desktop-large--vw-to) / var(--_sizing-fluid-scaling---base-html-size)
+  );
+}
+
+html {
+  font-size: calc(var(--_root-font-size) * 1rem);
+}
+
+@media screen and (max-width: 2400px) {
+  html {
+    font-size: calc(var(--_sizing-fluid-scaling---desktop-large--base) * 1rem + var(--_sizing-fluid-scaling---desktop-large--coefficient) * 1vw);
+  }
+}
+@media screen and (max-width: 1920px) {
+  html {
+    font-size: calc(var(--_sizing-fluid-scaling---desktop--base) * 1rem + var(--_sizing-fluid-scaling---desktop--coefficient) * 1vw);
+  }
+}
+@media screen and (max-width: 1440px) {
+  html {
+    font-size: calc(var(--_sizing-fluid-scaling---laptop--base) * 1rem + var(--_sizing-fluid-scaling---laptop--coefficient) * 1vw);
+  }
+}
+@media screen and (max-width: 990px) {
+  html {
+    font-size: calc(var(--_sizing-fluid-scaling---tablet--base) * 1rem + var(--_sizing-fluid-scaling---tablet--coefficient) * 1vw);
+  }
+}
+@media screen and (max-width: 479px) {
+  html {
+    font-size: calc(var(--_sizing-fluid-scaling---mobile--base) * 1rem + var(--_sizing-fluid-scaling---mobile--coefficient) * 1vw);
+  }
+}

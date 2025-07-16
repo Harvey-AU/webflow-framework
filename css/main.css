@@ -1,0 +1,38 @@
+/* WEBFLOW FRAMEWORK - MAIN CSS 
+   GitHub Pages URL: https://harvey-au.github.io/webflow-framework/
+*/
+
+/* === CORE === */
+@import url("./core/base.css");
+@import url("./core/fluid-sizing.css");
+@import url("./core/gap.css");
+
+/* === COLOURS === */
+@import url("./framework-mapping/colour/primitive.css");
+@import url("./framework-mapping/colour/semantic.css");
+@import url("./framework-mapping/colour/semantic-buttons.css");
+
+/* === FONTS === */
+@import url("./framework-mapping/fonts/base.css");
+@import url("./framework-mapping/fonts/rich-text.css");
+
+/* === SIZING === */
+@import url("./framework-mapping/sizing/general.css");
+@import url("./framework-mapping/sizing/gap-spacing.css");
+@import url("./framework-mapping/sizing/border-corner.css");
+@import url("./framework-mapping/sizing/button.css");
+
+/* === CORE COMPONENTS === */
+@import url("./core/grid.css");
+@import url("./core/buttons.css");
+@import url("./core/corners.css");
+@import url("./core/max-lines.css");
+
+/* === ICONS === */
+@import url("./icons/base.css");
+@import url("./icons/content.css");
+@import url("./icons/mapping.css");
+@import url("./icons/simple.css");
+
+/* === LIBRARY === */
+@import url("./framework.css");

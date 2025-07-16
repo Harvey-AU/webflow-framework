@@ -1,0 +1,53 @@
+body {
+  /* Text */
+  --harvey-components-jan-25_colour-semantic---text--primary: var(--_colour-semantic---text--primary);
+  --harvey-components-jan-25_colour-semantic---text--secondary: var(--_colour-semantic---text--secondary);
+  --harvey-components-jan-25_colour-semantic---text--alternate: var(--_colour-semantic---text--alternate);
+
+  /* Background */
+  --harvey-components-jan-25_colour-semantic---background--primary: var(--_colour-semantic---background--primary);
+  --harvey-components-jan-25_colour-semantic---background--secondary: var(--_colour-semantic---background--secondary);
+  --harvey-components-jan-25_colour-semantic---background--tertiary: var(--_colour-semantic---background--tertiary);
+  --harvey-components-jan-25_colour-semantic---background--alternate: var(--_colour-semantic---background--alternate);
+  --harvey-components-jan-25_colour-semantic---background--body-1: var(--_colour-semantic---background--body-1);
+  --harvey-components-jan-25_colour-semantic---background--body-2: var(--_colour-semantic---background--body-2);
+
+  /* Link */
+  --harvey-components-jan-25_colour-semantic---link--primary: var(--_colour-semantic---link--primary);
+  --harvey-components-jan-25_colour-semantic---link--secondary: var(--_colour-semantic---link--secondary);
+  --harvey-components-jan-25_colour-semantic---link--alternate: var(--_colour-semantic---link--alternate);
+
+  /* Breadcrumb */
+  --harvey-components-jan-25_colour-semantic---breadcrumb--text: var(--_colour-semantic---breadcrumb--text);
+  --harvey-components-jan-25_colour-semantic---breadcrumb--separator: var(--_colour-semantic---breadcrumb--separator);
+
+  /* Tooltip */
+  --harvey-components-jan-25_colour-semantic---tooltip--text: var(--_colour-semantic---tooltip--text);
+  --harvey-components-jan-25_colour-semantic---tooltip--background: var(--_colour-semantic---tooltip--background);
+  --harvey-components-jan-25_colour-semantic---tooltip--border: var(--_colour-semantic---tooltip--border);
+
+  /* Border */
+  --harvey-components-jan-25_colour-semantic---border--primary: var(--_colour-semantic---border--primary);
+  --harvey-components-jan-25_colour-semantic---border--secondary: var(--_colour-semantic---border--secondary);
+  --harvey-components-jan-25_colour-semantic---border--alternate: var(--_colour-semantic---border--alternate);
+  --harvey-components-jan-25_colour-semantic---border--horizontal-line-1: var(--_colour-semantic---border--horizontal-line-1);
+  --harvey-components-jan-25_colour-semantic---border--horizontal-line-2: var(--_colour-semantic---border--horizontal-line-2);
+  --harvey-components-jan-25_colour-semantic---border--horizontal-line-3: var(--_colour-semantic---border--horizontal-line-3);
+  --harvey-components-jan-25_colour-semantic---border--hr: var(--_colour-semantic---border--hr);
+  --harvey-components-jan-25_colour-semantic---border--hr-article: var(--_colour-semantic---border--hr-article);
+
+  /* Forms */
+  --harvey-components-jan-25_colour-semantic---forms--placeholder: var(--_colour-semantic---forms--placeholder);
+  --harvey-components-jan-25_colour-semantic---forms--input-text: var(--_colour-semantic---forms--input-text);
+  --harvey-components-jan-25_colour-semantic---forms--input-border: var(--_colour-semantic---forms--input-border);
+  --harvey-components-jan-25_colour-semantic---forms--button-text: var(--_colour-semantic---forms--button-text);
+  --harvey-components-jan-25_colour-semantic---forms--button-bg: var(--_colour-semantic---forms--button-bg);
+  --harvey-components-jan-25_colour-semantic---forms--button-border: var(--_colour-semantic---forms--button-border);
+
+  /* Utility */
+  --harvey-components-jan-25_colour-semantic---utility--success: var(--_colour-semantic---utility--success);
+  --harvey-components-jan-25_colour-semantic---utility--warning: var(--_colour-semantic---utility--warning);
+  --harvey-components-jan-25_colour-semantic---utility--warning-bg: var(--_colour-semantic---utility--warning-bg);
+  --harvey-components-jan-25_colour-semantic---utility--error: var(--_colour-semantic---utility--error);
+  --harvey-components-jan-25_colour-semantic---utility--error-bg: var(--_colour-semantic---utility--error-bg);
+}

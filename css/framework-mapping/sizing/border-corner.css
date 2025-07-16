@@ -1,0 +1,23 @@
+body {
+  /* Border */
+  --harvey-components-jan-25_sizing-border-corner---border--xsmall: var(--_sizing-border-corner---border--xsmall);
+  --harvey-components-jan-25_sizing-border-corner---border--small: var(--_sizing-border-corner---border--small);
+  --harvey-components-jan-25_sizing-border-corner---border--medium: var(--_sizing-border-corner---border--medium);
+  --harvey-components-jan-25_sizing-border-corner---border--large: var(--_sizing-border-corner---border--large);
+  --harvey-components-jan-25_sizing-border-corner---border--xlarge: var(--_sizing-border-corner---border--xlarge);
+  --harvey-components-jan-25_sizing-border-corner---border--breadcrumb: var(--_sizing-border-corner---border--breadcrumb);
+  --harvey-components-jan-25_sizing-border-corner---border--tooltip: var(--_sizing-border-corner---border--tooltip);
+  --harvey-components-jan-25_sizing-border-corner---border--hr: var(--_sizing-border-corner---border--hr);
+  --harvey-components-jan-25_sizing-border-corner---border--hr-article: var(--_sizing-border-corner---border--hr-article);
+
+  /* Corner */
+  --harvey-components-jan-25_sizing-border-corner---corner--none: var(--_sizing-border-corner---corner--none);
+  --harvey-components-jan-25_sizing-border-corner---corner--xsmall: var(--_sizing-border-corner---corner--xsmall);
+  --harvey-components-jan-25_sizing-border-corner---corner--small: var(--_sizing-border-corner---corner--small);
+  --harvey-components-jan-25_sizing-border-corner---corner--medium: var(--_sizing-border-corner---corner--medium);
+  --harvey-components-jan-25_sizing-border-corner---corner--large: var(--_sizing-border-corner---corner--large);
+  --harvey-components-jan-25_sizing-border-corner---corner--xlarge: var(--_sizing-border-corner---corner--xlarge);
+  --harvey-components-jan-25_sizing-border-corner---corner--corner-full: var(--_sizing-border-corner---corner--corner-full);
+  --harvey-components-jan-25_sizing-border-corner---corner--corner-custom-1: var(--_sizing-border-corner---corner--corner-custom-1);
+  --harvey-components-jan-25_sizing-border-corner---corner--corner-tooltip: var(--_sizing-border-corner---corner--corner-tooltip);
+}

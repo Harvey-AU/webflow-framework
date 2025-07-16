@@ -1,0 +1,126 @@
+:root {
+  --max-lines-overflow: hidden;
+  --max-lines-number: 1;
+  --max-lines-line-height: 1.5rem; /* Default value */
+}
+
+/* Set base styles for any paragraph within a max-lines container */
+[data-wf--u_text_max-lines--max-height] p[data-wf--u_paragraph--text-size],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height] p[data-wf--harvey-components-jan-25--u_paragraph--text-size] {
+  max-height: calc(var(--max-lines-number) * var(--max-lines-line-height));
+  overflow: var(--max-lines-overflow);
+  position: relative;
+}
+
+[data-wf--u_text_max-lines--max-height="1-line"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="1-line"],
+[data-wf--u_text_max-lines--max-height="2-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="2-lines"],
+[data-wf--u_text_max-lines--max-height="3-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="3-lines"],
+[data-wf--u_text_max-lines--max-height="4-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="4-lines"],
+[data-wf--u_text_max-lines--max-height="5-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="5-lines"] {
+  p[data-wf--u_paragraph--text-size],
+  p[data-wf--harvey-components-jan-25--u_paragraph--text-size] {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: var(--max-lines-number);
+    -webkit-box-orient: vertical;
+  }
+  .harvey-components-jan-25--display-inline-flex,
+  .display-inline-flex {
+    flex-wrap: nowrap;
+  }
+}
+
+/* No limit variant */
+[data-wf--u_text_max-lines--max-height="no-limit"] p[data-wf--u_paragraph--text-size],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="no-limit"] p[data-wf--harvey-components-jan-25--u_paragraph--text-size] {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Line number variants */
+
+[data-wf--u_text_max-lines--max-height="1-line"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="1-line"] {
+  --max-lines-number: 1;
+}
+
+[data-wf--u_text_max-lines--max-height="2-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="2-lines"] {
+  --max-lines-number: 2;
+}
+
+[data-wf--u_text_max-lines--max-height="3-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="3-lines"] {
+  --max-lines-number: 3;
+}
+
+[data-wf--u_text_max-lines--max-height="4-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="4-lines"] {
+  --max-lines-number: 4;
+}
+
+[data-wf--u_text_max-lines--max-height="5-lines"],
+[data-wf--harvey-components-jan-25--u_text_max-lines--max-height="5-lines"] {
+  --max-lines-number: 5;
+}
+
+/* Font size variants */
+p[data-wf--u_paragraph--text-size="tiny"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="tiny"] {
+  --max-lines-line-height: var(--_font---height--tiny, 1rem);
+}
+
+p[data-wf--u_paragraph--text-size="xxxsmall"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="xxxsmall"] {
+  --max-lines-line-height: var(--_font---height--xxxsmall, 1.2rem);
+}
+
+p[data-wf--u_paragraph--text-size="xxsmall"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="xxsmall"] {
+  --max-lines-line-height: var(--_font---height--xxsmall, 1.4rem);
+}
+
+p[data-wf--u_paragraph--text-size="xsmall"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="xsmall"] {
+  --max-lines-line-height: var(--_font---height--xsmall, 1.6rem);
+}
+
+p[data-wf--u_paragraph--text-size="small"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="small"] {
+  --max-lines-line-height: var(--_font---height--small, 1.8rem);
+}
+
+p[data-wf--u_paragraph--text-size="medium"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="medium"] {
+  --max-lines-line-height: var(--_font---height--medium, 2rem);
+}
+
+p[data-wf--u_paragraph--text-size="large"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="large"] {
+  --max-lines-line-height: var(--_font---height--large, 2.2rem);
+}
+
+p[data-wf--u_paragraph--text-size="xlarge"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="xlarge"] {
+  --max-lines-line-height: var(--_font---height--xlarge, 2.4rem);
+}
+
+p[data-wf--u_paragraph--text-size="xxlarge"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="xxlarge"] {
+  --max-lines-line-height: var(--_font---height--xxlarge, 2.6rem);
+}
+
+p[data-wf--u_paragraph--text-size="xxxlarge"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="xxxlarge"] {
+  --max-lines-line-height: var(--_font---height--xxxlarge, 2.8rem);
+}
+
+p[data-wf--u_paragraph--text-size="huge"],
+p[data-wf--harvey-components-jan-25--u_paragraph--text-size="huge"] {
+  --max-lines-line-height: var(--_font---height--huge, 3rem);
+}

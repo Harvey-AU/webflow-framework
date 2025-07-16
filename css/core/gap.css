@@ -1,0 +1,197 @@
+[data-wf--u_grid-settings_gap-row--row-gap="zero"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="zero"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="zero"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--zero);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="tiny"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="tiny"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="tiny"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--tiny);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="xxsmall"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="xxsmall"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="xxsmall"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--xxsmall);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="xsmall"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="xsmall"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="xsmall"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--xsmall);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="small"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="small"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="small"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--small);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="medium"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="medium"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="medium"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--medium);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="large"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="large"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="large"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--large);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="xlarge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="xlarge"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="xlarge"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--xlarge);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="xxlarge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="xxlarge"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="xxlarge"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--xxlarge);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="huge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="huge"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="huge"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--huge);
+  }
+}
+
+[data-wf--u_grid-settings_gap-row--row-gap="xhuge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_gap-row--row-gap="xhuge"],
+[data-wf--component-library--u_grid-settings_gap-row--row-gap="xhuge"] {
+  > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    row-gap: var(--_sizing-spacer-gap---gap--xhuge);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="zero"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="zero"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="zero"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--zero);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="tiny"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="tiny"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="tiny"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--tiny);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="xxsmall"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="xxsmall"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="xxsmall"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--xxsmall);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="xsmall"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="xsmall"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="xsmall"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--xsmall);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="small"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="small"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="small"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--small);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="medium"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="medium"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="medium"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--medium);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="large"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="large"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="large"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--large);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="xlarge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="xlarge"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="xlarge"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--xlarge);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="xxlarge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="xxlarge"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="xxlarge"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--xxlarge);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="huge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="huge"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="huge"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--huge);
+  }
+}
+
+[data-wf--u_grid-settings_col-gap--column-gap="xhuge"],
+[data-wf--harvey-components-jan-25--u_grid-settings_col-gap--column-gap="xhuge"],
+[data-wf--component-library--u_grid-settings_col-gap--column-gap="xhuge"] {
+  > div > div > div > div > :is(.grid-boxed-wrapper, [class*="--grid-boxed-wrapper"]) > div > div > div > :is(.grid-slot, [class*="--grid-slot"]),
+  > div > div > div > div > :is(.grid-slot, [class*="--grid-slot"]) {
+    column-gap: var(--_sizing-spacer-gap---gap--xhuge);
+  }
+}

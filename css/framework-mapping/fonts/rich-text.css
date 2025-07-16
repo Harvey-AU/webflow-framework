@@ -1,0 +1,201 @@
+body {
+  /* Family Tag Variables */
+  --harvey-components-jan-25_font-rich-text---family--tag--h1: var(--_font-rich-text---family--tag--h1);
+  --harvey-components-jan-25_font-rich-text---family--tag--h2: var(--_font-rich-text---family--tag--h2);
+  --harvey-components-jan-25_font-rich-text---family--tag--h3: var(--_font-rich-text---family--tag--h3);
+  --harvey-components-jan-25_font-rich-text---family--tag--h4: var(--_font-rich-text---family--tag--h4);
+  --harvey-components-jan-25_font-rich-text---family--tag--h5: var(--_font-rich-text---family--tag--h5);
+  --harvey-components-jan-25_font-rich-text---family--tag--h6: var(--_font-rich-text---family--tag--h6);
+  --harvey-components-jan-25_font-rich-text---family--tag--p: var(--_font-rich-text---family--tag--p);
+  --harvey-components-jan-25_font-rich-text---family--tag--block-quote: var(--_font-rich-text---family--tag--block-quote);
+  --harvey-components-jan-25_font-rich-text---family--tag--superscript: var(--_font-rich-text---family--tag--superscript);
+  --harvey-components-jan-25_font-rich-text---family--tag--subscript: var(--_font-rich-text---family--tag--subscript);
+  --harvey-components-jan-25_font-rich-text---family--tag--captions: var(--_font-rich-text---family--tag--captions);
+  --harvey-components-jan-25_font-rich-text---family--tag--h1-article: var(--_font-rich-text---family--tag--h1-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--h2-article: var(--_font-rich-text---family--tag--h2-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--h3-article: var(--_font-rich-text---family--tag--h3-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--h4-article: var(--_font-rich-text---family--tag--h4-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--h5-article: var(--_font-rich-text---family--tag--h5-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--h6-article: var(--_font-rich-text---family--tag--h6-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--p-article: var(--_font-rich-text---family--tag--p-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--block-quote-article: var(--_font-rich-text---family--tag--block-quote-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--captions-article: var(--_font-rich-text---family--tag--captions-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--superscript-article: var(--_font-rich-text---family--tag--superscript-article);
+  --harvey-components-jan-25_font-rich-text---family--tag--subscript-article: var(--_font-rich-text---family--tag--subscript-article);
+
+  /* Size Tag Variables */
+  --harvey-components-jan-25_font-rich-text---size--tag--h1: var(--_font-rich-text---size--tag--h1);
+  --harvey-components-jan-25_font-rich-text---size--tag--h2: var(--_font-rich-text---size--tag--h2);
+  --harvey-components-jan-25_font-rich-text---size--tag--h3: var(--_font-rich-text---size--tag--h3);
+  --harvey-components-jan-25_font-rich-text---size--tag--h4: var(--_font-rich-text---size--tag--h4);
+  --harvey-components-jan-25_font-rich-text---size--tag--h5: var(--_font-rich-text---size--tag--h5);
+  --harvey-components-jan-25_font-rich-text---size--tag--h6: var(--_font-rich-text---size--tag--h6);
+  --harvey-components-jan-25_font-rich-text---size--tag--p: var(--_font-rich-text---size--tag--p);
+  --harvey-components-jan-25_font-rich-text---size--tag--list: var(--_font-rich-text---size--tag--list);
+  --harvey-components-jan-25_font-rich-text---size--tag--block-quote: var(--_font-rich-text---size--tag--block-quote);
+  --harvey-components-jan-25_font-rich-text---size--tag--superscript: var(--_font-rich-text---size--tag--superscript);
+  --harvey-components-jan-25_font-rich-text---size--tag--subscript: var(--_font-rich-text---size--tag--subscript);
+  --harvey-components-jan-25_font-rich-text---size--tag--captions: var(--_font-rich-text---size--tag--captions);
+  --harvey-components-jan-25_font-rich-text---size--tag--h1-article: var(--_font-rich-text---size--tag--h1-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--h2-article: var(--_font-rich-text---size--tag--h2-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--h3-article: var(--_font-rich-text---size--tag--h3-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--h4-article: var(--_font-rich-text---size--tag--h4-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--h5-article: var(--_font-rich-text---size--tag--h5-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--h6-article: var(--_font-rich-text---size--tag--h6-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--p-article: var(--_font-rich-text---size--tag--p-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--list-article: var(--_font-rich-text---size--tag--list-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--block-quote-article: var(--_font-rich-text---size--tag--block-quote-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--captions-article: var(--_font-rich-text---size--tag--captions-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--superscript-article: var(--_font-rich-text---size--tag--superscript-article);
+  --harvey-components-jan-25_font-rich-text---size--tag--subscript-article: var(--_font-rich-text---size--tag--subscript-article);
+
+  /* Height Tag Variables */
+  --harvey-components-jan-25_font-rich-text---height--tag--h1: var(--_font-rich-text---height--tag--h1);
+  --harvey-components-jan-25_font-rich-text---height--tag--h2: var(--_font-rich-text---height--tag--h2);
+  --harvey-components-jan-25_font-rich-text---height--tag--h3: var(--_font-rich-text---height--tag--h3);
+  --harvey-components-jan-25_font-rich-text---height--tag--h4: var(--_font-rich-text---height--tag--h4);
+  --harvey-components-jan-25_font-rich-text---height--tag--h5: var(--_font-rich-text---height--tag--h5);
+  --harvey-components-jan-25_font-rich-text---height--tag--h6: var(--_font-rich-text---height--tag--h6);
+  --harvey-components-jan-25_font-rich-text---height--tag--p: var(--_font-rich-text---height--tag--p);
+  --harvey-components-jan-25_font-rich-text---height--tag--list: var(--_font-rich-text---height--tag--list);
+  --harvey-components-jan-25_font-rich-text---height--tag--block-quote: var(--_font-rich-text---height--tag--block-quote);
+  --harvey-components-jan-25_font-rich-text---height--tag--superscript: var(--_font-rich-text---height--tag--superscript);
+  --harvey-components-jan-25_font-rich-text---height--tag--subscript: var(--_font-rich-text---height--tag--subscript);
+  --harvey-components-jan-25_font-rich-text---height--tag--captions: var(--_font-rich-text---height--tag--captions);
+  --harvey-components-jan-25_font-rich-text---height--tag--h1-article: var(--_font-rich-text---height--tag--h1-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--h2-article: var(--_font-rich-text---height--tag--h2-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--h3-article: var(--_font-rich-text---height--tag--h3-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--h4-article: var(--_font-rich-text---height--tag--h4-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--h5-article: var(--_font-rich-text---height--tag--h5-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--h6-article: var(--_font-rich-text---height--tag--h6-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--p-article: var(--_font-rich-text---height--tag--p-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--list-article: var(--_font-rich-text---height--tag--list-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--block-quote-article: var(--_font-rich-text---height--tag--block-quote-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--captions-article: var(--_font-rich-text---height--tag--captions-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--superscript-article: var(--_font-rich-text---height--tag--superscript-article);
+  --harvey-components-jan-25_font-rich-text---height--tag--subscript-article: var(--_font-rich-text---height--tag--subscript-article);
+
+  /* Weight Tag Variables */
+  --harvey-components-jan-25_font-rich-text---weight--tag--h1: var(--_font-rich-text---weight--tag--h1);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h2: var(--_font-rich-text---weight--tag--h2);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h3: var(--_font-rich-text---weight--tag--h3);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h4: var(--_font-rich-text---weight--tag--h4);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h5: var(--_font-rich-text---weight--tag--h5);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h6: var(--_font-rich-text---weight--tag--h6);
+  --harvey-components-jan-25_font-rich-text---weight--tag--p: var(--_font-rich-text---weight--tag--p);
+  --harvey-components-jan-25_font-rich-text---weight--tag--list: var(--_font-rich-text---weight--tag--list);
+  --harvey-components-jan-25_font-rich-text---weight--tag--block-quote: var(--_font-rich-text---weight--tag--block-quote);
+  --harvey-components-jan-25_font-rich-text---weight--tag--superscript: var(--_font-rich-text---weight--tag--superscript);
+  --harvey-components-jan-25_font-rich-text---weight--tag--subscript: var(--_font-rich-text---weight--tag--subscript);
+  --harvey-components-jan-25_font-rich-text---weight--tag--captions: var(--_font-rich-text---weight--tag--captions);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h1-article: var(--_font-rich-text---weight--tag--h1-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h2-article: var(--_font-rich-text---weight--tag--h2-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h3-article: var(--_font-rich-text---weight--tag--h3-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h4-article: var(--_font-rich-text---weight--tag--h4-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h5-article: var(--_font-rich-text---weight--tag--h5-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--h6-article: var(--_font-rich-text---weight--tag--h6-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--p-article: var(--_font-rich-text---weight--tag--p-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--list-article: var(--_font-rich-text---weight--tag--list-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--block-quote-article: var(--_font-rich-text---weight--tag--block-quote-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--captions-article: var(--_font-rich-text---weight--tag--captions-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--superscript-article: var(--_font-rich-text---weight--tag--superscript-article);
+  --harvey-components-jan-25_font-rich-text---weight--tag--subscript-article: var(--_font-rich-text---weight--tag--subscript-article);
+
+  /* Letter Spacing Tag Variables */
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h1: var(--_font-rich-text---letter-spacing--tag--h1);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h2: var(--_font-rich-text---letter-spacing--tag--h2);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h3: var(--_font-rich-text---letter-spacing--tag--h3);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h4: var(--_font-rich-text---letter-spacing--tag--h4);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h5: var(--_font-rich-text---letter-spacing--tag--h5);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h6: var(--_font-rich-text---letter-spacing--tag--h6);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--p: var(--_font-rich-text---letter-spacing--tag--p);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--list: var(--_font-rich-text---letter-spacing--tag--list);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--block-quote: var(--_font-rich-text---letter-spacing--tag--block-quote);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--superscript: var(--_font-rich-text---letter-spacing--tag--superscript);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--subscript: var(--_font-rich-text---letter-spacing--tag--subscript);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--captions: var(--_font-rich-text---letter-spacing--tag--captions);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h1-article: var(--_font-rich-text---letter-spacing--tag--h1-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h2-article: var(--_font-rich-text---letter-spacing--tag--h2-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h3-article: var(--_font-rich-text---letter-spacing--tag--h3-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h4-article: var(--_font-rich-text---letter-spacing--tag--h4-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h5-article: var(--_font-rich-text---letter-spacing--tag--h5-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--h6-article: var(--_font-rich-text---letter-spacing--tag--h6-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--p-article: var(--_font-rich-text---letter-spacing--tag--p-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--list-article: var(--_font-rich-text---letter-spacing--tag--list-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--block-quote-article: var(
+    --_font-rich-text---letter-spacing--tag--block-quote-article
+  );
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--captions-article: var(--_font-rich-text---letter-spacing--tag--captions-article);
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--superscript-article: var(
+    --_font-rich-text---letter-spacing--tag--superscript-article
+  );
+  --harvey-components-jan-25_font-rich-text---letter-spacing--tag--subscript-article: var(--_font-rich-text---letter-spacing--tag--subscript-article);
+
+  /* Spacing Variables */
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-margin-top: var(--_font-rich-text---spacing--block-quote-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-margin-bottom: var(--_font-rich-text---spacing--block-quote-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-top: var(--_font-rich-text---spacing--block-quote-padding-top);
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-right: var(--_font-rich-text---spacing--block-quote-padding-right);
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-bottom: var(--_font-rich-text---spacing--block-quote-padding-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-left: var(--_font-rich-text---spacing--block-quote-padding-left);
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-article-margin-top: var(
+    --_font-rich-text---spacing--block-quote-article-margin-top
+  );
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-article-margin-bottom: var(
+    --_font-rich-text---spacing--block-quote-article-margin-bottom
+  );
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-article-padding-top: var(
+    --_font-rich-text---spacing--block-quote-article-padding-top
+  );
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-article-padding-right: var(
+    --_font-rich-text---spacing--block-quote-article-padding-right
+  );
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-article-padding-bottom: var(
+    --_font-rich-text---spacing--block-quote-article-padding-bottom
+  );
+  --harvey-components-jan-25_font-rich-text---spacing--block-quote-article-padding-left: var(
+    --_font-rich-text---spacing--block-quote-article-padding-left
+  );
+
+  --harvey-components-jan-25_font-rich-text---spacing--h1-margin-top: var(--_font-rich-text---spacing--h1-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h1-margin-bottom: var(--_font-rich-text---spacing--h1-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--h1-article-margin-top: var(--_font-rich-text---spacing--h1-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h1-article-margin-bottom: var(--_font-rich-text---spacing--h1-article-margin-bottom);
+
+  --harvey-components-jan-25_font-rich-text---spacing--h2-margin-top: var(--_font-rich-text---spacing--h2-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h2-margin-bottom: var(--_font-rich-text---spacing--h2-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--h2-article-margin-top: var(--_font-rich-text---spacing--h2-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h2-article-margin-bottom: var(--_font-rich-text---spacing--h2-article-margin-bottom);
+
+  --harvey-components-jan-25_font-rich-text---spacing--h3-margin-top: var(--_font-rich-text---spacing--h3-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h3-margin-bottom: var(--_font-rich-text---spacing--h3-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--h3-article-margin-top: var(--_font-rich-text---spacing--h3-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h3-article-margin-bottom: var(--_font-rich-text---spacing--h3-article-margin-bottom);
+
+  --harvey-components-jan-25_font-rich-text---spacing--h4-margin-top: var(--_font-rich-text---spacing--h4-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h4-margin-bottom: var(--_font-rich-text---spacing--h4-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--h4-article-margin-top: var(--_font-rich-text---spacing--h4-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h4-article-margin-bottom: var(--_font-rich-text---spacing--h4-article-margin-bottom);
+
+  --harvey-components-jan-25_font-rich-text---spacing--h5-margin-top: var(--_font-rich-text---spacing--h5-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h5-margin-bottom: var(--_font-rich-text---spacing--h5-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--h5-article-margin-top: var(--_font-rich-text---spacing--h5-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h5-article-margin-bottom: var(--_font-rich-text---spacing--h5-article-margin-bottom);
+
+  --harvey-components-jan-25_font-rich-text---spacing--h6-margin-top: var(--_font-rich-text---spacing--h6-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h6-margin-bottom: var(--_font-rich-text---spacing--h6-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--h6-article-margin-top: var(--_font-rich-text---spacing--h6-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--h6-article-margin-bottom: var(--_font-rich-text---spacing--h6-article-margin-bottom);
+
+  --harvey-components-jan-25_font-rich-text---spacing--p-margin-top: var(--_font-rich-text---spacing--p-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--p-margin-bottom: var(--_font-rich-text---spacing--p-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--p-article-margin-top: var(--_font-rich-text---spacing--p-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--p-article-margin-bottom: var(--_font-rich-text---spacing--p-article-margin-bottom);
+
+  --harvey-components-jan-25_font-rich-text---spacing--list-margin-top: var(--_font-rich-text---spacing--list-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--list-margin-bottom: var(--_font-rich-text---spacing--list-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--list-padding-left: var(--_font-rich-text---spacing--list-padding-left);
+  --harvey-components-jan-25_font-rich-text---spacing--list-article-margin-top: var(--_font-rich-text---spacing--list-article-margin-top);
+  --harvey-components-jan-25_font-rich-text---spacing--list-article-margin-bottom: var(--_font-rich-text---spacing--list-article-margin-bottom);
+  --harvey-components-jan-25_font-rich-text---spacing--list-article-padding-left: var(--_font-rich-text---spacing--list-article-padding-left);
+}

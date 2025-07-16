@@ -1,0 +1,120 @@
+/* Icon styles for direct classes or Webflow variant picker */
+
+/* Define base icon spacing variable */
+:root {
+  --icon-spacing-base: var(--_sizing-spacer-gap---gap--icon-base);
+  --icon-width: var(--_font---height--tag--icon-width);
+  --icon-height: var(--_font---height--tag--icon-height);
+  --icon-colour-default: currentColor;
+  --icon_element-display: inline-block;
+  --icon_element-height: 1.35em;
+  --icon_element-vert-align: middle;
+
+  --icon_element-margin-top: 0;
+  --icon_element-margin-bottom: 0;
+  --icon_element-margin-right: 0;
+  --icon_element-margin-left: 0;
+}
+
+[lib="icon"] {
+  display: inline-block;
+}
+
+/* Hide elements with no before/after */
+[lib="icon-before"] {
+  &[data-wf--u_icon--icon="no-icon"],
+  &[data-wf--harvey-components-jan-25--u_icon--icon="no-icon"] {
+    [lib="e_text_wrapper"] [lib="icon"]:first-child {
+      display: none;
+    }
+  }
+}
+
+[lib="icon-v1"] {
+  &[data-wf--e_text_advanced--layout-icon-v1="no-icon"],
+  &[data-wf--harvey-components-jan-25--e_text_advanced--layout-icon-v1="no-icon"] {
+    [lib="icon-after"] {
+      &[data-wf--u_icon--icon="no-icon"],
+      &[data-wf--harvey-components-jan-25--u_icon--icon="no-icon"] {
+        [lib="e_text_wrapper"] [lib="icon"]:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+/* Base styles for icon elements */
+[lib="icon-before"]:not([data-wf--u_icon--icon="no-icon"]):not([data-wf--harvey-components-jan-25--u_icon--icon="no-icon"])
+  [lib="e_text_wrapper"]
+  [lib="icon"]:first-child::before,
+[lib="icon-after"]:not([data-wf--u_icon--icon="no-icon"]):not([data-wf--harvey-components-jan-25--u_icon--icon="no-icon"])
+  [lib="e_text_wrapper"]
+  [lib="icon"]:last-child::after,
+[lib="icon-v1"]:not([data-wf--e_text_advanced--layout-icon-v1="no-icon"]):not(
+    [data-wf--harvey-components-jan-25--e_text_advanced--layout-icon-v1="no-icon"]
+  )
+  [lib="e_text_wrapper"]
+  [lib="icon"]:last-child::after,
+[class*="icon_"]::after {
+  color: var(--icon-colour, var(--icon-colour-default));
+  content: "\00a0";
+  background-color: var(--icon-colour-default);
+
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+
+  display: var(--icon_element-display);
+  height: var(--icon_element-height);
+  width: var(--icon-width);
+  vertical-align: var(--icon_element-vert-align);
+
+  margin-top: var(--icon_element-margin-top);
+  margin-bottom: var(--icon_element-margin-bottom);
+  margin-right: var(--icon_element-margin-right);
+  margin-left: var(--icon_element-margin-left);
+}
+
+[lib="icon-before"] {
+  &:not([data-wf--u_icon--icon="no-icon"]):not([data-wf--harvey-components-jan-25--u_icon--icon="no-icon"]) {
+    [lib="e_text_wrapper"]:not([class*="w-variant-"]) [lib="icon"]:first-child::before {
+      margin-right: var(--icon-spacing-base);
+    }
+  }
+}
+
+[class*="icon_"] {
+  display: inline-flex;
+  position: relative;
+}
+[class*="icon_"],
+[class*="icon_"]::after {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+[class*="icon_"]::after {
+  display: var(--icon_element-display);
+}
+
+[lib="icon-after"]:not([data-wf--u_icon--icon="no-icon"]):not([data-wf--harvey-components-jan-25--u_icon--icon="no-icon"])
+  [lib="e_text_wrapper"]:not([class*="w-variant-"])
+  [lib="icon"]:last-child::after,
+[lib="icon-v1"]:not([data-wf--e_text_advanced--layout-icon-v1="no-icon"]):not(
+    [data-wf--harvey-components-jan-25--e_text_advanced--layout-icon-v1="no-icon"]
+  )
+  [lib="e_text_wrapper"]:not([class*="w-variant-"])
+  [lib="icon"]:last-child::after,
+[class*="icon_"]::after {
+  margin-left: var(--icon-spacing-base);
+}
+
+[lib="e_text_wrapper"] [lib="icon-only"] [lib="icon"]:last-child::after {
+  margin-left: unset !important;
+}
+
+#breadcrumb [lib="e_text_wrapper"]:not([class*="w-variant-"]) [lib="icon"]:first-child::before {
+  margin-left: var(--_sizing-spacer-gap---padding--breadcrumb) !important;
+  margin-right: var(--_sizing-spacer-gap---padding--breadcrumb) !important;
+}

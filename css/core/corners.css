@@ -1,0 +1,307 @@
+/*
+1. Pushes corners settings down to border object to properly reflect radius down the DOM
+2. Controls which corners get treatment
+3. Controls border size
+*/
+
+[data-wf--u_corners_size--corners="none"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="none"],
+[data-wf--components-library--u_corners_size--corners="none"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--none);
+    border-top-right-radius: var(--_sizing-border-corner---corner--none);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--none);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--none);
+  }
+}
+
+[data-wf--u_corners_size--corners="xsmall"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="xsmall"],
+[data-wf--components-library--u_corners_size--corners="xsmall"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--xsmall);
+    border-top-right-radius: var(--_sizing-border-corner---corner--xsmall);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--xsmall);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--xsmall);
+  }
+}
+
+[data-wf--u_corners_size--corners="small"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="small"],
+[data-wf--components-library--u_corners_size--corners="small"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--small);
+    border-top-right-radius: var(--_sizing-border-corner---corner--small);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--small);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--small);
+  }
+}
+
+[data-wf--u_corners_size--corners="medium"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="medium"],
+[data-wf--components-library--u_corners_size--corners="medium"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--medium);
+    border-top-right-radius: var(--_sizing-border-corner---corner--medium);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--medium);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--medium);
+  }
+}
+
+[data-wf--u_corners_size--corners="large"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="large"],
+[data-wf--components-library--u_corners_size--corners="large"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--large);
+    border-top-right-radius: var(--_sizing-border-corner---corner--large);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--large);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--large);
+  }
+}
+
+[data-wf--u_corners_size--corners="xlarge"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="xlarge"],
+[data-wf--components-library--u_corners_size--corners="xlarge"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--xlarge);
+    border-top-right-radius: var(--_sizing-border-corner---corner--xlarge);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--xlarge);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--xlarge);
+  }
+}
+
+[data-wf--u_corners_size--corners="circle"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="circle"],
+[data-wf--components-library--u_corners_size--corners="circle"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--full);
+    border-top-right-radius: var(--_sizing-border-corner---corner--full);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--full);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--full);
+  }
+}
+
+/* Top */
+[data-wf--u_corners_sides--variant="top"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="top"],
+[data-wf--component-library--u_corners_sides--variant="top"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+}
+
+/* Bottom */
+[data-wf--u_corners_sides--variant="bottom"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="bottom"],
+[data-wf--component-library--u_corners_sides--variant="bottom"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+}
+
+/* Left */
+[data-wf--u_corners_sides--variant="left"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="left"],
+[data-wf--component-library--u_corners_sides--variant="left"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+}
+
+/* Right */
+[data-wf--u_corners_sides--variant="right"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="right"],
+[data-wf--component-library--u_corners_sides--variant="right"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+  }
+}
+
+/* Top Left */
+[data-wf--u_corners_sides--variant="top-left"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="top-left"],
+[data-wf--component-library--u_corners_sides--variant="top-left"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-right-radius: unset;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+}
+
+/* Top Right */
+[data-wf--u_corners_sides--variant="top-right"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="top-right"],
+[data-wf--component-library--u_corners_sides--variant="top-right"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+}
+
+/* Bottom Left */
+[data-wf--u_corners_sides--variant="bottom-left"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="bottom-left"],
+[data-wf--component-library--u_corners_sides--variant="bottom-left"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+}
+
+/* Bottom Right */
+[data-wf--u_corners_sides--variant="bottom-right"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="bottom-right"],
+[data-wf--component-library--u_corners_sides--variant="bottom-right"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    border-bottom-left-radius: unset;
+  }
+}
+
+/* Top Left & Bottom Right */
+[data-wf--u_corners_sides--variant="top-left-bottom-right"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="top-left-bottom-right"],
+[data-wf--component-library--u_corners_sides--variant="top-left-bottom-right"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-right-radius: unset;
+    border-bottom-left-radius: unset;
+  }
+}
+
+/* Top Right & Bottom Left */
+[data-wf--u_corners_sides--variant="top-right-bottom-left"],
+[data-wf--harvey-components-jan-25--u_corners_sides--variant="top-right-bottom-left"],
+[data-wf--component-library--u_corners_sides--variant="top-right-bottom-left"] {
+  .corners_size:first-of-type,
+  .harvey-components-jan-25--corners_size:first-of-type,
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .u_colour-variants:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type {
+    border-top-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
+}
+
+/* Width - None */
+[data-wf--u_border_size--border---size="none"],
+[data-wf--harvey-components-jan-25--u_border_size--border---size="none"],
+[data-wf--component-library--u_border_size--border---size="none"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type {
+    border-width: 0;
+  }
+}
+
+/* Width - XSmall */
+[data-wf--u_border_size--border---size="xsmall"],
+[data-wf--harvey-components-jan-25--u_border_size--border---size="xsmall"],
+[data-wf--component-library--u_border_size--border---size="xsmall"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type {
+    border-width: var(--_sizing-border-corner---border--xsmall);
+  }
+}
+
+/* Width - Small */
+[data-wf--u_border_size--border---size="small"],
+[data-wf--harvey-components-jan-25--u_border_size--border---size="small"],
+[data-wf--component-library--u_border_size--border---size="small"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type {
+    border-width: var(--_sizing-border-corner---border--small);
+  }
+}
+
+/* Width - Large */
+[data-wf--u_border_size--border---size="large"],
+[data-wf--harvey-components-jan-25--u_border_size--border---size="large"],
+[data-wf--component-library--u_border_size--border---size="large"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type {
+    border-width: var(--_sizing-border-corner---border--large);
+  }
+}
+
+/* Width - XLarge */
+[data-wf--u_border_size--border---size="xlarge"],
+[data-wf--harvey-components-jan-25--u_border_size--border---size="xlarge"],
+[data-wf--component-library--u_border_size--border---size="xlarge"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type {
+    border-width: var(--_sizing-border-corner---border--xlarge);
+  }
+}

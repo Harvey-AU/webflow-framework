@@ -1,0 +1,43 @@
+body {
+  /* Standard */
+  --harvey-components-jan-25_colour-semantic-button---standard--background: var(--_colour-semantic-button---standard--background);
+  --harvey-components-jan-25_colour-semantic-button---standard--text: var(--_colour-semantic-button---standard--text);
+  --harvey-components-jan-25_colour-semantic-button---standard--current-background: var(--_colour-semantic-button---button-1--current-background);
+  --harvey-components-jan-25_colour-semantic-button---standard--current-text: var(--_colour-semantic-button---button-1--current-text);
+
+  /* Button 1 */
+  --harvey-components-jan-25_colour-semantic-button---button-1--background: var(--_colour-semantic-button---button-1--background);
+  --harvey-components-jan-25_colour-semantic-button---button-1--text: var(--_colour-semantic-button---button-1--text);
+  --harvey-components-jan-25_colour-semantic-button---button-1--current-background: var(--_colour-semantic-button---button-1--current-background);
+  --harvey-components-jan-25_colour-semantic-button---button-1--current-text: var(--_colour-semantic-button---button-1--current-text);
+
+  /* Button 2 */
+  --harvey-components-jan-25_colour-semantic-button---button-2--background: var(--_colour-semantic-button---button-2--background);
+  --harvey-components-jan-25_colour-semantic-button---button-2--text: var(--_colour-semantic-button---button-2--text);
+  --harvey-components-jan-25_colour-semantic-button---button-2--current-background: var(--_colour-semantic-button---button-2--current-background);
+  --harvey-components-jan-25_colour-semantic-button---button-2--current-text: var(--_colour-semantic-button---button-2--current-text);
+
+  /* Button 3 */
+  --harvey-components-jan-25_colour-semantic-button---button-3--background: var(--_colour-semantic-button---button-3--background);
+  --harvey-components-jan-25_colour-semantic-button---button-3--text: var(--_colour-semantic-button---button-3--text);
+  --harvey-components-jan-25_colour-semantic-button---button-3--current-background: var(--_colour-semantic-button---button-3--current-background);
+  --harvey-components-jan-25_colour-semantic-button---button-3--current-text: var(--_colour-semantic-button---button-3--current-text);
+
+  /* Button 4 */
+  --harvey-components-jan-25_colour-semantic-button---button-4--background: var(--_colour-semantic-button---button-4--background);
+  --harvey-components-jan-25_colour-semantic-button---button-4--text: var(--_colour-semantic-button---button-4--text);
+  --harvey-components-jan-25_colour-semantic-button---button-4--current-background: var(--_colour-semantic-button---button-4--current-background);
+  --harvey-components-jan-25_colour-semantic-button---button-4--current-text: var(--_colour-semantic-button---button-4--current-text);
+
+  /* Button 5 */
+  --harvey-components-jan-25_colour-semantic-button---button-5--background: var(--_colour-semantic-button---button-5--background);
+  --harvey-components-jan-25_colour-semantic-button---button-5--text: var(--_colour-semantic-button---button-5--text);
+  --harvey-components-jan-25_colour-semantic-button---button-5--current-background: var(--_colour-semantic-button---button-5--current-background);
+  --harvey-components-jan-25_colour-semantic-button---button-5--current-text: var(--_colour-semantic-button---button-5--current-text);
+
+  /* Button 6 */
+  --harvey-components-jan-25_colour-semantic-button---button-6--background: var(--_colour-semantic-button---button-6--background);
+  --harvey-components-jan-25_colour-semantic-button---button-6--text: var(--_colour-semantic-button---button-6--text);
+  --harvey-components-jan-25_colour-semantic-button---button-6--current-background: var(--_colour-semantic-button---button-6--current-background);
+  --harvey-components-jan-25_colour-semantic-button---button-6--current-text: var(--_colour-semantic-button---button-6--current-text);
+}

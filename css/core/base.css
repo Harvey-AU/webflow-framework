@@ -1,0 +1,537 @@
+/* Make text look crisper and more legible in all browsers */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Focus state style for keyboard navigation for the focusable elements */
+*[tabindex]:focus-visible,
+input[type="file"]:focus-visible {
+  outline: 0.125rem solid #4d65ff;
+  outline-offset: 0.125rem;
+}
+
+/* Set color style to inherit */
+.inherit-color * {
+  color: inherit;
+}
+
+/* Get rid of top margin on first element in any rich text element */
+.w-richtext > :not(div):first-child,
+.w-richtext > div:first-child > :first-child {
+  margin-top: 0 !important;
+}
+
+/* Get rid of bottom margin on last element in any rich text element */
+.w-richtext > :last-child,
+.w-richtext ol li:last-child,
+.w-richtext ul li:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Set current link styles */
+.w-richtext .w--current {
+  filter: opacity(0.5);
+}
+
+/* Unset w-button class that randomly appears when you copy/paste */
+.w-richtext .w-button {
+  color: inherit;
+  padding: unset;
+  display: unset;
+  background-color: inherit;
+}
+
+/* Make sure containers never lose their center alignment */
+.container-medium,
+.container-small,
+.container-large {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/*
+                Make the following elements inherit typography styles from the parent and not have hardcoded values.
+                Important: You will not be able to style for example "All Links" in Designer with this CSS applied.
+                Uncomment this CSS to use it in the project. Leave this message for future hand-off.
+                */
+
+a,
+.w-input,
+.w-select,
+.w-tab-link,
+.w-nav-link,
+.w-dropdown-btn,
+.w-dropdown-toggle,
+.w-dropdown-link {
+  color: inherit;
+  text-decoration: inherit;
+  font-size: inherit;
+}
+.w-checkbox {
+  margin-bottom: unset;
+  padding-left: unset;
+}
+.w-checkbox-input {
+  margin: unset;
+}
+.w-checkbox::before {
+  content: unset;
+  display: none;
+}
+
+.w-form {
+}
+
+/* Apply "..." after 3 lines of text */
+.text-style-3lines {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Apply "..." after 2 lines of text */
+.text-style-2lines {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Adds inline flex display */
+.display-inlineflex {
+  display: inline-flex;
+}
+
+/* Blockquote override defaults */
+blockquote {
+  font-size: unset;
+  line-height: unset;
+}
+
+/* These classes are never overwritten */
+.hide {
+  display: none !important;
+}
+
+@media screen and (max-width: 991px) {
+  .hide,
+  .hide-tablet {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 767px) {
+  .hide-mobile-landscape {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 479px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+.margin-0 {
+  margin: 0rem !important;
+}
+
+.padding-0 {
+  padding: 0rem !important;
+}
+
+.spacing-clean {
+  padding: 0rem !important;
+  margin: 0rem !important;
+}
+
+.margin-top {
+  margin-right: 0rem !important;
+  margin-bottom: 0rem !important;
+  margin-left: 0rem !important;
+}
+
+.padding-top {
+  padding-right: 0rem !important;
+  padding-bottom: 0rem !important;
+  padding-left: 0rem !important;
+}
+
+.margin-right {
+  margin-top: 0rem !important;
+  margin-bottom: 0rem !important;
+  margin-left: 0rem !important;
+}
+
+.padding-right {
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+  padding-left: 0rem !important;
+}
+
+.margin-bottom {
+  margin-top: 0rem !important;
+  margin-right: 0rem !important;
+  margin-left: 0rem !important;
+}
+
+.padding-bottom {
+  padding-top: 0rem !important;
+  padding-right: 0rem !important;
+  padding-left: 0rem !important;
+}
+
+.margin-left {
+  margin-top: 0rem !important;
+  margin-right: 0rem !important;
+  margin-bottom: 0rem !important;
+}
+
+.padding-left {
+  padding-top: 0rem !important;
+  padding-right: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
+.margin-horizontal {
+  margin-top: 0rem !important;
+  margin-bottom: 0rem !important;
+}
+
+.padding-horizontal {
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
+.margin-vertical {
+  margin-right: 0rem !important;
+  margin-left: 0rem !important;
+}
+
+.padding-vertical {
+  padding-right: 0rem !important;
+  padding-left: 0rem !important;
+}
+
+/* Breakpoint overrides */
+
+@media screen and (min-width: 768px) {
+  [breakpoint="mobile"] {
+    display: none;
+  }
+}
+@media screen and (max-width: 767px) {
+  [breakpoint="desktop-tablet"] {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  *:has(> [data-wf--u_visibility-control--variant="hide-tablet-down"]),
+  *:has(> [data-wf--harvey-components-jan-25--u_visibility-control--variant="hide-tablet-down"]) {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  *:has(> [data-wf--u_visibility-control--variant="hide-mobile-landscape-down"]),
+  *:has(> [data-wf--harvey-components-jan-25--u_visibility-control--variant="hide-mobile-landscape-down"]) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  *:has(> [data-wf--u_visibility-control--variant="hide-mobile-portrait"]),
+  *:has(> [data-wf--harvey-components-jan-25--u_visibility-control--variant="hide-mobile-portrait"]) {
+    display: none;
+  }
+}
+
+@media (min-width: 991px) {
+  *:has(> [data-wf--u_visibility-control--variant="show-tablet-down"]),
+  *:has(> [data-wf--harvey-components-jan-25--u_visibility-control--variant="hide-tablet-down"]) {
+    display: none;
+  }
+}
+
+@media (min-width: 767px) {
+  *:has(> [data-wf--u_visibility-control--variant="show-mobile-landscape-down"]),
+  *:has(> [data-wf--harvey-components-jan-25--u_visibility-control--variant="hide-mobile-landscape-down"]) {
+    display: none;
+  }
+}
+
+@media (min-width: 480px) {
+  *:has(> [data-wf--u_visibility-control--variant="show-mobile-portrait"]),
+  *:has(> [data-wf--harvey-components-jan-25--u_visibility-control--variant="hide-mobile-portrait"]) {
+    display: none;
+  }
+}
+
+.display-contents {
+  display: contents;
+}
+
+.w-richtext {
+  sub {
+    bottom: unset;
+  }
+  a {
+    color: currentColor;
+  }
+  hr {
+    color: currentColor;
+  }
+  .button {
+    text-decoration: none;
+    background-color: currentColour;
+    border-color: currentColor;
+    color: "";
+    &.is-outline {
+      color: currentColor;
+      &:hover {
+        color: var(--_colour-semantic---text--alternate);
+      }
+    }
+  }
+}
+
+/* Gutter overrides */
+[data-wf--u_grid_gutter-overrides--gutter-overrides="no-gutter-left"],
+[data-wf--harvey-components-jan-25--u_grid_gutter-overrides--gutter-overrides="no-gutter-left"],
+[data-wf--component-library--u_grid_gutter-overrides--gutter-overrides="no-gutter-left"],
+[data-wf--u_grid_gutter-overrides--gutter-overrides="no-gutter-left-right"],
+[data-wf--harvey-components-jan-25--u_grid_gutter-overrides--gutter-overrides="no-gutter-left-right"],
+[data-wf--component-library--u_grid_gutter-overrides--gutter-overrides="no-gutter-left-right"] .grid-slot > :nth-child(1) {
+  margin-left: var(--_sizing-general---gutters--standard-override);
+}
+
+[data-wf--u_grid_gutter-overrides--gutter-overrides="no-gutter-right"],
+[data-wf--harvey-components-jan-25--u_grid_gutter-overrides--gutter-overrides="no-gutter-right"],
+[data-wf--component-library--u_grid_gutter-overrides--gutter-overrides="no-gutter-right"],
+[data-wf--u_grid_gutter-overrides--gutter-overrides="no-gutter-left-right"],
+[data-wf--harvey-components-jan-25--u_grid_gutter-overrides--gutter-overrides="no-gutter-left-right"],
+[data-wf--component-library--u_grid_gutter-overrides--gutter-overrides="no-gutter-left-right"] .grid-slot > :nth-child(2) {
+  margin-right: var(--_sizing-general---gutters--standard-override);
+}
+
+/* This hides the empty element inside the e_text element in the designer (as it doesn't show on the frontend*/
+[lib="icon-v1"],
+[data-wf--u_icon--icon],
+[data-wf--harvey-components-jan-25--u_icon--icon] {
+  .wf-empty:not([lib="icon"]) {
+    font-size: unset;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    width: 0px;
+  }
+}
+
+[id^="separator-"]:empty {
+  display: none;
+}
+
+[lib="e_text_wrapper"] .wf-empty {
+  padding-bottom: unset;
+  padding-right: unset;
+  outline: unset !important;
+  box-shadow: unset;
+  outline-offset: unset !important;
+  vertical-align: unset;
+}
+[lib="e_text_wrapper"] {
+  [data-wf--u_paragraph--text-size="inherit"],
+  [data-wf--harvey-components-jan-25--u_paragraph--text-size="inherit"] {
+    &.wf-empty {
+      line-height: inherit;
+      font-size: inherit;
+    }
+  }
+}
+
+/* Handling natural line breaking for multiple e_text elements spacers and hide/show elements to avoid gap issues */
+[lib="e_text_wrapper"] {
+  [lib="first"]:empty,
+  [lib="second"]:empty,
+  [lib="separator-middle"]:empty,
+  [lib="separator-start"]:empty,
+  [lib="separator-end"]:empty {
+    display: none !important;
+  }
+  [lib="first"],
+  [lib="second"] {
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* Add space after separator-start */
+  [lib="separator-start"]:not(:empty) + [lib="first"]:not(:empty)::before {
+    content: " ";
+    white-space: pre;
+  }
+
+  /* Add space between first and separator-middle */
+  [lib="first"]:not(:empty) + [lib="separator-middle"]:not(:empty)::before {
+    content: " ";
+    white-space: pre;
+  }
+
+  /* Add space between separator-middle and second */
+  [lib="separator-middle"]:not(:empty) + [lib="second"]:not(:empty)::before {
+    content: " ";
+    white-space: pre;
+  }
+
+  /* Add space between second and separator-end */
+  [lib="second"]:not(:empty) + [lib="separator-end"]:not(:empty)::before {
+    content: " ";
+    white-space: pre;
+  }
+
+  /* When separator-middle is empty but both first and second have content */
+  [lib="first"]:not(:empty) + [lib="separator-middle"]:empty + [lib="second"]:not(:empty)::before {
+    content: " ";
+    white-space: pre;
+  }
+}
+
+hr {
+  border: var(--_colour-semantic---border--hr) solid var(--_sizing-border-corner---border--hr);
+  margin-top: var(--_sizing-spacer-gap---padding--hr-top);
+  margin-bottom: var(--_sizing-spacer-gap---padding--hr-bottom);
+}
+
+.harvey-components-jan-25--text-rich-text,
+.harvey-components-jan-25--text-rich-text_article,
+.text-rich-text,
+.text-rich-text_article {
+  hr {
+    border: var(--_colour-semantic---border--hr) solid var(--_sizing-border-corner---border--hr);
+    margin-top: var(--_sizing-spacer-gap---padding--hr-top);
+    margin-bottom: var(--_sizing-spacer-gap---padding--hr-bottom);
+  }
+  .button {
+    display: inline-block;
+    text-decoration: none;
+
+    margin-right: var(--_sizing-button---rich-text--margin-right, var(--_sizing-spacer-gap---padding--small));
+    margin-top: var(--_sizing-button---rich-text--margin-top, var(--_sizing-spacer-gap---padding--medium));
+    margin-bottom: var(--_sizing-button---rich-text--margin-bottom, var(--_sizing-spacer-gap---padding--large));
+  }
+  .w-embed:has(.riaa-table) + a.button {
+    margin-top: 0px;
+  }
+}
+.harvey-components-jan-25--text-rich-text_article,
+.text-rich-text_article {
+  hr {
+    border: var(--_colour-semantic---border--hr-article) solid var(--_sizing-border-corner---border--hr-article);
+    margin-top: var(--_sizing-spacer-gap---padding--hr-top-article);
+    margin-bottom: var(--_sizing-spacer-gap---padding--hr-bottom-article);
+  }
+}
+
+[data-wf--u_font-decoration--variant^="underline-"],
+[data-wf--harvey-components-jan-25--u_font-decoration--variant^="underline-"] {
+  [lib="e_text_wrapper"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: currentColor;
+  }
+}
+[data-wf--u_font-decoration--variant="underline-1"],
+[data-wf--harvey-components-jan-25--u_font-decoration--variant="underline-1"] {
+  [lib="e_text_wrapper"]::after {
+    height: var(--_font---underline--1-size);
+    bottom: var(--_font---underline--1-gap);
+  }
+}
+[data-wf--u_font-decoration--variant="underline-2"],
+[data-wf--harvey-components-jan-25--u_font-decoration--variant="underline-2"] {
+  [lib="e_text_wrapper"]::after {
+    height: var(--_font---underline--2-size);
+    bottom: var(--_font---underline--2-gap);
+  }
+}
+[data-wf--u_font-decoration--variant="underline-3"],
+[data-wf--harvey-components-jan-25--u_font-decoration--variant="underline-3"] {
+  [lib="e_text_wrapper"]::after {
+    height: var(--_font---underline--3-size);
+    bottom: var(--_font---underline--3-gap);
+  }
+}
+
+.card-wrapper,
+.harvey-components-jan-25--card-wrapper,
+.card-wrapper div,
+.harvey-components-jan-25--card-wrapper div {
+  height: 100%;
+}
+.card-content_image div,
+.harvey-components-jan-25--card-content_image div,
+div.card-content_image,
+div.harvey-components-jan-25--card-content_image,
+.card-wrapper [data-wf--e_image--image-image---format] div,
+.harvey-components-jan-25--card-wrapper [data-wf--harvey-components-jan-25--e_image--image-image---format] div,
+.card-content_simple:not(div.card-wrapper_image .card-content_simple),
+.harvey-components-jan-25--card-content_simple:not(div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple),
+.card-content_simple:not(div.card-wrapper_image .card-content_simple) div,
+.harvey-components-jan-25--card-content_simple:not(div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple)
+  div {
+  height: unset;
+}
+.card-content_image .grid-slot,
+.harvey-components-jan-25--card-content_image .harvey-components-jan-25--grid-slot {
+  grid-template-rows: min-content 1fr;
+}
+
+[data-wf--u_align-flex--position="vertical-space-between-left"],
+[data-wf--harvey-components-jan-25--u_align-flex--position="vertical-space-between-left"],
+[data-wf--u_align-flex--position="vertical-space-between-center"],
+[data-wf--harvey-components-jan-25--u_align-flex--position="vertical-space-between-center"],
+[data-wf--u_align-flex--position="vertical-space-between-right"],
+[data-wf--harvey-components-jan-25--u_align-flex--position="vertical-space-between-right"] {
+  .card-content_image,
+  .harvey-components-jan-25--card-content_image,
+  .card-content_simple:not(div.card-wrapper_image .card-content_simple),
+  .harvey-components-jan-25--card-content_simple:not(
+      div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
+    ) {
+    display: flex;
+    width: 100%;
+    flex-flow: column;
+    height: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+[data-wf--u_align-flex--position="vertical-space-between-center"],
+[data-wf--harvey-components-jan-25--u_align-flex--position="vertical-space-between-center"] {
+  .card-content_image,
+  .harvey-components-jan-25--card-content_image,
+  .card-content_simple:not(div.card-wrapper_image .card-content_simple),
+  .harvey-components-jan-25--card-content_simple:not(
+      div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
+    ) {
+    align-items: center;
+  }
+}
+[data-wf--u_align-flex--position="vertical-space-between-right"],
+[data-wf--harvey-components-jan-25--u_align-flex--position="vertical-space-between-right"] {
+  .card-content_image,
+  .harvey-components-jan-25--card-content_image,
+  .card-content_simple:not(div.card-wrapper_image .card-content_simple),
+  .harvey-components-jan-25--card-content_simple:not(
+      div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
+    ) {
+    align-items: flex-end;
+  }
+}
+/*Fix superflow comment line height issue.*/
+.velt-comment-dialog-overlay-panel {
+  line-height: 1.2em !important;
+}

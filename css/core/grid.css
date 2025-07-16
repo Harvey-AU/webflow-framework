@@ -1,0 +1,474 @@
+.grid-boxed-wrapper,
+.harvey-components-jan-25--grid-boxed-wrapper {
+  --grid-boxed-border: var(--_sizing-border-corner---border--medium);
+  --grid-boxed-colour: currentColor;
+
+  &:not([data-wf--u_grid-boxed--border-colour="none"]):not([data-wf--harvey-components-jan-25--u_grid-boxed--border-colour="none"]) {
+    .grid-slot:first-of-type,
+    .harvey-components-jan-25--grid-slot:first-of-type {
+      overflow: hidden;
+      border-bottom: var(--grid-boxed-border) solid var(--grid-boxed-colour);
+      border-right: var(--grid-boxed-border) solid var(--grid-boxed-colour);
+      > * {
+        position: relative;
+        height: 100%;
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          background-color: var(--grid-boxed-colour);
+          z-index: 1;
+        }
+        &::after {
+          width: 100%;
+          height: var(--grid-boxed-border);
+          left: 0;
+          top: 0;
+        }
+        &::before {
+          width: var(--grid-boxed-border);
+          height: 100%;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+
+  [data-wf--u_grid-boxed_border-size--border-size="xsmall"],
+  [data-wf--harvey-components-jan-25--u_grid-boxed_border-size--border-size="xsmall"] {
+    --grid-boxed-border: var(--_sizing-border-corner---border--xsmall);
+  }
+  [data-wf--u_grid-boxed_border-size--border-size="small"],
+  [data-wf--harvey-components-jan-25--u_grid-boxed_border-size--border-size="small"] {
+    --grid-boxed-border: var(--_sizing-border-corner---border--small);
+  }
+  [data-wf--u_grid-boxed_border-size--border-size="medium"],
+  [data-wf--harvey-components-jan-25--u_grid-boxed_border-size--border-size="medium"] {
+    --grid-boxed-border: var(--_sizing-border-corner---border--medium);
+  }
+  [data-wf--u_grid-boxed_border-size--border-size="large"],
+  [data-wf--harvey-components-jan-25--u_grid-boxed_border-size--border-size="large"] {
+    --grid-boxed-border: var(--_sizing-border-corner---border--large);
+  }
+  [data-wf--u_grid-boxed_border-size--border-size="xlarge"],
+  [data-wf--harvey-components-jan-25--u_grid-boxed_border-size--border-size="xlarge"] {
+    --grid-boxed-border: var(--_sizing-border-corner---border--xlarge);
+  }
+
+  &[data-wf--u_grid-boxed--border-colour="brand-1"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-1"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--1);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-2"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-2"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--2);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-3"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-3"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--3);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-4"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-4"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--4);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-5"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-5"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--5);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-6"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-6"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--6);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral-black"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-black"] {
+    --grid-boxed-colour: var(--_colour-primitive---neutral--black);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral-white"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-white"] {
+    --grid-boxed-colour: var(--_colour-primitive---neutral--white);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral-lighter"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-lighter"] {
+    --grid-boxed-colour: var(--_colour-primitive---neutral--lighter);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral-light"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-light"] {
+    --grid-boxed-colour: var(--_colour-primitive---neutral--light);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral"] {
+    --grid-boxed-colour: var(--colour--neutral--colour-neutral);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral-dark"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-dark"] {
+    --grid-boxed-colour: var(--_colour-primitive---neutral--dark);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral-darker"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-darker"] {
+    --grid-boxed-colour: var(--_colour-primitive---neutral--darker);
+  }
+  &[data-wf--u_grid-boxed--border-colour="neutral-darkest"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-darkest"] {
+    --grid-boxed-colour: var(--_colour-primitive---neutral--darkest);
+  }
+}
+
+/* Desktop Reversal Logic */
+.grid_direction[data-wf--u_grid-reverse--direction="reverse"] .grid-slot > *:nth-child(1),
+.harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse"]
+  .harvey-components-jan-25--grid-slot
+  > *:nth-child(1) {
+  order: 30 !important;
+}
+
+.grid_direction[data-wf--u_grid-reverse--direction="reverse"] .grid-slot > *:nth-child(2),
+.harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse"]
+  .harvey-components-jan-25--grid-slot
+  > *:nth-child(2) {
+  order: 20 !important;
+}
+
+.grid_direction[data-wf--u_grid-reverse--direction="reverse"] .grid-slot > *:nth-child(3),
+.harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse"]
+  .harvey-components-jan-25--grid-slot
+  > *:nth-child(3) {
+  order: 10 !important;
+}
+
+.grid_direction[data-wf--u_grid-reverse--direction="reverse"] .grid-slot > *:nth-child(n + 4),
+.harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse"]
+  .harvey-components-jan-25--grid-slot
+  > *:nth-child(n + 4) {
+  order: 1 !important;
+}
+
+.grid_direction[data-wf--u_grid-reverse--direction="reverse"] .grid-slot .grid-slot > *,
+.harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse"]
+  .harvey-components-jan-25--grid-slot
+  .harvey-components-jan-25--grid-slot
+  > * {
+  order: initial !important;
+}
+
+.grid_direction[data-wf--u_grid-reverse--direction="reverse"] .grid-slot .harvey-components-jan-25--grid-slot > *,
+.harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse"]
+  .harvey-components-jan-25--grid-slot
+  .grid-slot
+  > * {
+  order: initial !important;
+}
+
+/* Grid column overrides */
+:root {
+  --grid-cols-1: 1;
+  --grid-cols-2: 2;
+  --grid-cols-3: 3;
+  --grid-cols-4: 4;
+  --grid-cols-5: 5;
+  --grid-cols-6: 6;
+  --grid-cols-7: 7;
+  --grid-cols-8: 8;
+  --grid-cols-9: 9;
+  --grid-cols-10: 10;
+}
+
+/* Tablet and lower (max-width: 990px) */
+@media screen and (max-width: 991px) {
+  /* Set grid column counts based on the attribute */
+  [breakpoint="tablet"] {
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="one-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-1);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="two-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="two-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-2);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="three-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="three-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-3);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="four-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="four-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-4);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="five-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="five-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-5);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="six-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="six-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-6);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="seven-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="seven-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-7);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="eight-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="eight-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-8);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="nine-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="nine-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-9);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="ten-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="ten-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-10);
+    }
+  }
+
+  /* Apply grid template columns to all matching grid slots */
+  [breakpoint="tablet"][data-wf--u_grid-cols_breakpoint-inner--columns]:not([data-wf--u_grid-cols_breakpoint-inner--columns="inherit"]) .grid-slot,
+  [breakpoint="tablet"][data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns]:not(
+      [data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="inherit"]
+    )
+    .harvey-components-jan-25--grid-slot {
+    grid-template-columns: repeat(var(--grid-cols-count, 1), 1fr);
+  }
+
+  /* Reset the variable for nested grid slots to prevent inheritance */
+  &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+    --grid-cols-count: initial;
+  }
+
+  /* Reversal logic */
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---tablet-lower"] .grid-slot:first-of-type > *:nth-child(1),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---tablet-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(1) {
+    order: 30 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---tablet-lower"] .grid-slot:first-of-type > *:nth-child(2),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---tablet-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(2) {
+    order: 20 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---tablet-lower"] .grid-slot:first-of-type > *:nth-child(3),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---tablet-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(3) {
+    order: 10 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---tablet-lower"] .grid-slot:first-of-type > *:nth-child(n + 4),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---tablet-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(n + 4) {
+    order: 1 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---tablet-lower"] .grid-slot .grid-slot > *,
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---tablet-lower"] .grid-slot .harvey-components-jan-25--grid-slot > *,
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---tablet-lower"]
+    .harvey-components-jan-25--grid-slot
+    .grid-slot
+    > *,
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---tablet-lower"]
+    .harvey-components-jan-25--grid-slot
+    .harvey-components-jan-25--grid-slot
+    > * {
+    order: initial !important;
+  }
+}
+
+/* Mobile landscape and lower (max-width: 767px) */
+@media screen and (max-width: 768px) {
+  /* Set grid column counts based on the attribute */
+  [breakpoint="mobile-landscape"] {
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="one-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-1);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="two-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="two-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-2);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="three-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="three-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-3);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="four-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="four-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-4);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="five-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="five-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-5);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="six-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="six-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-6);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="seven-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="seven-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-7);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="eight-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="eight-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-8);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="nine-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="nine-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-9);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="ten-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="ten-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-10);
+    }
+  }
+
+  /* Apply grid template columns to all matching grid slots */
+  [breakpoint="mobile-landscape"][data-wf--u_grid-cols_breakpoint-inner--columns]:not([data-wf--u_grid-cols_breakpoint-inner--columns="inherit"])
+    .grid-slot,
+  [breakpoint="mobile-landscape"][data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns]:not(
+      [data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="inherit"]
+    )
+    .harvey-components-jan-25--grid-slot {
+    grid-template-columns: repeat(var(--grid-cols-count, 1), 1fr);
+  }
+
+  /* Reset the variable for nested grid slots to prevent inheritance */
+  &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+    --grid-cols-count: initial;
+  }
+
+  /* Reversal logic */
+
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-landscape-lower"] .grid-slot:first-of-type > *:nth-child(1),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-landscape-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(1) {
+    order: 30 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-landscape-lower"] .grid-slot:first-of-type > *:nth-child(2),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-landscape-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(2) {
+    order: 20 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-landscape-lower"] .grid-slot:first-of-type > *:nth-child(3),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-landscape-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(3) {
+    order: 10 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-landscape-lower"] .grid-slot:first-of-type > *:nth-child(n + 4),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-landscape-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(n + 4) {
+    order: 1 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-landscape-lower"] .grid-slot .grid-slot > *,
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-landscape-lower"] .grid-slot .harvey-components-jan-25--grid-slot > *,
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-landscape-lower"]
+    .harvey-components-jan-25--grid-slot
+    .grid-slot
+    > *,
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-landscape-lower"]
+    .harvey-components-jan-25--grid-slot
+    .harvey-components-jan-25--grid-slot
+    > * {
+    order: initial !important;
+  }
+}
+
+/* Mobile portrait and lower (max-width: 479px) */
+@media screen and (max-width: 480px) {
+  /* Set grid column counts based on the attribute */
+  [breakpoint="mobile-portrait"] {
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="one-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-1);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="two-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="two-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-2);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="three-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="three-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-3);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="four-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="four-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-4);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="five-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="five-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-5);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="six-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="six-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-6);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="seven-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="seven-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-7);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="eight-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="eight-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-8);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="nine-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="nine-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-9);
+    }
+    &[data-wf--u_grid-cols_breakpoint-inner--columns="ten-column"] .grid-slot,
+    &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="ten-column"] .harvey-components-jan-25--grid-slot {
+      --grid-cols-count: var(--grid-cols-10);
+    }
+  }
+
+  /* Apply grid template columns to all matching grid slots */
+  [breakpoint="mobile-portrait"][data-wf--u_grid-cols_breakpoint-inner--columns]:not([data-wf--u_grid-cols_breakpoint-inner--columns="inherit"])
+    .grid-slot,
+  [breakpoint="mobile-portrait"][data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns]:not(
+      [data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="inherit"]
+    )
+    .harvey-components-jan-25--grid-slot {
+    grid-template-columns: repeat(var(--grid-cols-count, 1), 1fr);
+  }
+
+  /* Reset the variable for nested grid slots to prevent inheritance */
+  &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+    --grid-cols-count: initial;
+  }
+
+  /* Reversal logic */
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-portrait-lower"] .grid-slot:first-of-type > *:nth-child(1),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-portrait-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(1) {
+    order: 30 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-portrait-lower"] .grid-slot:first-of-type > *:nth-child(2),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-portrait-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(2) {
+    order: 20 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-portrait-lower"] .grid-slot:first-of-type > *:nth-child(3),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-portrait-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(3) {
+    order: 10 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-portrait-lower"] .grid-slot:first-of-type > *:nth-child(n + 4),
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-portrait-lower"]
+    .harvey-components-jan-25--grid-slot:first-of-type
+    > *:nth-child(n + 4) {
+    order: 1 !important;
+  }
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-portrait-lower"] .grid-slot .grid-slot > *,
+  .grid_direction[data-wf--u_grid-reverse--direction="reverse---mobile-portrait-lower"] .grid-slot .harvey-components-jan-25--grid-slot > *,
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-portrait-lower"]
+    .harvey-components-jan-25--grid-slot
+    .grid-slot
+    > *,
+  .harvey-components-jan-25--grid_direction[data-wf--harvey-components-jan-25--u_grid-reverse--direction="reverse---mobile-portrait-lower"]
+    .harvey-components-jan-25--grid-slot
+    .harvey-components-jan-25--grid-slot
+    > * {
+    order: initial !important;
+  }
+}

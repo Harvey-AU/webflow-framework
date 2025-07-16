@@ -1,0 +1,32 @@
+body {
+  /* Brand */
+  --harvey-components-jan-25_colour-primitive---brand--1: var(--_colour-primitive---brand--1);
+  --harvey-components-jan-25_colour-primitive---brand--2: var(--_colour-primitive---brand--2);
+  --harvey-components-jan-25_colour-primitive---brand--3: var(--_colour-primitive---brand--3);
+  --harvey-components-jan-25_colour-primitive---brand--4: var(--_colour-primitive---brand--4);
+  --harvey-components-jan-25_colour-primitive---brand--5: var(--_colour-primitive---brand--5);
+  --harvey-components-jan-25_colour-primitive---brand--6: var(--_colour-primitive---brand--6);
+
+  /* Neutral */
+  --harvey-components-jan-25_colour-primitive---neutral--transparent: var(--_colour-primitive---neutral--transparent);
+  --harvey-components-jan-25_colour-primitive---neutral--white: var(--_colour-primitive---neutral--white);
+  --harvey-components-jan-25_colour-primitive---neutral--lightest: var(--_colour-primitive---neutral--lightest);
+  --harvey-components-jan-25_colour-primitive---neutral--lighter: var(--_colour-primitive---neutral--lighter);
+  --harvey-components-jan-25_colour-primitive---neutral--light: var(--_colour-primitive---neutral--light);
+  --harvey-components-jan-25_colour-primitive---neutral--neutral: var(--_colour-primitive---neutral--neutral);
+  --harvey-components-jan-25_colour-primitive---neutral--dark: var(--_colour-primitive---neutral--dark);
+  --harvey-components-jan-25_colour-primitive---neutral--darker: var(--_colour-primitive---neutral--darker);
+  --harvey-components-jan-25_colour-primitive---neutral--darkest: var(--_colour-primitive---neutral--darkest);
+  --harvey-components-jan-25_colour-primitive---neutral--black: var(--_colour-primitive---neutral--black);
+
+  /* Utility */
+  --harvey-components-jan-25_colour-primitive---utility--success-text: var(--_colour-primitive---utility--success-text);
+  --harvey-components-jan-25_colour-primitive---utility--success-bg: var(--_colour-primitive---utility--success-bg);
+  --harvey-components-jan-25_colour-primitive---utility--success-2-text: var(--_colour-primitive---utility--success-2-text);
+  --harvey-components-jan-25_colour-primitive---utility--success-2-bg: var(--_colour-primitive---utility--success-2-bg);
+  --harvey-components-jan-25_colour-primitive---utility--warning: var(--_colour-primitive---utility--warning);
+  --harvey-components-jan-25_colour-primitive---utility--warning-dark: var(--_colour-primitive---utility--warning-dark);
+  --harvey-components-jan-25_colour-primitive---utility--error-red: var(--_colour-primitive---utility--error-red);
+  --harvey-components-jan-25_colour-primitive---utility--error-red-dark: var(--_colour-primitive---utility--error-red-dark);
+  --harvey-components-jan-25_colour-primitive---utility--focus-state: var(--_colour-primitive---utility--focus-state);
+}

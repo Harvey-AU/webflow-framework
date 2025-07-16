@@ -1,0 +1,23 @@
+body {
+  /* Framework */
+  --harvey-components-jan-25_framework---framework--font-1: var(--_framework---framework--font-1);
+  --harvey-components-jan-25_framework---framework--font-2: var(--_framework---framework--font-2);
+  --harvey-components-jan-25_framework---framework--colour-variant: var(--_framework---framework--colour-variant);
+  --harvey-components-jan-25_framework---framework--colour-state: var(--_framework---framework--colour-state);
+  --harvey-components-jan-25_framework---framework--colour-1: var(--_framework---framework--colour-1);
+  --harvey-components-jan-25_framework---framework--colour-2: var(--_framework---framework--colour-2);
+  --harvey-components-jan-25_framework---framework--colour-3: var(--_framework---framework--colour-3);
+  --harvey-components-jan-25_framework---framework--colour-4: var(--_framework---framework--colour-4);
+  --harvey-components-jan-25_framework---framework--colour-5: var(--_framework---framework--colour-5);
+  --harvey-components-jan-25_framework---framework--colour-6: var(--_framework---framework--colour-6);
+
+  /* Brand system */
+  --harvey-components-jan-25_framework---brand-system--header-bg: var(--_framework---brand-system--header-bg);
+  --harvey-components-jan-25_framework---brand-system--header-font-colour: var(--_framework---brand-system--header-font-colour);
+  --harvey-components-jan-25_framework---brand-system--heading-family: var(--_framework---brand-system--heading-family);
+  --harvey-components-jan-25_framework---brand-system--sub-heading-family: var(--_framework---brand-system--sub-heading-family);
+  --harvey-components-jan-25_framework---brand-system--highlight-font-colour: var(--_framework---brand-system--highlight-font-colour);
+  --harvey-components-jan-25_framework---brand-system--highlight-bg: var(--_framework---brand-system--highlight-bg);
+  --harvey-components-jan-25_framework---brand-system--section-colour-bg: var(--_framework---brand-system--section-colour-bg);
+  --harvey-components-jan-25_framework---brand-system--section-colour-font: var(--_framework---brand-system--section-colour-font);
+}

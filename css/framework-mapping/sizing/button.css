@@ -1,0 +1,22 @@
+body {
+  /* Standard Button */
+  --harvey-components-jan-25_sizing-button---standard--padding-top-bottom: var(--_sizing-button---standard--padding-top-bottom);
+  --harvey-components-jan-25_sizing-button---standard--padding-left-right: var(--_sizing-button---standard--padding-left-right);
+
+  /* Wide Button */
+  --harvey-components-jan-25_sizing-button---wide--padding-top-bottom: var(--_sizing-button---wide--padding-top-bottom);
+  --harvey-components-jan-25_sizing-button---wide--padding-left-right: var(--_sizing-button---wide--padding-left-right);
+
+  /* Short & Narrow Button */
+  --harvey-components-jan-25_sizing-button---short-narrow--padding-top-bottom: var(--_sizing-button---short-narrow--padding-top-bottom);
+  --harvey-components-jan-25_sizing-button---short-narrow--padding-left-right: var(--_sizing-button---short-narrow--padding-left-right);
+
+  /* XShort & Narrow Button */
+  --harvey-components-jan-25_sizing-button---xshort-narrow--padding-top-bottom: var(--_sizing-button---xshort-narrow--padding-top-bottom);
+  --harvey-components-jan-25_sizing-button---xshort-narrow--padding-left-right: var(--_sizing-button---xshort-narrow--padding-left-right);
+
+  /* Rich Text Button */
+  --harvey-components-jan-25_sizing-button---rich-text--margin-right: var(--_sizing-button---rich-text--margin-right);
+  --harvey-components-jan-25_sizing-button---rich-text--margin-top: var(--_sizing-button---rich-text--margin-top);
+  --harvey-components-jan-25_sizing-button---rich-text--margin-bottom: var(--_sizing-button---rich-text--margin-bottom);
+}

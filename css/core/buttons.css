@@ -1,0 +1,116 @@
+.w--current {
+  /* Colour 1 */
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="colour-1"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="colour-1"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      border-color: var(--_colour-semantic-button---button-1--current-background);
+      background-color: var(--_colour-semantic-button---button-1--current-background);
+      color: var(--_colour-semantic-button---button-1--current-text);
+    }
+  }
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-1"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-1"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      background-color: var(--_colour-semantic-button---button-1--current-text);
+      color: var(--_colour-semantic-button---button-1--current-background);
+    }
+  }
+
+  /* Colour 2 */
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="colour-2"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="colour-2"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      border-color: var(--_colour-semantic-button---button-2--current-background);
+      background-color: var(--_colour-semantic-button---button-2--current-background);
+      color: var(--_colour-semantic-button---button-2--current-text);
+    }
+  }
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-2"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-2"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      background-color: var(--_colour-semantic-button---button-2--current-text);
+      color: var(--_colour-semantic-button---button-2--current-background);
+    }
+  }
+
+  /* Colour 3 */
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="colour-3"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="colour-3"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      border-color: var(--_colour-semantic-button---button-3--current-background);
+      background-color: var(--_colour-semantic-button---button-3--current-background);
+      color: var(--_colour-semantic-button---button-3--current-text);
+    }
+  }
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-3"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-3"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      background-color: var(--_colour-semantic-button---button-3--current-text);
+      color: var(--_colour-semantic-button---button-3--current-background);
+    }
+  }
+
+  /* Colour 4 */
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="colour-4"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="colour-4"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      border-color: var(--_colour-semantic-button---button-4--current-background);
+      background-color: var(--_colour-semantic-button---button-4--current-background);
+      color: var(--_colour-semantic-button---button-4--current-text);
+    }
+  }
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-4"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-4"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      background-color: var(--_colour-semantic-button---button-4--current-text);
+      color: var(--_colour-semantic-button---button-4--current-background);
+    }
+  }
+
+  /* Colour 5 */
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="colour-5"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="colour-5"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      border-color: var(--_colour-semantic-button---button-5--current-background);
+      background-color: var(--_colour-semantic-button---button-5--current-background);
+      color: var(--_colour-semantic-button---button-5--current-text);
+    }
+  }
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-5"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-5"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      background-color: var(--_colour-semantic-button---button-5--current-text);
+      color: var(--_colour-semantic-button---button-5--current-background);
+    }
+  }
+
+  /* Colour 6 */
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="colour-6"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="colour-6"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      border-color: var(--_colour-semantic-button---button-6--current-background);
+      background-color: var(--_colour-semantic-button---button-6--current-background);
+      color: var(--_colour-semantic-button---button-6--current-text);
+    }
+  }
+
+  [data-wf--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-6"],
+  [data-wf--harvey-components-jan-25--u_colour_bg-border-text_hover--layout-style-colour="outline-colour-6"] {
+    .harvey-components-jan-25--u_colour-variants,
+    .u_colour-variants {
+      background-color: var(--_colour-semantic-button---button-6--current-text);
+      color: var(--_colour-semantic-button---button-6--current-background);
+    }
+  }
+}

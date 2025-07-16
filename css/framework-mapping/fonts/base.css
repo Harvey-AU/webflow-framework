@@ -1,0 +1,252 @@
+body {
+  /* Size */
+  --harvey-components-jan-25_font---size--tiny: var(--_font---size--tiny);
+  --harvey-components-jan-25_font---size--xxxsmall: var(--_font---size--xxxsmall);
+  --harvey-components-jan-25_font---size--xxsmall: var(--_font---size--xxsmall);
+  --harvey-components-jan-25_font---size--xsmall: var(--_font---size--xsmall);
+  --harvey-components-jan-25_font---size--small: var(--_font---size--small);
+  --harvey-components-jan-25_font---size--medium: var(--_font---size--medium);
+  --harvey-components-jan-25_font---size--large: var(--_font---size--large);
+  --harvey-components-jan-25_font---size--xlarge: var(--_font---size--xlarge);
+  --harvey-components-jan-25_font---size--xxlarge: var(--_font---size--xxlarge);
+  --harvey-components-jan-25_font---size--xxxlarge: var(--_font---size--xxxlarge);
+  --harvey-components-jan-25_font---size--huge: var(--_font---size--huge);
+  --harvey-components-jan-25_font---size--xhuge: var(--_font---size--xhuge);
+
+  /* Size/Tag */
+  --harvey-components-jan-25_font---size--tag--h1: var(--_font---size--tag--h1);
+  --harvey-components-jan-25_font---size--tag--h2: var(--_font---size--tag--h2);
+  --harvey-components-jan-25_font---size--tag--h3: var(--_font---size--tag--h3);
+  --harvey-components-jan-25_font---size--tag--h4: var(--_font---size--tag--h4);
+  --harvey-components-jan-25_font---size--tag--h5: var(--_font---size--tag--h5);
+  --harvey-components-jan-25_font---size--tag--h6: var(--_font---size--tag--h6);
+  --harvey-components-jan-25_font---size--tag--p: var(--_font---size--tag--p);
+  --harvey-components-jan-25_font---size--tag--breadcrumb: var(--_font---size--tag--breadcrumb);
+  --harvey-components-jan-25_font---size--tag--tooltip: var(--_font---size--tag--tooltip);
+  --harvey-components-jan-25_font---size--tag--video-title: var(--_font---size--tag--video-title);
+
+  /* Family */
+  --harvey-components-jan-25_font---family--1: var(--_font---family--1);
+  --harvey-components-jan-25_font---family--2: var(--_font---family--2);
+  --harvey-components-jan-25_font---family--3: var(--_font---family--3);
+  --harvey-components-jan-25_font---family--base: var(--_font---family--base);
+
+  /* Family/Tag */
+  --harvey-components-jan-25_font---family--tag--h1: var(--_font---family--tag--h1);
+  --harvey-components-jan-25_font---family--tag--h2: var(--_font---family--tag--h2);
+  --harvey-components-jan-25_font---family--tag--h3: var(--_font---family--tag--h3);
+  --harvey-components-jan-25_font---family--tag--h4: var(--_font---family--tag--h4);
+  --harvey-components-jan-25_font---family--tag--h5: var(--_font---family--tag--h5);
+  --harvey-components-jan-25_font---family--tag--h6: var(--_font---family--tag--h6);
+  --harvey-components-jan-25_font---family--tag--p: var(--_font---family--tag--p);
+  --harvey-components-jan-25_font---family--tag--breadcrumb: var(--_font---family--tag--breadcrumb);
+  --harvey-components-jan-25_font---family--tag--tooltip: var(--_font---family--tag--tooltip);
+  --harvey-components-jan-25_font---family--tag--blockquote: var(--_font---family--tag--blockquote);
+
+  /* Height */
+  --harvey-components-jan-25_font---height--tiny: var(--_font---height--tiny);
+  --harvey-components-jan-25_font---height--xxxsmall: var(--_font---height--xxxsmall);
+  --harvey-components-jan-25_font---height--xxsmall: var(--_font---height--xxsmall);
+  --harvey-components-jan-25_font---height--xsmall: var(--_font---height--xsmall);
+  --harvey-components-jan-25_font---height--small: var(--_font---height--small);
+  --harvey-components-jan-25_font---height--medium: var(--_font---height--medium);
+  --harvey-components-jan-25_font---height--large: var(--_font---height--large);
+  --harvey-components-jan-25_font---height--xlarge: var(--_font---height--xlarge);
+  --harvey-components-jan-25_font---height--xxlarge: var(--_font---height--xxlarge);
+  --harvey-components-jan-25_font---height--xxxlarge: var(--_font---height--xxxlarge);
+  --harvey-components-jan-25_font---height--huge: var(--_font---height--huge);
+  --harvey-components-jan-25_font---height--xhuge: var(--_font---height--xhuge);
+
+  /* Height/Tag */
+  --harvey-components-jan-25_font---height--tag--h1: var(--_font---height--tag--h1);
+  --harvey-components-jan-25_font---height--tag--h2: var(--_font---height--tag--h2);
+  --harvey-components-jan-25_font---height--tag--h3: var(--_font---height--tag--h3);
+  --harvey-components-jan-25_font---height--tag--h4: var(--_font---height--tag--h4);
+  --harvey-components-jan-25_font---height--tag--h5: var(--_font---height--tag--h5);
+  --harvey-components-jan-25_font---height--tag--h6: var(--_font---height--tag--h6);
+  --harvey-components-jan-25_font---height--tag--p: var(--_font---height--tag--p);
+  --harvey-components-jan-25_font---height--tag--breadcrumb: var(--_font---height--tag--breadcrumb);
+  --harvey-components-jan-25_font---height--tag--tooltip: var(--_font---height--tag--tooltip);
+  --harvey-components-jan-25_font---height--tag--video-title: var(--_font---height--tag--video-title);
+
+  /* Weight */
+  --harvey-components-jan-25_font---weight--light: var(--_font---weight--light);
+  --harvey-components-jan-25_font---weight--normal: var(--_font---weight--normal);
+  --harvey-components-jan-25_font---weight--medium: var(--_font---weight--medium);
+  --harvey-components-jan-25_font---weight--semibold: var(--_font---weight--semibold);
+  --harvey-components-jan-25_font---weight--bold: var(--_font---weight--bold);
+  --harvey-components-jan-25_font---weight--xbold: var(--_font---weight--xbold);
+
+  /* Weight/Tag */
+  --harvey-components-jan-25_font---weight--tag--p: var(--_font---weight--tag--p);
+  --harvey-components-jan-25_font---weight--tag--heading: var(--_font---weight--tag--heading);
+  --harvey-components-jan-25_font---weight--tag--h1: var(--_font---weight--tag--h1);
+  --harvey-components-jan-25_font---weight--tag--h2: var(--_font---weight--tag--h2);
+  --harvey-components-jan-25_font---weight--tag--h3: var(--_font---weight--tag--h3);
+  --harvey-components-jan-25_font---weight--tag--h4: var(--_font---weight--tag--h4);
+  --harvey-components-jan-25_font---weight--tag--h5: var(--_font---weight--tag--h5);
+  --harvey-components-jan-25_font---weight--tag--h6: var(--_font---weight--tag--h6);
+  --harvey-components-jan-25_font---weight--tag--breadcrumb: var(--_font---weight--tag--breadcrumb);
+  --harvey-components-jan-25_font---weight--tag--tooltip: var(--_font---weight--tag--tooltip);
+
+  /* Letter Spacing */
+  --harvey-components-jan-25_font---letter-spacing--default: var(--_font---letter-spacing--default);
+  --harvey-components-jan-25_font---letter-spacing--tiny: var(--_font---letter-spacing--tiny);
+  --harvey-components-jan-25_font---letter-spacing--xxxsmall: var(--_font---letter-spacing--xxxsmall);
+  --harvey-components-jan-25_font---letter-spacing--xxsmall: var(--_font---letter-spacing--xxsmall);
+  --harvey-components-jan-25_font---letter-spacing--xsmall: var(--_font---letter-spacing--xsmall);
+  --harvey-components-jan-25_font---letter-spacing--small: var(--_font---letter-spacing--small);
+  --harvey-components-jan-25_font---letter-spacing--medium: var(--_font---letter-spacing--medium);
+  --harvey-components-jan-25_font---letter-spacing--large: var(--_font---letter-spacing--large);
+  --harvey-components-jan-25_font---letter-spacing--xlarge: var(--_font---letter-spacing--xlarge);
+  --harvey-components-jan-25_font---letter-spacing--xxlarge: var(--_font---letter-spacing--xxlarge);
+  --harvey-components-jan-25_font---letter-spacing--xxxlarge: var(--_font---letter-spacing--xxxlarge);
+  --harvey-components-jan-25_font---letter-spacing--huge: var(--_font---letter-spacing--huge);
+  --harvey-components-jan-25_font---letter-spacing--xhuge: var(--_font---letter-spacing--xhuge);
+
+  /* Letter Spacing/Tag */
+  --harvey-components-jan-25_font---letter-spacing--tag--headings: var(--_font---letter-spacing--tag--headings);
+  --harvey-components-jan-25_font---letter-spacing--tag--default: var(--_font---letter-spacing--tag--default);
+  --harvey-components-jan-25_font---letter-spacing--tag--h1: var(--_font---letter-spacing--tag--h1);
+  --harvey-components-jan-25_font---letter-spacing--tag--h2: var(--_font---letter-spacing--tag--h2);
+  --harvey-components-jan-25_font---letter-spacing--tag--h3: var(--_font---letter-spacing--tag--h3);
+  --harvey-components-jan-25_font---letter-spacing--tag--h4: var(--_font---letter-spacing--tag--h4);
+  --harvey-components-jan-25_font---letter-spacing--tag--h5: var(--_font---letter-spacing--tag--h5);
+  --harvey-components-jan-25_font---letter-spacing--tag--h6: var(--_font---letter-spacing--tag--h6);
+  --harvey-components-jan-25_font---letter-spacing--tag--p: var(--_font---letter-spacing--tag--p);
+  --harvey-components-jan-25_font---letter-spacing--tag--breadcrumb: var(--_font---letter-spacing--tag--breadcrumb);
+
+  /* Underline */
+  --harvey-components-jan-25_font---underline--1-size: var(--_font---underline--1-size);
+  --harvey-components-jan-25_font---underline--1-gap: var(--_font---underline--1-gap);
+  --harvey-components-jan-25_font---underline--2-size: var(--_font---underline--2-size);
+  --harvey-components-jan-25_font---underline--2-gap: var(--_font---underline--2-gap);
+  --harvey-components-jan-25_font---underline--3-size: var(--_font---underline--3-size);
+  --harvey-components-jan-25_font---underline--3-gap: var(--_font---underline--3-gap);
+}
+@media screen and (max-width: 767px) {
+  :root {
+    /* Size */
+    --harvey-components-jan-25_font---size--tiny: var(--_font---size--tiny);
+    --harvey-components-jan-25_font---size--xxxsmall: var(--_font---size--xxxsmall);
+    --harvey-components-jan-25_font---size--xxsmall: var(--_font---size--xxsmall);
+    --harvey-components-jan-25_font---size--xsmall: var(--_font---size--xsmall);
+    --harvey-components-jan-25_font---size--small: var(--_font---size--small);
+    --harvey-components-jan-25_font---size--medium: var(--_font---size--medium);
+    --harvey-components-jan-25_font---size--large: var(--_font---size--large);
+    --harvey-components-jan-25_font---size--xlarge: var(--_font---size--xlarge);
+    --harvey-components-jan-25_font---size--xxlarge: var(--_font---size--xxlarge);
+    --harvey-components-jan-25_font---size--xxxlarge: var(--_font---size--xxxlarge);
+    --harvey-components-jan-25_font---size--huge: var(--_font---size--huge);
+    --harvey-components-jan-25_font---size--xhuge: var(--_font---size--xhuge);
+
+    /* Size/Tag */
+    --harvey-components-jan-25_font---size--tag--h1: var(--_font---size--tag--h1);
+    --harvey-components-jan-25_font---size--tag--h2: var(--_font---size--tag--h2);
+    --harvey-components-jan-25_font---size--tag--h3: var(--_font---size--tag--h3);
+    --harvey-components-jan-25_font---size--tag--h4: var(--_font---size--tag--h4);
+    --harvey-components-jan-25_font---size--tag--h5: var(--_font---size--tag--h5);
+    --harvey-components-jan-25_font---size--tag--h6: var(--_font---size--tag--h6);
+    --harvey-components-jan-25_font---size--tag--p: var(--_font---size--tag--p);
+    --harvey-components-jan-25_font---size--tag--breadcrumb: var(--_font---size--tag--breadcrumb);
+    --harvey-components-jan-25_font---size--tag--tooltip: var(--_font---size--tag--tooltip);
+
+    /* Family */
+    --harvey-components-jan-25_font---family--1: var(--_font---family--1);
+    --harvey-components-jan-25_font---family--2: var(--_font---family--2);
+    --harvey-components-jan-25_font---family--3: var(--_font---family--3);
+    --harvey-components-jan-25_font---family--base: var(--_font---family--base);
+
+    /* Family/Tag */
+    --harvey-components-jan-25_font---family--tag--h1: var(--_font---family--tag--h1);
+    --harvey-components-jan-25_font---family--tag--h2: var(--_font---family--tag--h2);
+    --harvey-components-jan-25_font---family--tag--h3: var(--_font---family--tag--h3);
+    --harvey-components-jan-25_font---family--tag--h4: var(--_font---family--tag--h4);
+    --harvey-components-jan-25_font---family--tag--h5: var(--_font---family--tag--h5);
+    --harvey-components-jan-25_font---family--tag--h6: var(--_font---family--tag--h6);
+    --harvey-components-jan-25_font---family--tag--p: var(--_font---family--tag--p);
+    --harvey-components-jan-25_font---family--tag--breadcrumb: var(--_font---family--tag--breadcrumb);
+    --harvey-components-jan-25_font---family--tag--tooltip: var(--_font---family--tag--tooltip);
+    --harvey-components-jan-25_font---family--tag--blockquote: var(--_font---family--tag--blockquote);
+
+    /* Height */
+    --harvey-components-jan-25_font---height--tiny: var(--_font---height--tiny);
+    --harvey-components-jan-25_font---height--xxxsmall: var(--_font---height--xxxsmall);
+    --harvey-components-jan-25_font---height--xxsmall: var(--_font---height--xxsmall);
+    --harvey-components-jan-25_font---height--xsmall: var(--_font---height--xsmall);
+    --harvey-components-jan-25_font---height--small: var(--_font---height--small);
+    --harvey-components-jan-25_font---height--medium: var(--_font---height--medium);
+    --harvey-components-jan-25_font---height--large: var(--_font---height--large);
+    --harvey-components-jan-25_font---height--xlarge: var(--_font---height--xlarge);
+    --harvey-components-jan-25_font---height--xxlarge: var(--_font---height--xxlarge);
+    --harvey-components-jan-25_font---height--xxxlarge: var(--_font---height--xxxlarge);
+    --harvey-components-jan-25_font---height--huge: var(--_font---height--huge);
+    --harvey-components-jan-25_font---height--xhuge: var(--_font---height--xhuge);
+
+    /* Height/Tag */
+    --harvey-components-jan-25_font---height--tag--h1: var(--_font---height--tag--h1);
+    --harvey-components-jan-25_font---height--tag--h2: var(--_font---height--tag--h2);
+    --harvey-components-jan-25_font---height--tag--h3: var(--_font---height--tag--h3);
+    --harvey-components-jan-25_font---height--tag--h4: var(--_font---height--tag--h4);
+    --harvey-components-jan-25_font---height--tag--h5: var(--_font---height--tag--h5);
+    --harvey-components-jan-25_font---height--tag--h6: var(--_font---height--tag--h6);
+    --harvey-components-jan-25_font---height--tag--p: var(--_font---height--tag--p);
+    --harvey-components-jan-25_font---height--tag--breadcrumb: var(--_font---height--tag--breadcrumb);
+    --harvey-components-jan-25_font---height--tag--tooltip: var(--_font---height--tag--tooltip);
+
+    /* Weight */
+    --harvey-components-jan-25_font---weight--light: var(--_font---weight--light);
+    --harvey-components-jan-25_font---weight--normal: var(--_font---weight--normal);
+    --harvey-components-jan-25_font---weight--medium: var(--_font---weight--medium);
+    --harvey-components-jan-25_font---weight--semibold: var(--_font---weight--semibold);
+    --harvey-components-jan-25_font---weight--bold: var(--_font---weight--bold);
+    --harvey-components-jan-25_font---weight--xbold: var(--_font---weight--xbold);
+
+    /* Weight/Tag */
+    --harvey-components-jan-25_font---weight--tag--p: var(--_font---weight--tag--p);
+    --harvey-components-jan-25_font---weight--tag--heading: var(--_font---weight--tag--heading);
+    --harvey-components-jan-25_font---weight--tag--h1: var(--_font---weight--tag--h1);
+    --harvey-components-jan-25_font---weight--tag--h2: var(--_font---weight--tag--h2);
+    --harvey-components-jan-25_font---weight--tag--h3: var(--_font---weight--tag--h3);
+    --harvey-components-jan-25_font---weight--tag--h4: var(--_font---weight--tag--h4);
+    --harvey-components-jan-25_font---weight--tag--h5: var(--_font---weight--tag--h5);
+    --harvey-components-jan-25_font---weight--tag--h6: var(--_font---weight--tag--h6);
+    --harvey-components-jan-25_font---weight--tag--breadcrumb: var(--_font---weight--tag--breadcrumb);
+    --harvey-components-jan-25_font---weight--tag--tooltip: var(--_font---weight--tag--tooltip);
+
+    /* Letter Spacing */
+    --harvey-components-jan-25_font---letter-spacing--default: var(--_font---letter-spacing--default);
+    --harvey-components-jan-25_font---letter-spacing--tiny: var(--_font---letter-spacing--tiny);
+    --harvey-components-jan-25_font---letter-spacing--xxxsmall: var(--_font---letter-spacing--xxxsmall);
+    --harvey-components-jan-25_font---letter-spacing--xxsmall: var(--_font---letter-spacing--xxsmall);
+    --harvey-components-jan-25_font---letter-spacing--xsmall: var(--_font---letter-spacing--xsmall);
+    --harvey-components-jan-25_font---letter-spacing--small: var(--_font---letter-spacing--small);
+    --harvey-components-jan-25_font---letter-spacing--medium: var(--_font---letter-spacing--medium);
+    --harvey-components-jan-25_font---letter-spacing--large: var(--_font---letter-spacing--large);
+    --harvey-components-jan-25_font---letter-spacing--xlarge: var(--_font---letter-spacing--xlarge);
+    --harvey-components-jan-25_font---letter-spacing--xxlarge: var(--_font---letter-spacing--xxlarge);
+    --harvey-components-jan-25_font---letter-spacing--xxxlarge: var(--_font---letter-spacing--xxxlarge);
+    --harvey-components-jan-25_font---letter-spacing--huge: var(--_font---letter-spacing--huge);
+    --harvey-components-jan-25_font---letter-spacing--xhuge: var(--_font---letter-spacing--xhuge);
+
+    /* Letter Spacing/Tag */
+    --harvey-components-jan-25_font---letter-spacing--tag--headings: var(--_font---letter-spacing--tag--headings);
+    --harvey-components-jan-25_font---letter-spacing--tag--default: var(--_font---letter-spacing--tag--default);
+    --harvey-components-jan-25_font---letter-spacing--tag--h1: var(--_font---letter-spacing--tag--h1);
+    --harvey-components-jan-25_font---letter-spacing--tag--h2: var(--_font---letter-spacing--tag--h2);
+    --harvey-components-jan-25_font---letter-spacing--tag--h3: var(--_font---letter-spacing--tag--h3);
+    --harvey-components-jan-25_font---letter-spacing--tag--h4: var(--_font---letter-spacing--tag--h4);
+    --harvey-components-jan-25_font---letter-spacing--tag--h5: var(--_font---letter-spacing--tag--h5);
+    --harvey-components-jan-25_font---letter-spacing--tag--h6: var(--_font---letter-spacing--tag--h6);
+    --harvey-components-jan-25_font---letter-spacing--tag--p: var(--_font---letter-spacing--tag--p);
+    --harvey-components-jan-25_font---letter-spacing--tag--breadcrumb: var(--_font---letter-spacing--tag--breadcrumb);
+
+    /* Underline */
+    --harvey-components-jan-25_font---underline--1-size: var(--_font---underline--1-size);
+    --harvey-components-jan-25_font---underline--1-gap: var(--_font---underline--1-gap);
+    --harvey-components-jan-25_font---underline--2-size: var(--_font---underline--2-size);
+    --harvey-components-jan-25_font---underline--2-gap: var(--_font---underline--2-gap);
+    --harvey-components-jan-25_font---underline--3-size: var(--_font---underline--3-size);
+    --harvey-components-jan-25_font---underline--3-gap: var(--_font---underline--3-gap);
+  }
+}

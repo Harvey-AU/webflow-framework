@@ -1,0 +1,71 @@
+body {
+  /* Padding */
+  --harvey-components-jan-25_sizing-spacer-gap---padding--xtiny: var(--_sizing-spacer-gap---padding--xtiny);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tiny: var(--_sizing-spacer-gap---padding--tiny);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--xxsmall: var(--_sizing-spacer-gap---padding--xxsmall);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--xsmall: var(--_sizing-spacer-gap---padding--xsmall);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--small: var(--_sizing-spacer-gap---padding--small);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--medium: var(--_sizing-spacer-gap---padding--medium);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--large: var(--_sizing-spacer-gap---padding--large);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--xlarge: var(--_sizing-spacer-gap---padding--xlarge);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--xxlarge: var(--_sizing-spacer-gap---padding--xxlarge);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--huge: var(--_sizing-spacer-gap---padding--huge);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--xhuge: var(--_sizing-spacer-gap---padding--xhuge);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--xxhuge: var(--_sizing-spacer-gap---padding--xxhuge);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--custom-1: var(--_sizing-spacer-gap---padding--custom-1);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--custom-2: var(--_sizing-spacer-gap---padding--custom-2);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--custom-3: var(--_sizing-spacer-gap---padding--custom-3);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--breadcrumb: var(--_sizing-spacer-gap---padding--breadcrumb);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tooltip: var(--_sizing-spacer-gap---padding--tooltip);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--hr-top: var(--_sizing-spacer-gap---padding--hr-top);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--hr-bottom: var(--_sizing-spacer-gap---padding--hr-bottom);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--hr-top-article: var(--_sizing-spacer-gap---padding--hr-top-article);
+  --harvey-components-jan-25_sizing-spacer-gap---padding--hr-bottom-article: var(--_sizing-spacer-gap---padding--hr-bottom-article);
+
+  /* Padding / Tag */
+
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tag--blockquote-margin-left: var(
+    --_sizing-spacer-gap---padding--tag--blockquote-margin-left
+  );
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tag--blockquote-padding-right: var(
+    --_sizing-spacer-gap---padding--tag--blockquote-padding-right
+  );
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tag--blockquote-padding-left: var(
+    --_sizing-spacer-gap---padding--tag--blockquote-padding-left
+  );
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tag--blockquote-padding-top: var(
+    --_sizing-spacer-gap---padding--tag--blockquote-padding-top
+  );
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tag--blockquote-padding-bottom: var(
+    --_sizing-spacer-gap---padding--tag--blockquote-padding-bottom
+  );
+  --harvey-components-jan-25_sizing-spacer-gap---padding--tag--image-caption-gap: var(--_sizing-spacer-gap---padding--tag--image-caption-gap);
+
+  /* Spacer */
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--xtiny: var(--_sizing-spacer-gap---spacer--xtiny);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--tiny: var(--_sizing-spacer-gap---spacer--tiny);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--xxxsmall: var(--_sizing-spacer-gap---spacer--xxxsmall);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--xxsmall: var(--_sizing-spacer-gap---spacer--xxsmall);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--xsmall: var(--_sizing-spacer-gap---spacer--xsmall);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--small: var(--_sizing-spacer-gap---spacer--small);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--medium: var(--_sizing-spacer-gap---spacer--medium);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--large: var(--_sizing-spacer-gap---spacer--large);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--xlarge: var(--_sizing-spacer-gap---spacer--xlarge);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--custom-1: var(--_sizing-spacer-gap---spacer--custom-1);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--custom-2: var(--_sizing-spacer-gap---spacer--custom-2);
+  --harvey-components-jan-25_sizing-spacer-gap---spacer--custom-3: var(--_sizing-spacer-gap---spacer--custom-3);
+
+  /* Gap */
+  --harvey-components-jan-25_sizing-spacer-gap---gap--zero: var(--_sizing-spacer-gap---gap--zero);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--tiny: var(--_sizing-spacer-gap---gap--tiny);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--xxsmall: var(--_sizing-spacer-gap---gap--xxsmall);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--xsmall: var(--_sizing-spacer-gap---gap--xsmall);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--small: var(--_sizing-spacer-gap---gap--small);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--medium: var(--_sizing-spacer-gap---gap--medium);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--large: var(--_sizing-spacer-gap---gap--large);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--xlarge: var(--_sizing-spacer-gap---gap--xlarge);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--xxlarge: var(--_sizing-spacer-gap---gap--xxlarge);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--huge: var(--_sizing-spacer-gap---gap--huge);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--xhuge: var(--_sizing-spacer-gap---gap--xhuge);
+  --harvey-components-jan-25_sizing-spacer-gap---gap--icon-base: var(--_sizing-spacer-gap---gap--icon-base);
+}
