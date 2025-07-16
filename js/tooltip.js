@@ -2,14 +2,15 @@
   "use strict";
 
   function initTooltips() {
-  const tooltipTemplate = document.getElementById("tooltip-container");
-  if (!tooltipTemplate) {
-    console.error("Tooltip container not found.");
-    return;
-  }
+  try {
+    const tooltipTemplate = document.getElementById("tooltip-container");
+    if (!tooltipTemplate) {
+      console.error("Tooltip: Container element with id 'tooltip-container' not found");
+      return;
+    }
 
-  tooltipTemplate.style.display = "none";
-  const tooltips = new WeakMap();
+    tooltipTemplate.style.display = "none";
+    const tooltips = new WeakMap();
 
   function positionTooltip(tooltipEl, targetEl) {
     const rect = targetEl.getBoundingClientRect();
@@ -18,22 +19,23 @@
   }
 
   function showTooltip(el, message) {
-    let tooltip = tooltips.get(el);
-    if (!tooltip) {
-      tooltip = tooltipTemplate.cloneNode(true);
-      tooltip.style.display = "none";
-      tooltip.style.opacity = "0";
+    try {
+      let tooltip = tooltips.get(el);
+      if (!tooltip) {
+        tooltip = tooltipTemplate.cloneNode(true);
+        tooltip.style.display = "none";
+        tooltip.style.opacity = "0";
 
-      // Generate unique ID for accessibility
-      const tooltipId = "tooltip-" + Math.random().toString(36).substr(2, 9);
-      tooltip.setAttribute("id", tooltipId);
+        // Generate unique ID for accessibility
+        const tooltipId = "tooltip-" + Math.random().toString(36).substr(2, 9);
+        tooltip.setAttribute("id", tooltipId);
 
-      document.body.appendChild(tooltip);
-      tooltips.set(el, tooltip);
+        document.body.appendChild(tooltip);
+        tooltips.set(el, tooltip);
 
-      // Set aria-describedby on trigger
-      el.setAttribute("aria-describedby", tooltipId);
-    }
+        // Set aria-describedby on trigger
+        el.setAttribute("aria-describedby", tooltipId);
+      }
 
     clearTimeout(tooltip.showTimeout);
     clearTimeout(tooltip.hideTimeout);
@@ -51,6 +53,9 @@
     tooltip.showTimeout = setTimeout(() => {
       tooltip.style.opacity = "1";
     }, 100);
+    } catch (err) {
+      console.error("Tooltip: Error showing tooltip:", err);
+    }
   }
 
   function hideTooltip(el) {
@@ -69,8 +74,9 @@
   }
 
   // Attach hover and focus events for hover-tooltips
-  const hoverElements = document.querySelectorAll("[tooltip-hover]:not([tooltip-hover=''])");
-  hoverElements.forEach((el) => {
+  try {
+    const hoverElements = document.querySelectorAll("[tooltip-hover]:not([tooltip-hover=''])");
+    hoverElements.forEach((el) => {
     const message = el.getAttribute("tooltip-hover");
 
     el.addEventListener("mouseenter", function () {
@@ -90,10 +96,14 @@
       hideTooltip(el);
     });
   });
+  } catch (err) {
+    console.error("Tooltip: Error setting up hover tooltips:", err);
+  }
 
   // Attach events for click-tooltips
-  const clickElements = document.querySelectorAll("[tooltip-click]:not([tooltip-click=''])");
-  clickElements.forEach((el) => {
+  try {
+    const clickElements = document.querySelectorAll("[tooltip-click]:not([tooltip-click=''])");
+    clickElements.forEach((el) => {
     el.addEventListener("click", function (e) {
       e.preventDefault();
       el.setAttribute("active-click", "");
@@ -108,13 +118,19 @@
       }
     });
   });
+  } catch (err) {
+    console.error("Tooltip: Error setting up click tooltips:", err);
+  }
+  } catch (err) {
+    console.error("Tooltip initialisation failed:", err);
+  }
 }
 
-  // Initialize tooltips based on DOM ready state
+  // Initialise tooltips based on DOM ready state
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTooltips);
   } else {
-    // DOM already loaded, initialize immediately
+    // DOM already loaded, initialise immediately
     initTooltips();
   }
 })();

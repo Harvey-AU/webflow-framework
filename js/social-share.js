@@ -2,25 +2,33 @@
   "use strict";
 
   function initSocialShare() {
-  // Approach 1: Find all potential parent containers and check for marker
-  const potentialContainers = document.querySelectorAll("[data-social-share-list]");
+  try {
+    // Find all potential parent containers and check for marker
+    const potentialContainers = document.querySelectorAll("[data-social-share-list]");
+    
+    // Check if any containers exist
+    if (potentialContainers.length === 0) {
+      console.warn("Social share: No containers with [data-social-share-list] found");
+      return;
+    }
 
-  // Define a map for share URLs
-  const shareUrlMap = {
-    facebook: (url) => `https://www.facebook.com/sharer.php?u=${url}`,
-    linkedin: (url) => `https://www.linkedin.com/sharing/share-offsite?url=${url}`,
-    x: (title, url) => `https://twitter.com/intent/tweet?text=${title}&url=${url}`,
-    email: (title, url) => `mailto:?subject=${title}&body=Check this out: ${url}`,
-    whatsapp: (title, url) => `https://api.whatsapp.com/send?text=${title}%0A${url}`,
-  };
+    // Define a map for share URLs
+    const shareUrlMap = {
+      facebook: (url) => `https://www.facebook.com/sharer.php?u=${url}`,
+      linkedin: (url) => `https://www.linkedin.com/sharing/share-offsite?url=${url}`,
+      x: (title, url) => `https://twitter.com/intent/tweet?text=${title}&url=${url}`,
+      email: (title, url) => `mailto:?subject=${title}&body=Check this out: ${url}`,
+      whatsapp: (title, url) => `https://api.whatsapp.com/send?text=${title}%0A${url}`,
+    };
 
-  potentialContainers.forEach((container) => {
-    const marker = container.querySelector("#link-mode_sharing");
-    if (!marker) return;
+    potentialContainers.forEach((container) => {
+    try {
+      const marker = container.querySelector("#link-mode_sharing");
+      if (!marker) return;
 
-    const socialLinks = container.querySelectorAll("[data-social-share]");
+      const socialLinks = container.querySelectorAll("[data-social-share]");
 
-    socialLinks.forEach((link) => {
+      socialLinks.forEach((link) => {
       const platform = link.getAttribute("data-social-share")?.toLowerCase();
 
       // Skip Youtube and Instagram links
@@ -57,18 +65,23 @@
               });
           } else {
             // Fallback for older browsers
-            const textArea = document.createElement("textarea");
-            textArea.value = window.location.href;
-            document.body.appendChild(textArea);
-            textArea.select();
             try {
-              document.execCommand("copy");
-              link.setAttribute("title", "Copied!");
+              const textArea = document.createElement("textarea");
+              textArea.value = window.location.href;
+              document.body.appendChild(textArea);
+              textArea.select();
+              try {
+                document.execCommand("copy");
+                link.setAttribute("title", "Copied!");
+              } catch (err) {
+                console.error("Fallback copy failed:", err);
+                link.setAttribute("title", "Copy failed");
+              }
+              document.body.removeChild(textArea);
             } catch (err) {
-              console.error("Fallback copy failed:", err);
+              console.error("Fallback DOM operation failed:", err);
               link.setAttribute("title", "Copy failed");
             }
-            document.body.removeChild(textArea);
           }
           return;
         }
@@ -89,14 +102,20 @@
         }
       });
     });
+    } catch (err) {
+      console.error(`Social share: Error processing container:`, err);
+    }
   });
+  } catch (err) {
+    console.error("Social share initialisation failed:", err);
+  }
 }
 
-  // Initialize social share based on DOM ready state
+  // Initialise social share based on DOM ready state
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSocialShare);
   } else {
-    // DOM already loaded, initialize immediately
+    // DOM already loaded, initialise immediately
     initSocialShare();
   }
 })();

@@ -19,7 +19,7 @@ const Cookie = {
       ?.split("=")[1];
   },
   set: (name, value) => {
-    document.cookie = `${name}=${value}; path=/; max-age=86400`; // 1 day expiration
+    document.cookie = `${name}=${value}; path=/; max-age=86400`; // 1 day expiry
   },
   remove: (name) => {
     document.cookie = `${name}=; path=/; max-age=0`;

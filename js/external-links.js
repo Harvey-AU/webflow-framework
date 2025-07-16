@@ -56,11 +56,11 @@
   });
 }
 
-  // Initialize external links based on DOM ready state
+  // Initialise external links based on DOM ready state
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initExternalLinks);
   } else {
-    // DOM already loaded, initialize immediately
+    // DOM already loaded, initialise immediately
     initExternalLinks();
   }
 })();
