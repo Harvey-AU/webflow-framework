@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+function initExternalLinks() {
   const links = document.querySelectorAll("a");
 
   // Get current hostname
@@ -51,4 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
       console.debug("Error processing link:", link.href);
     }
   });
-});
+}
+
+// Initialize external links based on DOM ready state
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initExternalLinks);
+} else {
+  // DOM already loaded, initialize immediately
+  initExternalLinks();
+}

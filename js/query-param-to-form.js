@@ -38,7 +38,7 @@ function getParsedCookie() {
 }
 
 // Save parameters to cookie (merges with existing ones)
-function createLead() {
+function createLead(urlParams) {
   const existingData = getParsedCookie();
   const mergedParams = { ...existingData.parameters, ...urlParams };
   const lead = { parameters: mergedParams };
@@ -97,10 +97,10 @@ function captureUrlParameters() {
 
   if (hasParams && !cookieExist) {
     console.log("Created SessionParameters cookie");
-    createLead();
+    createLead(urlParams);
   } else if (hasParams && cookieExist) {
     console.log("Added to SessionParameters cookie");
-    createLead();
+    createLead(urlParams);
   }
   
   return { hasParams, cookieExist };

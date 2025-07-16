@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+function initTooltips() {
   const tooltipTemplate = document.getElementById("tooltip-container");
   if (!tooltipTemplate) {
     console.error("Tooltip container not found.");
@@ -105,4 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-});
+}
+
+// Initialize tooltips based on DOM ready state
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTooltips);
+} else {
+  // DOM already loaded, initialize immediately
+  initTooltips();
+}

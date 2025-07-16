@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+function initSocialShare() {
   // Approach 1: Find all potential parent containers and check for marker
   const potentialContainers = document.querySelectorAll("[data-social-share-list]");
 
@@ -87,4 +87,12 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   });
-});
+}
+
+// Initialize social share based on DOM ready state
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSocialShare);
+} else {
+  // DOM already loaded, initialize immediately
+  initSocialShare();
+}
