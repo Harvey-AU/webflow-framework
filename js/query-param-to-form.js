@@ -89,23 +89,46 @@ function createAndSetFormFields() {
   });
 }
 
-// STEP 1: Capture parameters immediately (before user navigates away)
-const urlParams = getAllUrlParams();
-const cookieExist = Cookie.get("SessionParameters") !== undefined;
-const hasParams = Object.keys(urlParams).length > 0;
+// STEP 1: Capture parameters immediately (works regardless of when script loads)
+function captureUrlParameters() {
+  const urlParams = getAllUrlParams();
+  const cookieExist = Cookie.get("SessionParameters") !== undefined;
+  const hasParams = Object.keys(urlParams).length > 0;
 
-if (hasParams && !cookieExist) {
-  console.log("Created SessionParameters cookie");
-  createLead();
-} else if (hasParams && cookieExist) {
-  console.log("Added to SessionParameters cookie");
-  createLead();
+  if (hasParams && !cookieExist) {
+    console.log("Created SessionParameters cookie");
+    createLead();
+  } else if (hasParams && cookieExist) {
+    console.log("Added to SessionParameters cookie");
+    createLead();
+  }
+  
+  return { hasParams, cookieExist };
 }
 
-// STEP 2: Add form fields after delay (when user might interact with forms)
-setTimeout(() => {
+// STEP 2: Add form fields when DOM is ready
+function handleFormFields() {
+  const cookieExist = Cookie.get("SessionParameters") !== undefined;
   const forms = document.querySelectorAll("form");
-  if (forms.length > 0 && (hasParams || cookieExist)) {
+  
+  if (forms.length > 0 && cookieExist) {
     createAndSetFormFields();
   }
-}, 2000);
+}
+
+// Initialise: Capture parameters and handle forms based on DOM state
+function init() {
+  // Always capture parameters first
+  captureUrlParameters();
+  
+  // Handle forms based on DOM ready state
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleFormFields);
+  } else {
+    // DOM already loaded, handle forms immediately
+    handleFormFields();
+  }
+}
+
+// Start initialisation
+init();
