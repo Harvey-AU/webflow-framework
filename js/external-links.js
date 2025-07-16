@@ -1,4 +1,7 @@
-function initExternalLinks() {
+(function() {
+  "use strict";
+
+  function initExternalLinks() {
   const links = document.querySelectorAll("a");
 
   // Get current hostname
@@ -53,10 +56,11 @@ function initExternalLinks() {
   });
 }
 
-// Initialize external links based on DOM ready state
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initExternalLinks);
-} else {
-  // DOM already loaded, initialize immediately
-  initExternalLinks();
-}
+  // Initialize external links based on DOM ready state
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initExternalLinks);
+  } else {
+    // DOM already loaded, initialize immediately
+    initExternalLinks();
+  }
+})();

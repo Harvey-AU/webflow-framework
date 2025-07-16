@@ -1,11 +1,14 @@
-/*
- * Query Parameter Tracker
- *
- * Captures all URL query parameters (utm_source, gclid, etc.) across page visits
- * and stores them in a session cookie. Automatically adds these parameters as
- * hidden fields to all forms on the page for tracking attribution through form
- * submissions. Parameters accumulate across multiple page visits within the session.
- */
+(function() {
+  "use strict";
+
+  /*
+   * Query Parameter Tracker
+   *
+   * Captures all URL query parameters (utm_source, gclid, etc.) across page visits
+   * and stores them in a session cookie. Automatically adds these parameters as
+   * hidden fields to all forms on the page for tracking attribution through form
+   * submissions. Parameters accumulate across multiple page visits within the session.
+   */
 
 // Native cookie functions (no external library needed)
 const Cookie = {
@@ -46,7 +49,7 @@ function createLead(urlParams) {
 }
 
 // Check if current URL params match what's already stored
-function isCurrentParamsEqualToCookie() {
+function isCurrentParamsEqualToCookie(urlParams) {
   const cookieData = getParsedCookie();
   if (!cookieData.parameters) return false;
 
@@ -130,5 +133,6 @@ function init() {
   }
 }
 
-// Start initialisation
-init();
+  // Start initialisation
+  init();
+})();
