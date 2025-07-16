@@ -1,6 +1,6 @@
-# Webflow Framework
+# Harvey Webflow Framework
 
-A comprehensive CSS and JavaScript framework designed for Webflow projects using the Harvey Component Library. This framework provides reusable components, utilities, and styling systems.
+A CSS and JavaScript framework designed for Webflow projects using the Harvey Component Library. This framework provides reusable components, utilities, and styling systems.
 
 ## 🚀 Quick Start
 
