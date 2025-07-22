@@ -278,7 +278,7 @@ blockquote {
   sub {
     bottom: unset;
   }
-  a {
+  a:not(.button) {
     color: currentColor;
   }
   hr {
