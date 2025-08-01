@@ -1,0 +1,1 @@
+Initialise by reading @claude.md, associated files, and describe your project understanding and how you will approach working together today. Clarify the sub-agents available and that you'll use them.
