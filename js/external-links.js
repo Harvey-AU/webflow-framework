@@ -12,11 +12,56 @@
     // Remove www. if present
     let domain = hostname.replace(/^www\./i, "");
 
-    // Split the domain by dots and get the last two parts (e.g., "example.com")
-    // This is a simple approach that works for most common domains
+    // Comprehensive list of multi-level TLDs
+    const multiLevelTLDs = [
+      // United Kingdom
+      'co.uk', 'ac.uk', 'gov.uk', 'org.uk', 'net.uk', 'sch.uk', 'nhs.uk', 'police.uk', 'mod.uk', 'me.uk',
+      // Australia
+      'com.au', 'edu.au', 'gov.au', 'org.au', 'net.au', 'asn.au', 'id.au',
+      // New Zealand
+      'co.nz', 'ac.nz', 'govt.nz', 'org.nz', 'net.nz', 'school.nz',
+      // South Africa
+      'co.za', 'ac.za', 'gov.za', 'org.za', 'net.za',
+      // Brazil
+      'com.br', 'edu.br', 'gov.br', 'org.br', 'net.br', 'vet.br', 'wiki.br',
+      // Japan
+      'co.jp', 'ac.jp', 'go.jp', 'or.jp', 'ne.jp',
+      // India
+      'co.in', 'ac.in', 'gov.in', 'org.in', 'net.in',
+      // China
+      'com.cn', 'edu.cn', 'gov.cn', 'net.cn', 'org.cn',
+      // Hong Kong
+      'com.hk', 'edu.hk', 'gov.hk', 'org.hk', 'net.hk',
+      // Singapore
+      'com.sg', 'edu.sg', 'gov.sg', 'org.sg', 'net.sg',
+      // Malaysia
+      'com.my', 'edu.my', 'gov.my', 'org.my', 'net.my',
+      // Thailand
+      'co.th', 'ac.th', 'go.th', 'or.th', 'net.th',
+      // Mexico
+      'com.mx', 'edu.mx', 'gob.mx', 'org.mx', 'net.mx',
+      // Argentina
+      'com.ar', 'edu.ar', 'gov.ar', 'org.ar', 'net.ar',
+      // Colombia
+      'com.co', 'edu.co', 'gov.co', 'org.co', 'net.co',
+      // Israel
+      'co.il', 'ac.il', 'gov.il', 'org.il', 'net.il',
+      // Turkey
+      'com.tr', 'edu.tr', 'gov.tr', 'org.tr', 'net.tr'
+    ];
+
     const parts = domain.split(".");
+    
+    // Check for multi-level TLDs
+    for (let i = 2; i <= 3 && i <= parts.length; i++) {
+      const tld = parts.slice(-i).join(".");
+      if (multiLevelTLDs.includes(tld)) {
+        return parts.slice(-(i + 1)).join(".");
+      }
+    }
+    
+    // Default: take last two parts for standard TLDs
     if (parts.length > 2) {
-      // Take the last two parts for domains like blog.example.com
       return parts.slice(-2).join(".");
     }
     return domain;
@@ -42,8 +87,11 @@
       // Extract the base domain for the link
       const linkBaseDomain = extractBaseDomain(linkUrl.hostname);
 
-      // Compare base domains instead of full hostnames
-      if (linkBaseDomain !== currentBaseDomain) {
+      // Check if the link is external by comparing base domains
+      // If base domains match, it's internal (handles all subdomains)
+      const isExternal = linkBaseDomain !== currentBaseDomain;
+
+      if (isExternal) {
         // External link - open in new tab
         link.setAttribute("target", "_blank");
         // Add security attributes
