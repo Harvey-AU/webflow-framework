@@ -1,7 +1,7 @@
 /**
  * WEBFLOW FRAMEWORK - MAIN JAVASCRIPT
  * Dynamically loads all framework JavaScript modules
- * GitHub Pages URL: https://webflow.teamharvey.co/js/main.js
+ * URL: https://webflow.teamharvey.co/js/main.js
  */
 
 (function () {

@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Multiple version updates may occur on the same date, each with its own version number.
 Each version represents a distinct set of changes, even if released on the same day.
 
+## [1.0.5] - 2025-07-17
+
+### Changed
+
+- Moved to Netlify CDN using sub-domain webflow.teamharvey.co
+
 ## [1.0.4] - 2025-07-17
 
 ### Changed
