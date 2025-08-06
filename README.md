@@ -1,19 +1,24 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/Harvey-AU/webflow-framework)
+
 # Harvey Webflow Framework
 
 A CSS and JavaScript framework designed for Webflow projects using the Harvey Component Library. This framework provides reusable components, utilities, and styling systems.
 
 ## 🚀 Quick Start
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c4d00a68-902c-4007-bb57-0c88ce6ebceb/deploy-status)](https://app.netlify.com/projects/harvey-webflow-component-library/deploys)
+
 Add this single line to your Webflow project's custom code (`<head>` section):
 
 ```html
-<link rel="stylesheet" href="https://harvey-au.github.io/webflow-framework/css/main.css" />
+<link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.css" />
 ```
 
 **Optional: Add JavaScript functionality** before closing `</body>` tag:
 
 ```html
-<script src="https://harvey-au.github.io/webflow-framework/js/main.js"></script>
+<script src="https://webflow.teamharvey.co/js/main.js"></script>
 ```
 
 ## 📁 Project Structure
@@ -98,12 +103,12 @@ webflow-framework/
 1. **Add the CSS framework to your Webflow project (`<head>`):**
 
    ```html
-   <link rel="stylesheet" href="https://harvey-au.github.io/webflow-framework/css/main.css" />
+   <link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.css" />
    ```
 
 2. **Add JavaScript functionality (before `</body>`):**
    ```html
-   <script src="https://harvey-au.github.io/webflow-framework/js/main.js"></script>
+   <script src="https://webflow.teamharvey.co/js/main.js"></script>
    ```
 
 ### Individual Components
@@ -114,20 +119,20 @@ If you only need specific components, you can import them individually:
 
 ```html
 <!-- Just the button system -->
-<link rel="stylesheet" href="https://harvey-au.github.io/webflow-framework/css/core/buttons.css" />
+<link rel="stylesheet" href="https://webflow.teamharvey.co/css/core/buttons.css" />
 
 <!-- Just the grid system -->
-<link rel="stylesheet" href="https://harvey-au.github.io/webflow-framework/css/core/grid.css" />
+<link rel="stylesheet" href="https://webflow.teamharvey.co/css/core/grid.css" />
 ```
 
 **JavaScript Modules:**
 
 ```html
 <!-- Just external links functionality -->
-<script src="https://harvey-au.github.io/webflow-framework/js/external-links.js"></script>
+<script src="https://webflow.teamharvey.co/js/external-links.js"></script>
 
 <!-- Just tooltip functionality -->
-<script src="https://harvey-au.github.io/webflow-framework/js/tooltip.js"></script>
+<script src="https://webflow.teamharvey.co/js/tooltip.js"></script>
 ```
 
 ### JavaScript Framework Events
@@ -175,7 +180,7 @@ window.WebflowFramework.reload();
    git push origin main
    ```
 
-4. **Changes go live automatically** via GitHub Pages within 1-10 minutes
+4. **Changes go live automatically** via Netlify deployment within 1-2 minutes
 
 ### Load Order
 
@@ -199,12 +204,12 @@ To add a new JavaScript module to the framework:
 
 ## 🌐 CDN Information
 
-This framework is hosted via **GitHub Pages** for optimal development workflow:
+This framework is hosted via **Netlify** for optimal performance and reliability.
 
-- **Base URL**: `https://harvey-au.github.io/webflow-framework/`
+- **Base URL**: `https://webflow.teamharvey.co/`
 - **Update Time**: 1-10 minutes after pushing changes
 - **Caching**: Optimised for both development and production use
-- **Reliability**: Backed by GitHub's infrastructure
+- **Reliability**: Backed by Netlify's global CDN infrastructure
 
 ## 🤝 Contributing
 

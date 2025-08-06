@@ -1,14 +1,14 @@
 /**
  * WEBFLOW FRAMEWORK - MAIN JAVASCRIPT
  * Dynamically loads all framework JavaScript modules
- * GitHub Pages URL: https://harvey-au.github.io/webflow-framework/js/main.js
+ * GitHub Pages URL: https://webflow.teamharvey.co/js/main.js
  */
 
 (function () {
   "use strict";
 
   // Base URL for the framework
-  const FRAMEWORK_BASE_URL = "https://harvey-au.github.io/webflow-framework/js/";
+  const FRAMEWORK_BASE_URL = "https://webflow.teamharvey.co/js/";
 
   // JavaScript modules to load
   const JS_MODULES = ["external-links.js", "tooltip.js", "social-share.js", "query-param-to-form.js"];
