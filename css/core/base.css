@@ -493,6 +493,26 @@ div.harvey-components-jan-25--card-content_image,
   div {
   height: unset;
 }
+
+/*e_image wrapper divs, ensure they are correct size to enabled positioning, i.e. top left, middle center, to work*/
+.harvey-components-jan-25--width-height-100,
+.width-height-100 {
+  /*If this ^^ generalised targeting breaks - be more specific [lib="e_image"] - need to push that component out to projects*/
+  .harvey-components-jan-25--u_max_width,
+  .u_max_width {
+    width: fit-content;
+  }
+
+  .width-height-100,
+  .harvey-components-jan-25--width-height-100,
+  .height-100,
+  .harvey-components-jan-25--height-100,
+  .flex-align,
+  .harvey-components-jan-25--flex-align {
+    height: 100% !important;
+  }
+}
+
 .card-content_image .grid-slot,
 .harvey-components-jan-25--card-content_image .harvey-components-jan-25--grid-slot {
   grid-template-rows: min-content 1fr;
