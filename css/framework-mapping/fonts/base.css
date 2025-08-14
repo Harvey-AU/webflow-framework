@@ -123,6 +123,8 @@ body {
   --harvey-components-jan-25_font---underline--2-gap: var(--_font---underline--2-gap);
   --harvey-components-jan-25_font---underline--3-size: var(--_font---underline--3-size);
   --harvey-components-jan-25_font---underline--3-gap: var(--_font---underline--3-gap);
+  --harvey-components-jan-25_font---underline--button-hover-size: var(--_font---underline--button-hover-size);
+  --harvey-components-jan-25_font---underline--button-hover-gap: var(--_font---underline--button-hover-gap);
 }
 @media screen and (max-width: 767px) {
   :root {
@@ -248,5 +250,7 @@ body {
     --harvey-components-jan-25_font---underline--2-gap: var(--_font---underline--2-gap);
     --harvey-components-jan-25_font---underline--3-size: var(--_font---underline--3-size);
     --harvey-components-jan-25_font---underline--3-gap: var(--_font---underline--3-gap);
+    --harvey-components-jan-25_font---underline--button-hover-size: var(--_font---underline--button-hover-size);
+    --harvey-components-jan-25_font---underline--button-hover-gap: var(--_font---underline--button-hover-gap);
   }
 }

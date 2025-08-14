@@ -434,7 +434,8 @@ hr {
 }
 
 [data-wf--u_font-decoration--variant^="underline-"],
-[data-wf--harvey-components-jan-25--u_font-decoration--variant^="underline-"] {
+[data-wf--harvey-components-jan-25--u_font-decoration--variant^="underline-"],
+[lib="button-hover-underline"]:hover {
   [lib="e_text_wrapper"]::after {
     content: "";
     position: absolute;
@@ -443,8 +444,10 @@ hr {
     background: currentColor;
   }
 }
+
 [data-wf--u_font-decoration--variant="underline-1"],
-[data-wf--harvey-components-jan-25--u_font-decoration--variant="underline-1"] {
+[data-wf--harvey-components-jan-25--u_font-decoration--variant="underline-1"],
+.u_colour-variants.underline-hover:hover {
   [lib="e_text_wrapper"]::after {
     height: var(--_font---underline--1-size);
     bottom: var(--_font---underline--1-gap);
@@ -462,6 +465,12 @@ hr {
   [lib="e_text_wrapper"]::after {
     height: var(--_font---underline--3-size);
     bottom: var(--_font---underline--3-gap);
+  }
+}
+[lib="button-hover-underline"] {
+  [lib="e_text_wrapper"]::after {
+    height: var(--_font---underline--button-hover-size);
+    bottom: var(--_font---underline--button-hover-gap);
   }
 }
 
@@ -499,8 +508,8 @@ div.harvey-components-jan-25--card-content_image,
   .harvey-components-jan-25--card-content_image,
   .card-content_simple:not(div.card-wrapper_image .card-content_simple),
   .harvey-components-jan-25--card-content_simple:not(
-      div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
-    ) {
+    div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
+  ) {
     display: flex;
     width: 100%;
     flex-flow: column;
@@ -515,8 +524,8 @@ div.harvey-components-jan-25--card-content_image,
   .harvey-components-jan-25--card-content_image,
   .card-content_simple:not(div.card-wrapper_image .card-content_simple),
   .harvey-components-jan-25--card-content_simple:not(
-      div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
-    ) {
+    div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
+  ) {
     align-items: center;
   }
 }
@@ -526,8 +535,8 @@ div.harvey-components-jan-25--card-content_image,
   .harvey-components-jan-25--card-content_image,
   .card-content_simple:not(div.card-wrapper_image .card-content_simple),
   .harvey-components-jan-25--card-content_simple:not(
-      div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
-    ) {
+    div.harvey-components-jan-25--card-wrapper_image .harvey-components-jan-25--card-content_simple
+  ) {
     align-items: flex-end;
   }
 }
