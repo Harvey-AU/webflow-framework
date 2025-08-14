@@ -1,0 +1,34 @@
+.w-richtext .blockquote {
+  margin-top: var(--harvey-components-jan-25_sizing-spacer-gap---padding--medium);
+  margin-bottom: var(--harvey-components-jan-25_sizing-spacer-gap---padding--medium);
+  padding: var(--harvey-components-jan-25_sizing-spacer-gap---padding--tiny) var(--harvey-components-jan-25_sizing-spacer-gap---padding--medium);
+  border-left: var(--_sizing-border-corner---border--xlarge) solid var(--_colour-semantic---border--secondary);
+  margin-left: var(--_sizing-spacer-gap---padding--tag--blockquote-margin-left);
+
+  font-size: var(--_font---size--tag--blockquote);
+  line-height: var(--_font---height--tag--blockquote);
+  letter-spacing: var(--_font---letter-spacing--tag--blockquote);
+  font-weight: var(--harvey-components-jan-25_font-rich-text---weight--normal);
+
+  &.xsmall {
+    font-size: var(--_font---size--xsmall);
+    line-height: var(--_font---height--xsmall);
+    letter-spacing: var(--_font---letter-spacing--xsmall);
+  }
+  &.small {
+    font-size: var(--_font---size--small);
+    line-height: var(--_font---height--small);
+    letter-spacing: var(--_font---letter-spacing--small);
+  }
+  &.medium {
+    font-size: var(--_font---size--medium);
+    line-height: var(--_font---height--medium);
+    letter-spacing: var(--_font---letter-spacing--medium);
+  }
+  &.italic {
+    font-style: italic;
+  }
+  &.bold {
+    font-weight: bold;
+  }
+}
