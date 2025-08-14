@@ -27,6 +27,7 @@
 @import url("./core/buttons.css");
 @import url("./core/corners.css");
 @import url("./core/max-lines.css");
+@import url("./core/richtext-extras.css");
 
 /* === ICONS === */
 @import url("./icons/base.css");
