@@ -40,4 +40,10 @@ body {
   --harvey-components-jan-25_colour-semantic-button---button-6--text: var(--_colour-semantic-button---button-6--text);
   --harvey-components-jan-25_colour-semantic-button---button-6--current-background: var(--_colour-semantic-button---button-6--current-background);
   --harvey-components-jan-25_colour-semantic-button---button-6--current-text: var(--_colour-semantic-button---button-6--current-text);
+
+  /* Button 7 */
+  --harvey-components-jan-25_colour-semantic-button---button-6--background: var(--_colour-semantic-button---button-7--background);
+  --harvey-components-jan-25_colour-semantic-button---button-6--text: var(--_colour-semantic-button---button-7--text);
+  --harvey-components-jan-25_colour-semantic-button---button-6--current-background: var(--_colour-semantic-button---button-7--current-background);
+  --harvey-components-jan-25_colour-semantic-button---button-6--current-text: var(--_colour-semantic-button---button-7--current-text);
 }
