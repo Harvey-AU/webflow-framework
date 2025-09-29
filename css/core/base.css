@@ -435,6 +435,7 @@ hr {
 
 [data-wf--u_font-decoration--variant^="underline-"],
 [data-wf--harvey-components-jan-25--u_font-decoration--variant^="underline-"],
+[data-wf--u_font-decoration--variant^="strike-through"],
 [lib="button-hover-underline"]:hover {
   [lib="e_text_wrapper"]::after {
     content: "";
@@ -470,13 +471,8 @@ hr {
 [data-wf--u_font-decoration--variant="strike-through"],
 [data-wf--harvey-components-jan-25--u_font-decoration--variant="strike-through"] {
   [lib="e_text_wrapper"]::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
     top: 50%;
     height: var(--_font---strike-through--size);
-    background-color: currentColor;
 }
 }
 [lib="button-hover-underline"] {
