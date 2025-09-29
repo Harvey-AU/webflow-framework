@@ -467,6 +467,18 @@ hr {
     bottom: var(--_font---underline--3-gap);
   }
 }
+[data-wf--u_font-decoration--variant="strike-through"],
+[data-wf--harvey-components-jan-25--u_font-decoration--variant="strike-through"] {
+  [lib="e_text_wrapper"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: var(--_font---strike-through--size);
+    background-color: currentColor;
+}
+}
 [lib="button-hover-underline"] {
   [lib="e_text_wrapper"]::after {
     height: var(--_font---underline--button-hover-size);
