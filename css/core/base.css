@@ -435,6 +435,7 @@ hr {
 
 [data-wf--u_font-decoration--variant^="underline-"],
 [data-wf--harvey-components-jan-25--u_font-decoration--variant^="underline-"],
+[data-wf--u_font-decoration--variant^="strike-through"],
 [lib="button-hover-underline"]:hover {
   [lib="e_text_wrapper"]::after {
     content: "";
@@ -466,6 +467,13 @@ hr {
     height: var(--_font---underline--3-size);
     bottom: var(--_font---underline--3-gap);
   }
+}
+[data-wf--u_font-decoration--variant="strike-through"],
+[data-wf--harvey-components-jan-25--u_font-decoration--variant="strike-through"] {
+  [lib="e_text_wrapper"]::after {
+    top: 50%;
+    height: var(--_font---strike-through--size);
+}
 }
 [lib="button-hover-underline"] {
   [lib="e_text_wrapper"]::after {
