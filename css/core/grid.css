@@ -80,6 +80,22 @@
   &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-6"] {
     --grid-boxed-colour: var(--_colour-primitive---brand--6);
   }
+  &[data-wf--u_grid-boxed--border-colour="brand-7"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-7"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--7);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-8"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-8"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--8);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-9"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-9"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--9);
+  }
+  &[data-wf--u_grid-boxed--border-colour="brand-10"],
+  &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="brand-10"] {
+    --grid-boxed-colour: var(--_colour-primitive---brand--10);
+  }
   &[data-wf--u_grid-boxed--border-colour="neutral-black"],
   &[data-wf--harvey-components-jan-25--u_grid-boxed_colour--border-colour="neutral-black"] {
     --grid-boxed-colour: var(--_colour-primitive---neutral--black);
