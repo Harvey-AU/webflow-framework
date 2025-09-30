@@ -436,6 +436,7 @@ hr {
 [data-wf--u_font-decoration--variant^="underline-"],
 [data-wf--harvey-components-jan-25--u_font-decoration--variant^="underline-"],
 [data-wf--u_font-decoration--variant^="strike-through"],
+[data-wf--harvey-components-jan-25--u_font-decoration--variant="strike-through"],
 [lib="button-hover-underline"]:hover {
   [lib="e_text_wrapper"]::after {
     content: "";
