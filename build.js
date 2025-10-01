@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { minify } = require("csso");
+const { transform } = require("lightningcss");
 
 function resolveImports(cssContent, baseDir) {
   return cssContent.replace(/@import url\("\.\/([^"]+)"\);/g, (match, filepath) => {
@@ -16,36 +16,45 @@ function resolveImports(cssContent, baseDir) {
   });
 }
 
-console.log("🏗️  Building CSS from imports...");
+function build() {
+  console.log("🏗️  Building CSS from imports...");
 
-// Read the imports file
-const importsCss = fs.readFileSync("css/imports.css", "utf8");
+  // Read the imports file
+  const importsCss = fs.readFileSync("css/imports.css", "utf8");
 
-// Generate concatenated main.css
-const concatenated = `/* WEBFLOW FRAMEWORK - GENERATED FILE */
+  // Generate concatenated main.css
+  const concatenated = `/* WEBFLOW FRAMEWORK - GENERATED FILE */
 /* Built from css/imports.css at ${new Date().toISOString()} */
 /* Original imports replaced with file contents */
 
 ${resolveImports(importsCss, "css")}`;
 
-// Generate minified version only
-console.log("🔧 Generating main.min.css...");
-const minified = minify(concatenated, {
-  restructure: false, // Don't restructure CSS (prevents reordering)
-  forceMediaMerge: false, // Don't merge media queries
-  comments: true, // Remove comments
-}).css;
+  // Generate minified version with Lightning CSS
+  console.log("🔧 Generating main.min.css with Lightning CSS...");
 
-// Add header comment to minified file
-const minifiedWithHeader = `/* WEBFLOW FRAMEWORK - MINIFIED */
-/* Built from css/imports.css at ${new Date().toISOString()} through build.js on Netlify */
+  try {
+    const result = transform({
+      code: Buffer.from(concatenated),
+      minify: true,
+    });
+
+    const minifiedCSS = result.code.toString();
+    const size = Math.round(minifiedCSS.length / 1024);
+
+    const minifiedWithHeader = `/* WEBFLOW FRAMEWORK - MINIFIED */
+/* Built from css/imports.css at ${new Date().toISOString()} with Lightning CSS */
 /* Source: https://github.com/Harvey-AU/webflow-framework */
-${minified}`;
+${minifiedCSS}`;
 
-fs.writeFileSync("css/main.min.css", minifiedWithHeader);
+    fs.writeFileSync("css/main.min.css", minifiedWithHeader);
 
-// Get file size
-const minifiedSize = Math.round(minified.length / 1024);
+    console.log(`✅ Built css/main.min.css (${size}KB)`);
+  } catch (error) {
+    console.log(`❌ Lightning CSS failed: ${error.message}`);
+  }
 
-console.log(`✅ Built css/main.min.css (${minifiedSize}KB)`);
-console.log("🚀 Ready for deployment!");
+  console.log("\n🚀 Ready for testing!");
+}
+
+// Run the build
+build();
