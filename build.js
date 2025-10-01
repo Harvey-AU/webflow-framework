@@ -30,7 +30,11 @@ ${resolveImports(importsCss, "css")}`;
 
 // Generate minified version only
 console.log("🔧 Generating main.min.css...");
-const minified = minify(concatenated).css;
+const minified = minify(concatenated, {
+  restructure: false, // Don't restructure CSS (prevents reordering)
+  forceMediaMerge: false, // Don't merge media queries
+  comments: true, // Remove comments
+}).css;
 
 // Add header comment to minified file
 const minifiedWithHeader = `/* WEBFLOW FRAMEWORK - MINIFIED */
