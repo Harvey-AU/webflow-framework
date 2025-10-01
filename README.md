@@ -12,6 +12,10 @@ A CSS and JavaScript framework designed for Webflow projects using the Harvey Co
 Add this single line to your Webflow project's custom code (`<head>` section):
 
 ```html
+<!-- Production (recommended): Minified, single file, ~118KB -->
+<link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.min.css" />
+
+<!-- Development/Debug: Original with imports, slower loading -->
 <link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.css" />
 ```
 
@@ -170,9 +174,21 @@ window.WebflowFramework.reload();
    git clone https://github.com/Harvey-AU/webflow-framework.git
    ```
 
-2. **Edit CSS/JS files** as needed
+2. **Install dependencies:**
 
-3. **Commit and push changes:**
+   ```bash
+   npm install
+   ```
+
+3. **Edit CSS/JS files** as needed (edit individual files in subfolders)
+
+4. **Test build locally:**
+
+   ```bash
+   node build.js
+   ```
+
+5. **Commit and push changes:**
 
    ```bash
    git add .
@@ -180,7 +196,23 @@ window.WebflowFramework.reload();
    git push origin main
    ```
 
-4. **Changes go live automatically** via Netlify deployment within 1-2 minutes
+6. **Changes go live automatically** via Netlify build + deployment within 1-2 minutes
+
+### Build Process
+
+The framework uses an automated build process that:
+
+1. **Reads** `css/imports.css` to understand the import order
+2. **Concatenates** all imported CSS files into a single file
+3. **Minifies** using csso for optimal performance
+4. **Outputs** `css/main.min.css` (~118KB, 46% smaller than unminified)
+
+**Files:**
+- `css/imports.css` - Source file defining import order
+- `css/main.css` - Original with @imports (for development/debugging)
+- `css/main.min.css` - Generated minified version (for production)
+- `build.js` - Build script (runs on Netlify)
+- `netlify.toml` - Netlify configuration
 
 ### Load Order
 

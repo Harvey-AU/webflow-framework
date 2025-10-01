@@ -1,3 +1,19 @@
-.DS_store
+.DS_Store
 .env
-claude.md
+
+# Dependencies
+node_modules/
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
