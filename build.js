@@ -20,14 +20,14 @@ function build() {
   console.log("🏗️  Building CSS from imports...");
 
   // Read the imports file
-  const importsCss = fs.readFileSync("css/imports.css", "utf8");
+  const importsCss = fs.readFileSync("src/css/imports.css", "utf8");
 
   // Generate concatenated main.css
   const concatenated = `/* WEBFLOW FRAMEWORK - GENERATED FILE */
-/* Built from css/imports.css at ${new Date().toISOString()} */
+/* Built from src/css/imports.css at ${new Date().toISOString()} */
 /* Original imports replaced with file contents */
 
-${resolveImports(importsCss, "css")}`;
+${resolveImports(importsCss, "src/css")}`;
 
   // Generate minified version with Lightning CSS
   console.log("🔧 Generating main.min.css with Lightning CSS...");
@@ -42,13 +42,25 @@ ${resolveImports(importsCss, "css")}`;
     const size = Math.round(minifiedCSS.length / 1024);
 
     const minifiedWithHeader = `/* WEBFLOW FRAMEWORK - MINIFIED */
-/* Built from css/imports.css at ${new Date().toISOString()} with Lightning CSS */
+/* Built from src/css/imports.css at ${new Date().toISOString()} with Lightning CSS */
 /* Source: https://github.com/Harvey-AU/webflow-framework */
 ${minifiedCSS}`;
 
-    fs.writeFileSync("css/main.min.css", minifiedWithHeader);
+    // Save minified version
+    fs.writeFileSync("dist/css/main.min.css", minifiedWithHeader);
 
-    console.log(`✅ Built css/main.min.css (${size}KB)`);
+    // Also save original concatenated version (with @imports removed)
+    const originalWithHeader = `/* WEBFLOW FRAMEWORK - DEBUG VERSION */
+/* Built from src/css/imports.css at ${new Date().toISOString()} */
+/* Source: https://github.com/Harvey-AU/webflow-framework */
+${concatenated}`;
+
+    fs.writeFileSync("dist/css/main.css", originalWithHeader);
+
+    const originalSize = Math.round(concatenated.length / 1024);
+
+    console.log(`✅ Built dist/css/main.css (${originalSize}KB) - debug version`);
+    console.log(`✅ Built dist/css/main.min.css (${size}KB) - production version`);
   } catch (error) {
     console.log(`❌ Lightning CSS failed: ${error.message}`);
   }

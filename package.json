@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "csso": "^5.0.5",
     "esbuild": "^0.25.10",
     "lightningcss": "^1.30.2"
   }
