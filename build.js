@@ -30,7 +30,7 @@ function build() {
 ${resolveImports(importsCss, "src/css")}`;
 
   // Generate minified version with Lightning CSS
-  console.log("🔧 Generating main.min.css with Lightning CSS...");
+  console.log("🔧 Generating main.css (minified) with Lightning CSS...");
 
   try {
     const result = transform({
@@ -46,21 +46,21 @@ ${resolveImports(importsCss, "src/css")}`;
 /* Source: https://github.com/Harvey-AU/webflow-framework */
 ${minifiedCSS}`;
 
-    // Save minified version
-    fs.writeFileSync("dist/css/main.min.css", minifiedWithHeader);
+    // Save minified version as main.css
+    fs.writeFileSync("dist/css/main.css", minifiedWithHeader);
 
-    // Also save original concatenated version (with @imports removed)
-    const originalWithHeader = `/* WEBFLOW FRAMEWORK - DEBUG VERSION */
+    // Also save original concatenated version as main.unminified.css
+    const originalWithHeader = `/* WEBFLOW FRAMEWORK - UNMINIFIED VERSION */
 /* Built from src/css/imports.css at ${new Date().toISOString()} */
 /* Source: https://github.com/Harvey-AU/webflow-framework */
 ${concatenated}`;
 
-    fs.writeFileSync("dist/css/main.css", originalWithHeader);
+    fs.writeFileSync("dist/css/main.unminified.css", originalWithHeader);
 
     const originalSize = Math.round(concatenated.length / 1024);
 
-    console.log(`✅ Built dist/css/main.css (${originalSize}KB) - debug version`);
-    console.log(`✅ Built dist/css/main.min.css (${size}KB) - production version`);
+    console.log(`✅ Built dist/css/main.css (${size}KB) - production version`);
+    console.log(`✅ Built dist/css/main.unminified.css (${originalSize}KB) - unminified version`);
   } catch (error) {
     console.log(`❌ Lightning CSS failed: ${error.message}`);
   }
@@ -83,7 +83,7 @@ ${concatenated}`;
   fs.cpSync("dist/js", `${versionDir}/js`, { recursive: true });
 
   console.log(`📸 Snapshot created: v/${baseDate}/v${counter}`);
-  console.log(`🔗 Stable URL: https://webflow.teamharvey.co/v/${baseDate}/v${counter}/css/main.min.css`);
+  console.log(`🔗 Stable URL: https://webflow.teamharvey.co/v/${baseDate}/v${counter}/css/main.css`);
 
   console.log("\n🚀 Ready for deployment!");
 }
