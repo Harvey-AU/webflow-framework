@@ -65,7 +65,27 @@ ${concatenated}`;
     console.log(`❌ Lightning CSS failed: ${error.message}`);
   }
 
-  console.log("\n🚀 Ready for testing!");
+  // Create versioned snapshot
+  console.log("📸 Creating versioned snapshot...");
+  const baseDate = new Date().toISOString().slice(0,10); // 2025-10-02
+  let counter = 1;
+
+  // Find next available version number for this date
+  while (fs.existsSync(`dist/v/${baseDate}/v${counter}`)) {
+    counter++;
+  }
+
+  const versionDir = `dist/v/${baseDate}/v${counter}`;
+  fs.mkdirSync(versionDir, { recursive: true });
+
+  // Copy current build to versioned directory
+  fs.cpSync("dist/css", `${versionDir}/css`, { recursive: true });
+  fs.cpSync("dist/js", `${versionDir}/js`, { recursive: true });
+
+  console.log(`📸 Snapshot created: v/${baseDate}/v${counter}`);
+  console.log(`🔗 Stable URL: https://webflow.teamharvey.co/v/${baseDate}/v${counter}/css/main.min.css`);
+
+  console.log("\n🚀 Ready for deployment!");
 }
 
 // Run the build
