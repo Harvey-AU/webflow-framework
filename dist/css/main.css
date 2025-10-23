@@ -521,11 +521,6 @@ div.harvey-components-jan-25--card-content_image,
 .harvey-components-jan-25--width-height-100,
 .width-height-100 {
   /*If this ^^ generalised targeting breaks - be more specific [lib="e_image"] - need to push that component out to projects*/
-  .harvey-components-jan-25--u_max_width,
-  .u_max_width {
-    width: fit-content;
-  }
-
   .width-height-100,
   .harvey-components-jan-25--width-height-100,
   .height-100,
