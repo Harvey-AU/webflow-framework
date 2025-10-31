@@ -1,151 +1,173 @@
-.icon_arrow-down::after {
+.icon_arrow-down::after,
+.icon-before_arrow-down::before {
   width: var(--icon_arrow-down-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-down);
   mask-image: var(--icon_arrow-down);
   --icon-colour: var(--icon_arrow-down-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-up::after {
+.icon_arrow-up::after,
+.icon-before_arrow-up::before {
   width: var(--icon_arrow-up-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-up);
   mask-image: var(--icon_arrow-up);
   --icon-colour: var(--icon_arrow-up-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-right::after {
+.icon_arrow-right::after,
+.icon-before_arrow-right::before {
   width: var(--icon_arrow-right-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-right);
   mask-image: var(--icon_arrow-right);
   --icon-colour: var(--icon_arrow-right-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-left::after {
+.icon_arrow-left::after,
+.icon-before_arrow-left::before {
   width: var(--icon_arrow-left-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-left);
   mask-image: var(--icon_arrow-left);
   --icon-colour: var(--icon_arrow-left-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-stem-up-right::after {
+.icon_arrow-stem-up-right::after,
+.icon-before_arrow-stem-up-right::before {
   width: var(--icon_arrow-stem-up-right-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-up-right);
   mask-image: var(--icon_arrow-stem-up-right);
   --icon-colour: var(--icon_arrow-stem-up-right-colour, var(--icon-colour-default));
 }
 
-.icon_triangle-down::after {
+.icon_triangle-down::after,
+.icon-before_triangle-down::before {
   width: var(--icon_triangle-down-width, var(--icon-width));
   -webkit-mask-image: var(--icon_triangle-down);
   mask-image: var(--icon_triangle-down);
   --icon-colour: var(--icon_triangle-down-colour, var(--icon-colour-default));
 }
 
-.icon_triangle-up::after {
+.icon_triangle-up::after,
+.icon-before_triangle-up::before {
   width: var(--icon_triangle-up-width, var(--icon-width));
   -webkit-mask-image: var(--icon_triangle-up);
   mask-image: var(--icon_triangle-up);
   --icon-colour: var(--icon_triangle-up-colour, var(--icon-colour-default));
 }
 
-.icon_triangle-right::after {
+.icon_triangle-right::after,
+.icon-before_triangle-right::before {
   width: var(--icon_triangle-right-width, var(--icon-width));
   -webkit-mask-image: var(--icon_triangle-right);
   mask-image: var(--icon_triangle-right);
   --icon-colour: var(--icon_triangle-right-colour, var(--icon-colour-default));
 }
 
-.icon_triangle-left::after {
+.icon_triangle-left::after,
+.icon-before_triangle-left::before {
   width: var(--icon_triangle-left-width, var(--icon-width));
   -webkit-mask-image: var(--icon_triangle-left);
   mask-image: var(--icon_triangle-left);
   --icon-colour: var(--icon_triangle-left-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-stem-right::after {
+.icon_arrow-stem-right::after,
+.icon-before_arrow-stem-right::before {
   width: var(--icon_arrow-stem-right-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-right);
   mask-image: var(--icon_arrow-stem-right);
   --icon-colour: var(--icon_arrow-stem-right-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-stem-left::after {
+.icon_arrow-stem-left::after,
+.icon-before_arrow-stem-left::before {
   width: var(--icon_arrow-stem-left-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-left);
   mask-image: var(--icon_arrow-stem-left);
   --icon-colour: var(--icon_arrow-stem-left-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-stem-down::after {
+.icon_arrow-stem-down::after,
+.icon-before_arrow-stem-down::before {
   width: var(--icon_arrow-stem-down-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-down);
   mask-image: var(--icon_arrow-stem-down);
   --icon-colour: var(--icon_arrow-stem-down-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-stem-down-pipe::after {
+.icon_arrow-stem-down-pipe::after,
+.icon-before_arrow-stem-down-pipe::before {
   width: var(--icon_arrow-stem-down-pipe-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-down-pipe);
   mask-image: var(--icon_arrow-stem-down-pipe);
   --icon-colour: var(--icon_arrow-stem-down-pipe-colour, var(--icon-colour-default));
 }
 
-.icon_arrow-stem-up::after {
+.icon_arrow-stem-up::after,
+.icon-before_arrow-stem-up::before {
   width: var(--icon_arrow-stem-up-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-up);
   mask-image: var(--icon_arrow-stem-up);
   --icon-colour: var(--icon_arrow-stem-up-colour, var(--icon-colour-default));
 }
 
-.icon_close::after {
+.icon_close::after,
+.icon-before_close::before {
   width: var(--icon_close-width, var(--icon-width));
   -webkit-mask-image: var(--icon_close);
   mask-image: var(--icon_close);
   --icon-colour: var(--icon_close-colour, var(--icon-colour-default));
 }
 
-.icon_plus::after {
+.icon_plus::after,
+.icon-before_plus::before {
   width: var(--icon_plus-width, var(--icon-width));
   -webkit-mask-image: var(--icon_plus);
   mask-image: var(--icon_plus);
   --icon-colour: var(--icon_plus-colour, var(--icon-colour-default));
 }
 
-.icon_menu::after {
+.icon_menu::after,
+.icon-before_menu::before {
   width: var(--icon_menu-width, var(--icon-width));
   -webkit-mask-image: var(--icon_menu);
   mask-image: var(--icon_menu);
   --icon-colour: var(--icon_menu-colour, var(--icon-colour-default));
 }
 
-.icon_settings::after {
+.icon_settings::after,
+.icon-before_settings::before {
   width: var(--icon_settings-width, var(--icon-width));
   -webkit-mask-image: var(--icon_settings);
   mask-image: var(--icon_settings);
   --icon-colour: var(--icon_settings-colour, var(--icon-colour-default));
 }
 
-.icon_search::after {
+.icon_search::after,
+.icon-before_search::before {
   width: var(--icon_search-width, var(--icon-width));
   -webkit-mask-image: var(--icon_search);
   mask-image: var(--icon_search);
   --icon-colour: var(--icon_search-colour, var(--icon-colour-default));
 }
 
-.icon_more::after {
+.icon_more::after,
+.icon-before_more::before {
   width: var(--icon_more-width, var(--icon-width));
   -webkit-mask-image: var(--icon_more);
   mask-image: var(--icon_more);
   --icon-colour: var(--icon_more-colour, var(--icon-colour-default));
 }
 
-.icon_send::after {
+.icon_send::after,
+.icon-before_send::before {
   width: var(--icon_send-width, var(--icon-width));
   -webkit-mask-image: var(--icon_send);
   mask-image: var(--icon_send);
   --icon-colour: var(--icon_send-colour, var(--icon-colour-default));
 }
 
-.icon_crown::after {
+.icon_crown::after,
+.icon-before_crown::before {
   width: var(--icon_crown-width, var(--icon-width));
   -webkit-mask-image: var(--icon_crown);
   mask-image: var(--icon_crown);
@@ -153,138 +175,175 @@
 }
 
 .icon_phone::after,
-.icon_phone_before::before {
+.icon-before_phone::before {
   width: var(--icon_phone-width, var(--icon-width));
   -webkit-mask-image: var(--icon_phone);
   mask-image: var(--icon_phone);
   --icon-colour: var(--icon_phone-colour, var(--icon-colour-default));
 }
 
-.icon_forward-slash::after {
+.icon_forward-slash::after,
+.icon-before_forward-slash::before {
   width: var(--icon_forward-slash-width, var(--icon-width));
   -webkit-mask-image: var(--icon_forward-slash);
   mask-image: var(--icon_forward-slash);
 }
 
-.icon_pipe::after {
+.icon_pipe::after,
+.icon-before_pipe::before {
   width: var(--icon_pipe-width, var(--icon-width));
   -webkit-mask-image: var(--icon_pipe);
   mask-image: var(--icon_pipe);
 }
 
-.icon_dash::after {
+.icon_dash::after,
+.icon-before_dash::before {
   width: var(--icon_dash-width, var(--icon-width));
   -webkit-mask-image: var(--icon_dash);
   mask-image: var(--icon_dash);
 }
 
-.icon_dash-long::after {
+.icon_dash-long::after,
+.icon-before_dash-long::before {
   width: var(--icon_dash-long-width, var(--icon-width));
   -webkit-mask-image: var(--icon_dash-long);
   mask-image: var(--icon_dash-long);
 }
 
-.icon_dot::after {
+.icon_dot::after,
+.icon-before_dot::before {
   width: var(--icon_dot-width, var(--icon-width));
   -webkit-mask-image: var(--icon_dot);
   mask-image: var(--icon_dot);
 }
 
-.icon_search-2::after {
+.icon_search-2::after,
+.icon-before_search-2::before {
   width: var(--icon_search-2-width, var(--icon-width));
   -webkit-mask-image: var(--icon_search-2);
   mask-image: var(--icon_search-2);
 }
 
-.icon_lock::after {
+.icon_lock::after,
+.icon-before_lock::before {
   width: var(--icon_lock-width, var(--icon-width));
   -webkit-mask-image: var(--icon_lock);
   mask-image: var(--icon_lock);
 }
 
-.icon_cross-circle::after {
+.icon_cross-circle::after,
+.icon-before_cross-circle::before {
   width: var(--icon_cross-circle-width, var(--icon-width));
   -webkit-mask-image: var(--icon_cross-circle);
   mask-image: var(--icon_cross-circle);
 }
 
-.icon_check-circle::after {
+.icon_check-circle::after,
+.icon-before_check-circle::before {
   width: var(--icon_check-circle-width, var(--icon-width));
   -webkit-mask-image: var(--icon_check-circle);
   mask-image: var(--icon_check-circle);
 }
 
-.icon_info-circle::after {
+.icon_info-circle::after,
+.icon-before_info-circle::before {
   width: var(--icon_info-circle-width, var(--icon-width));
   -webkit-mask-image: var(--icon_info-circle);
   mask-image: var(--icon_info-circle);
 }
 
-.icon_arrow-stem-up-left::after {
+.icon_arrow-stem-up-left::after,
+.icon-before_arrow-stem-up-left::before {
   width: var(--icon_arrow-stem-up-left-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-up-left);
   mask-image: var(--icon_arrow-stem-up-left);
 }
 
-.icon_arrow-stem-down-right::after {
+.icon_arrow-stem-down-right::after,
+.icon-before_arrow-stem-down-right::before {
   width: var(--icon_arrow-stem-down-right-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-down-right);
   mask-image: var(--icon_arrow-stem-down-right);
 }
 
-.icon_arrow-stem-down-left::after {
+.icon_arrow-stem-down-left::after,
+.icon-before_arrow-stem-down-left::before {
   width: var(--icon_arrow-stem-down-left-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-down-left);
   mask-image: var(--icon_arrow-stem-down-left);
 }
 
-.icon_arrow-stem-up-pipe::after {
+.icon_arrow-stem-up-pipe::after,
+.icon-before_arrow-stem-up-pipe::before {
   width: var(--icon_arrow-stem-up-pipe-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-up-pipe);
   mask-image: var(--icon_arrow-stem-up-pipe);
 }
 
-.icon_arrow-stem-right-pipe::after {
+.icon_arrow-stem-right-pipe::after,
+.icon-before_arrow-stem-right-pipe::before {
   width: var(--icon_arrow-stem-right-pipe-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-right-pipe);
   mask-image: var(--icon_arrow-stem-right-pipe);
 }
 
-.icon_arrow-stem-left-pipe::after {
+.icon_arrow-stem-left-pipe::after,
+.icon-before_arrow-stem-left-pipe::before {
   width: var(--icon_arrow-stem-left-pipe-width, var(--icon-width));
   -webkit-mask-image: var(--icon_arrow-stem-left-pipe);
   mask-image: var(--icon_arrow-stem-left-pipe);
 }
 
-.icon_custom-1::after {
+.icon_quote::after,
+.icon-before_quote::before {
+  width: var(--icon_quote-width, var(--icon-width));
+  -webkit-mask-image: var(--icon_quote);
+  mask-image: var(--icon_quote);
+  --icon-colour: var(--icon_quote-colour, var(--icon-colour-default));
+}
+
+.icon_check-mark::after,
+.icon-before_check-mark::before {
+  width: var(--icon_check-mark-width, var(--icon-width));
+  -webkit-mask-image: var(--icon_check-mark);
+  mask-image: var(--icon_check-mark);
+  --icon-colour: var(--icon_check-mark-colour, var(--icon-colour-default));
+}
+
+.icon_custom-1::after,
+.icon-before_custom-1::before {
   width: var(--icon_custom-1-width, var(--icon-width));
   -webkit-mask-image: var(--icon_custom-1);
   mask-image: var(--icon_custom-1);
   --icon-colour: var(--icon_custom-1-colour, var(--icon-colour-default));
 }
 
-.icon_custom-2::after {
+.icon_custom-2::after,
+.icon-before_custom-2::before {
   width: var(--icon_custom-2-width, var(--icon-width));
   -webkit-mask-image: var(--icon_custom-2);
   mask-image: var(--icon_custom-2);
   --icon-colour: var(--icon_custom-2-colour, var(--icon-colour-default));
 }
 
-.icon_custom-3::after {
+.icon_custom-3::after,
+.icon-before_custom-3::before {
   width: var(--icon_custom-3-width, var(--icon-width));
   -webkit-mask-image: var(--icon_custom-3);
   mask-image: var(--icon_custom-3);
   --icon-colour: var(--icon_custom-3-colour, var(--icon-colour-default));
 }
 
-.icon_custom-4::after {
+.icon_custom-4::after,
+.icon-before_custom-4::before {
   width: var(--icon_custom-4-width, var(--icon-width));
   -webkit-mask-image: var(--icon_custom-4);
   mask-image: var(--icon_custom-4);
   --icon-colour: var(--icon_custom-4-colour, var(--icon-colour-default));
 }
 
-.icon_custom-5::after {
+.icon_custom-5::after,
+.icon-before_custom-5::before {
   width: var(--icon_custom-5-width, var(--icon-width));
   -webkit-mask-image: var(--icon_custom-5);
   mask-image: var(--icon_custom-5);

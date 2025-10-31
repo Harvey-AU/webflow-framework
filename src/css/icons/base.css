@@ -56,7 +56,8 @@
   )
   [lib="e_text_wrapper"]
   [lib="icon"]:last-child::after,
-[class*="icon_"]::after {
+[class*="icon_"]::after,
+[class*="icon-before_"]::before {
   color: var(--icon-colour, var(--icon-colour-default));
   content: "\00a0";
   background-color: var(--icon-colour-default);
@@ -85,16 +86,20 @@
   }
 }
 
-[class*="icon_"] {
+[class*="icon_"],
+[class*="icon-before_"] {
   display: inline-flex;
   position: relative;
 }
 [class*="icon_"],
-[class*="icon_"]::after {
+[class*="icon_"]::after,
+[class*="icon-before_"],
+[class*="icon-before_"]::before {
   vertical-align: middle;
   white-space: nowrap;
 }
-[class*="icon_"]::after {
+[class*="icon_"]::after,
+[class*="icon-before_"]::before {
   display: var(--icon_element-display);
 }
 
@@ -108,6 +113,10 @@
   [lib="icon"]:last-child::after,
 [class*="icon_"]::after {
   margin-left: var(--icon-spacing-base);
+}
+
+[class*="icon-before_"]::before {
+  margin-right: var(--icon-spacing-base);
 }
 
 [lib="e_text_wrapper"] [lib="icon-only"] [lib="icon"]:last-child::after {
