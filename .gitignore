@@ -4,9 +4,10 @@
 # Dependencies
 node_modules/
 
-# Build output
-./dist/css/
-./dist/v/
+# Build output (generated files)
+dist/css/
+dist/v/
+dist/icons.html
 
 # IDE/Editor files
 .vscode/

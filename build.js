@@ -78,12 +78,21 @@ ${concatenated}`;
   const versionDir = `dist/v/${baseDate}/v${counter}`;
   fs.mkdirSync(versionDir, { recursive: true });
 
+  // Copy icons.html from src to dist with updated CSS path
+  console.log("📄 Copying icons.html to dist...");
+  let iconsHtml = fs.readFileSync("src/icons.html", "utf8");
+  iconsHtml = iconsHtml.replace('href="css/imports.css"', 'href="css/main.css"');
+  fs.writeFileSync("dist/icons.html", iconsHtml);
+  console.log("✅ Built dist/icons.html");
+
   // Copy current build to versioned directory
   fs.cpSync("dist/css", `${versionDir}/css`, { recursive: true });
   fs.cpSync("dist/js", `${versionDir}/js`, { recursive: true });
+  fs.copyFileSync("dist/icons.html", `${versionDir}/icons.html`);
 
   console.log(`📸 Snapshot created: v/${baseDate}/v${counter}`);
   console.log(`🔗 Stable URL: https://webflow.teamharvey.co/v/${baseDate}/v${counter}/css/main.css`);
+  console.log(`🔗 Icons showcase: https://webflow.teamharvey.co/icons.html`);
 
   console.log("\n🚀 Ready for deployment!");
 }
