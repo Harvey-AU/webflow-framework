@@ -629,7 +629,8 @@
   [data-wf--e_text_advanced--layout-icon-v1="phone"],
   [data-wf--harvey-components-jan-25--e_text_advanced--layout-icon-v1="phone"],
   [data-wf--u_icon--icon="phone"],
-  [data-wf--harvey-components-jan-25--u_icon--icon="phone"] {
+  [data-wf--harvey-components-jan-25--u_icon--icon="phone"],
+  .icon_phone {
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
