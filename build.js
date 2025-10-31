@@ -19,6 +19,9 @@ function resolveImports(cssContent, baseDir) {
 function build() {
   console.log("🏗️  Building CSS from imports...");
 
+  // Ensure dist/css directory exists (dist/js always exists from git-tracked files)
+  fs.mkdirSync("dist/css", { recursive: true });
+
   // Read the imports file
   const importsCss = fs.readFileSync("src/css/imports.css", "utf8");
 
