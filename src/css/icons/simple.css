@@ -152,6 +152,14 @@
   --icon-colour: var(--icon_crown-colour, var(--icon-colour-default));
 }
 
+.icon_phone::after,
+.icon_phone_before::before {
+  width: var(--icon_phone-width, var(--icon-width));
+  -webkit-mask-image: var(--icon_phone);
+  mask-image: var(--icon_phone);
+  --icon-colour: var(--icon_phone-colour, var(--icon-colour-default));
+}
+
 .icon_forward-slash::after {
   width: var(--icon_forward-slash-width, var(--icon-width));
   -webkit-mask-image: var(--icon_forward-slash);
