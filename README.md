@@ -12,14 +12,11 @@ A CSS and JavaScript framework designed for Webflow projects using the Harvey Co
 Add this single line to your Webflow project's custom code (`<head>` section):
 
 ```html
-<!-- Production (recommended): Minified, single file, ~192KB -->
-<link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.min.css" />
-
-<!-- Development/Debug: Concatenated, unminified, ~220KB -->
+<!-- Production (recommended): Minified with Lightning CSS, ~198KB -->
 <link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.css" />
 
-<!-- Stable versioned (backwards compatibility): -->
-<link rel="stylesheet" href="https://webflow.teamharvey.co/v/2025-10-02/v1/css/main.min.css" />
+<!-- Stable versioned snapshot (pin to specific build): -->
+<link rel="stylesheet" href="https://webflow.teamharvey.co/v/2025-11-13/v1/css/main.css" />
 ```
 
 **Optional: Add JavaScript functionality** before closing `</body>` tag:
@@ -65,15 +62,19 @@ webflow-framework/
 │           └── simple.css
 ├── dist/                           # Built files (public)
 │   ├── css/
-│   │   ├── main.css                # Debug version (220KB, concatenated)
-│   │   └── main.min.css            # Production version (192KB, minified)
+│   │   ├── main.css                # Production version (198KB, minified)
+│   │   ├── main.2025-11-13-v1.css  # Version-tagged for long-term caching
+│   │   └── main.unminified.css     # Debug version (226KB, unminified)
 │   ├── js/                         # JavaScript functionality
 │   │   ├── main.js                 # Main JS loader
+│   │   ├── main.2025-11-13-v1.js   # Version-tagged for long-term caching
 │   │   ├── external-links.js       # Auto-handle external links
 │   │   ├── insert-data.js          # Data insertion utilities
 │   │   ├── query-param-to-form.js  # URL params to form fields
 │   │   ├── social-share.js         # Social sharing functionality
 │   │   └── tooltip.js              # Interactive tooltips
+│   ├── _redirects                  # Netlify redirects for cache busting
+│   ├── _headers                    # Cache-Control headers for optimal performance
 │   └── v/                          # Versioned snapshots (ignored in git)
 │       ├── 2025-10-01/
 │       │   └── v1/                 # First build of the day
@@ -121,33 +122,43 @@ webflow-framework/
 - **Form Utilities**: Automatically populate form fields from URL query parameters
 - **Smart Loading**: Main.js automatically loads all modules with error handling
 
-## 🔄 Versioning System
+## 🔄 Versioning & Caching System
 
-The framework includes automatic versioning for backwards compatibility and stability:
+The framework uses an intelligent caching strategy for optimal performance:
 
 ### **Latest (always current):**
 ```html
-<link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.min.css" />
+<!-- Stable URL that redirects to the latest version-tagged file -->
+<link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.css" />
+<script src="https://webflow.teamharvey.co/js/main.js"></script>
 ```
 
-### **Stable versioned (pin to specific build):**
+### **Stable versioned snapshots (pin to specific build):**
 ```html
-<!-- Pin to specific date and version -->
-<link rel="stylesheet" href="https://webflow.teamharvey.co/v/2025-10-02/v1/css/main.min.css" />
-<link rel="stylesheet" href="https://webflow.teamharvey.co/v/2025-10-02/v3/css/main.min.css" />
+<!-- Pin to specific date and version for guaranteed stability -->
+<link rel="stylesheet" href="https://webflow.teamharvey.co/v/2025-11-13/v1/css/main.css" />
+<script src="https://webflow.teamharvey.co/v/2025-11-13/v1/js/main.js"></script>
 ```
 
-### **How versioning works:**
-- **Each deployment** creates a new dated snapshot
+### **How it works:**
+
+**Cache Performance Strategy:**
+1. **Stable URLs** (`/css/main.css`, `/js/*.js`) → 302 redirect to version-tagged files
+   - Cache-Control: `public, max-age=0, must-revalidate` (always fresh)
+2. **Version-tagged files** (`main.2025-11-13-v1.css`) → Immutable, cached for 1 year
+   - Cache-Control: `public, max-age=31536000, immutable`
+3. **Result**: Browsers cache assets long-term while stable URLs stay fresh
+
+**Versioning:**
+- **Each deployment** creates a new dated snapshot in `/v/{YYYY-MM-DD}/v{N}/`
 - **Multiple builds per day** get incremental versions (v1, v2, v3...)
 - **All previous versions** remain available permanently
-- **URL format**: `v/{YYYY-MM-DD}/v{N}/css/main.min.css`
+- **Format**: `v/{YYYY-MM-DD}/v{N}/css/main.css`
 
-### **When to use versioned URLs:**
-- ✅ **Production projects** - Pin to tested version
-- ✅ **Client sites** - Prevent unexpected style changes
-- ✅ **Staging environments** - Test new versions safely
-- ❌ **Development** - Use latest for newest features
+### **When to use each approach:**
+- ✅ **Latest URL** - Development, always get newest features with browser caching
+- ✅ **Versioned snapshots** - Production projects, client sites, guaranteed stability
+- ✅ **Staging environments** - Test new versions before pinning to production
 
 ## 🚀 Performance
 
@@ -155,12 +166,15 @@ The framework includes automatic versioning for backwards compatibility and stab
 - 18 sequential HTTP requests via @import statements
 - ~220KB total download across multiple files
 - Render-blocking CSS loading waterfall
+- No browser caching (always re-downloaded)
 
 ### **After optimization:**
 - 1 HTTP request (single concatenated file)
-- 192KB minified with Lightning CSS (13% reduction)
+- 198KB minified with Lightning CSS (12% reduction)
 - Eliminates render-blocking import chain
-- **Significant improvement** on mobile and slower connections
+- **Long-term browser caching** via version-tagged files (1-year immutable cache)
+- **Stable URLs** automatically redirect to latest cached version
+- **Significant improvement** on mobile, slower connections, and repeat visits
 
 ## 📖 Usage
 
@@ -277,8 +291,13 @@ The framework uses Lightning CSS for optimal performance:
 5. **Creates** automatic versioned snapshots
 
 **Build outputs:**
-- `dist/css/main.css` - Debug version (220KB, concatenated but unminified)
-- `dist/css/main.min.css` - Production version (192KB, Lightning CSS minified)
+- `dist/css/main.css` - Production version (198KB, Lightning CSS minified)
+- `dist/css/main.{version-tag}.css` - Version-tagged file for long-term caching
+- `dist/css/main.unminified.css` - Debug version (226KB, unminified)
+- `dist/js/*.js` - Original JS files (stable URLs)
+- `dist/js/*.{version-tag}.js` - Version-tagged JS files for long-term caching
+- `dist/_redirects` - Netlify 302 redirects from stable URLs to version-tagged files
+- `dist/_headers` - Cache-Control headers for optimal caching strategy
 - `dist/v/{date}/v{n}/` - Versioned snapshots for backwards compatibility
 
 **Build files:**
@@ -312,9 +331,13 @@ To add a new JavaScript module to the framework:
 This framework is hosted via **Netlify** for optimal performance and reliability.
 
 - **Base URL**: `https://webflow.teamharvey.co/`
-- **Update Time**: 1-10 minutes after pushing changes
-- **Caching**: Optimised for both development and production use
+- **Update Time**: 1-2 minutes after pushing changes
+- **Caching Strategy**:
+  - Stable URLs → 302 redirect (always revalidate)
+  - Version-tagged files → Immutable, 1-year cache
+  - Optimal for both development and production use
 - **Reliability**: Backed by Netlify's global CDN infrastructure
+- **Performance**: Long-term browser caching eliminates redundant downloads
 
 ## 🤝 Contributing
 
