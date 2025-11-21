@@ -78,7 +78,8 @@ webflow-framework/
 │   │   ├── insert-data.js          # Data insertion utilities
 │   │   ├── query-param-to-form.js  # URL params to form fields
 │   │   ├── social-share.js         # Social sharing functionality
-│   │   └── tooltip.js              # Interactive tooltips
+│   │   ├── tooltip.js              # Interactive tooltips
+│   │   └── filter-tracking.js      # Optional: filter analytics (not auto-loaded)
 │   ├── _redirects                  # Netlify redirects for cache busting
 │   ├── _headers                    # Cache-Control headers for optimal performance
 │   └── v/                          # Versioned snapshots (ignored in git)
@@ -133,6 +134,7 @@ webflow-framework/
 The framework uses an intelligent caching strategy for optimal performance:
 
 ### **Latest (always current):**
+
 ```html
 <!-- Stable URL that redirects to the latest version-tagged file -->
 <link rel="stylesheet" href="https://webflow.teamharvey.co/css/main.css" />
@@ -140,6 +142,7 @@ The framework uses an intelligent caching strategy for optimal performance:
 ```
 
 ### **Stable versioned snapshots (pin to specific build):**
+
 ```html
 <!-- Pin to specific date and version for guaranteed stability -->
 <link rel="stylesheet" href="https://webflow.teamharvey.co/v/2025-11-13/v1/css/main.css" />
@@ -149,6 +152,7 @@ The framework uses an intelligent caching strategy for optimal performance:
 ### **How it works:**
 
 **Cache Performance Strategy:**
+
 1. **Stable URLs** (`/css/main.css`, `/js/*.js`) → 302 redirect to version-tagged files
    - Cache-Control: `public, max-age=0, must-revalidate` (always fresh)
 2. **Version-tagged files** (`main.2025-11-13-v1.css`) → Immutable, cached for 1 year
@@ -156,12 +160,14 @@ The framework uses an intelligent caching strategy for optimal performance:
 3. **Result**: Browsers cache assets long-term while stable URLs stay fresh
 
 **Versioning:**
+
 - **Each deployment** creates a new dated snapshot in `/v/{YYYY-MM-DD}/v{N}/`
 - **Multiple builds per day** get incremental versions (v1, v2, v3...)
 - **All previous versions** remain available permanently
 - **Format**: `v/{YYYY-MM-DD}/v{N}/css/main.css`
 
 ### **When to use each approach:**
+
 - ✅ **Latest URL** - Development, always get newest features with browser caching
 - ✅ **Versioned snapshots** - Production projects, client sites, guaranteed stability
 - ✅ **Staging environments** - Test new versions before pinning to production
@@ -169,12 +175,14 @@ The framework uses an intelligent caching strategy for optimal performance:
 ## 🚀 Performance
 
 ### **Before optimization:**
+
 - 18 sequential HTTP requests via @import statements
 - ~220KB total download across multiple files
 - Render-blocking CSS loading waterfall
 - No browser caching (always re-downloaded)
 
 ### **After optimization:**
+
 - 1 HTTP request (single concatenated file)
 - 198KB minified with Lightning CSS (12% reduction)
 - Eliminates render-blocking import chain
@@ -297,6 +305,7 @@ The framework uses Lightning CSS for optimal performance:
 5. **Creates** automatic versioned snapshots
 
 **Build outputs:**
+
 - `dist/css/main.css` - Production version (198KB, Lightning CSS minified)
 - `dist/css/main.{version-tag}.css` - Version-tagged file for long-term caching
 - `dist/css/main.unminified.css` - Debug version (226KB, unminified)
@@ -307,6 +316,7 @@ The framework uses Lightning CSS for optimal performance:
 - `dist/v/{date}/v{n}/` - Versioned snapshots for backwards compatibility
 
 **Build files:**
+
 - `src/css/imports.css` - Source file defining import order
 - `build.js` - Build script using Lightning CSS
 - `netlify.toml` - Deployment configuration (`publish = "dist"`)
