@@ -11,7 +11,7 @@
   const FRAMEWORK_BASE_URL = "https://webflow.teamharvey.co/js/";
 
   // JavaScript modules to load
-  const JS_MODULES = ["external-links.js", "tooltip.js", "social-share.js", "query-param-to-form.js"];
+  const JS_MODULES = ["external-links.js", "tooltip.js", "social-share.js", "query-param-to-form.js", "filter-tracking.js"];
 
   /**
    * Dynamically load a JavaScript file with retry logic
