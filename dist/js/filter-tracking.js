@@ -1,10 +1,43 @@
 (function () {
   "use strict";
 
-  // Exit early if gtag isn't defined.
-  if (typeof window.gtag !== "function") {
-    console.error("GTag is not defined. Filter tracking will not run.");
-    return;
+  function waitForGtag(maxAttempts = 10, interval = 500) {
+    return new Promise((resolve, reject) => {
+      if (typeof window.gtag === "function") {
+        resolve();
+        return;
+      }
+
+      let attempts = 0;
+      const timer = setInterval(() => {
+        attempts += 1;
+        if (typeof window.gtag === "function") {
+          clearInterval(timer);
+          resolve();
+        } else if (attempts >= maxAttempts) {
+          clearInterval(timer);
+          reject(new Error("GTag is not available"));
+        }
+      }, interval);
+    });
+  }
+
+  const gtagReady = waitForGtag();
+
+  function sendEvent(eventName, params) {
+    gtagReady
+      .then(() => {
+        window.gtag("event", eventName, params);
+      })
+      .catch((error) => {
+        console.error("Filter tracking could not send event:", error.message);
+      });
+  }
+
+  function sanitizeEventName(name, fallback) {
+    if (!name || typeof name !== "string") return fallback;
+    const cleaned = name.replace(/[^a-zA-Z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+    return cleaned ? cleaned.toLowerCase() : fallback;
   }
 
   // Private mapping of filter event names to their debounce configuration.
@@ -16,18 +49,18 @@
   // Precomputed query string from the current URL parameters (formatted as key:value pairs).
   let preMadeQuery = "";
   // Name of event to be send to GA
-  let eventName = "Search filter";
+  let eventName = "search_filter";
 
   // Build the filter events mapping from fields in the filters form.
   function buildFilterList() {
     const filterForm = document.querySelector('[fs-cmsfilter-element="filters"]');
     if (!filterForm) {
-      console.error("Filter form not found.");
+      console.debug("Filter form not found; skipping filter tracking init.");
       return;
     }
 
     // Get the form element to send into GA as event name
-    eventName = filterForm.getAttribute("fs-cmsfilter-formName") || eventName;
+    eventName = sanitizeEventName(filterForm.getAttribute("fs-cmsfilter-formName"), eventName);
 
     const filterElements = filterForm.querySelectorAll("[fs-cmsfilter-field]");
     filterElements.forEach((el) => {
@@ -36,13 +69,13 @@
         // Use the first value from a comma-separated list as the event name.
         const filterName = filterValue.split(",")[0].trim();
 
-        // Determine the field-specific debounce delay (6× the provided value), if defined.
+        // Determine the field-specific debounce delay (same units as provided)
         let debounceDelay = 0;
         const debounceAttr = el.getAttribute("fs-cmsfilter-debounce");
         if (debounceAttr) {
           const numericDelay = parseInt(debounceAttr, 10);
           if (!isNaN(numericDelay)) {
-            debounceDelay = numericDelay * 6;
+            debounceDelay = numericDelay;
           }
         }
 
@@ -55,7 +88,7 @@
         }
       }
     });
-    console.log("✅ Filter events built:", filterEvents);
+    console.log("Filter events built:", filterEvents);
   }
 
   // Check for "no results" and send a GA event if needed.
@@ -67,14 +100,9 @@
     setTimeout(() => {
       const finalCheck = window.getComputedStyle(emptyEl);
       if (finalCheck.display !== "none") {
-        console.log(`🔍 Confirmed 'No Results': ${preMadeQuery}`);
-        window.gtag("event", "Filter No Results", {
-          value: preMadeQuery,
-          event_callback: () => {
-            // Optional: Add visual feedback
-            emptyEl.classList.add("ga-tracked-no-results");
-          },
-        });
+        console.log(`Confirmed 'No Results': ${preMadeQuery}`);
+        sendEvent("filter_no_results", { value: preMadeQuery });
+        emptyEl.classList.add("ga-tracked-no-results");
       }
     }, 500);
   }
@@ -102,10 +130,10 @@
     const queryParts = [];
 
     Object.keys(filterEvents).forEach((filterName) => {
-      const value = urlParams.get(filterName);
-      if (value) {
+      const values = urlParams.getAll(filterName).filter(Boolean);
+      if (values.length > 0) {
         usedFilters.add(filterName);
-        queryParts.push(`${filterName}:${value}`);
+        queryParts.push(`${filterName}:${values.join(",")}`);
         const { debounceDelay } = filterEvents[filterName];
         maxDebounce = Math.max(maxDebounce, debounceDelay);
         if (debounceDelay > 0) {
@@ -114,13 +142,13 @@
             clearTimeout(filterEvents[filterName].timer);
           }
           filterEvents[filterName].timer = setTimeout(() => {
-            console.log(`🔍 Sending event (debounced): ${filterName} = ${value}`);
-            window.gtag("event", eventName, { filterName: value });
+            console.log(`Sending event (debounced): ${filterName} = ${values.join(",")}`);
+            sendEvent(eventName, { filter_key: filterName, filter_value: values.join(",") });
             filterEvents[filterName].timer = null;
           }, debounceDelay);
         } else {
-          console.log(`🔍 Sending event: ${filterName} = ${value}`);
-          window.gtag("event", eventName, { filterName: value });
+          console.log(`Sending event: ${filterName} = ${values.join(",")}`);
+          sendEvent(eventName, { filter_key: filterName, filter_value: values.join(",") });
         }
       }
     });
@@ -131,8 +159,8 @@
     // Send the combined filter event immediately.
     if (usedFilters.size > 0) {
       const filterCombination = Array.from(usedFilters).sort().join(",");
-      console.log(`🔍 Filter combination used: ${filterCombination}`);
-      window.gtag("event", "filter_used", { value: filterCombination });
+      console.log(`Filter combination used: ${filterCombination}`);
+      sendEvent("filter_used", { value: filterCombination });
     }
 
     if (noResultsTimer) {
@@ -142,9 +170,9 @@
     noResultsTimer = setTimeout(checkAndSendNoResults, delay);
   }
 
-  console.log("🚀 Building filter events list...");
+  console.log("Building filter events list...");
   buildFilterList();
-  console.log("🚀 Starting filter tracking...");
+  console.log("Starting filter tracking...");
   sendParamsToGA();
 
   // Hook into history state changes and popstate to track URL changes.
