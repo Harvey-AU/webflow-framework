@@ -25,6 +25,12 @@ Add this single line to your Webflow project's custom code (`<head>` section):
 <script src="https://webflow.teamharvey.co/js/main.js"></script>
 ```
 
+**Optional: Add filter tracking (loads separately):**
+
+```html
+<script src="https://webflow.teamharvey.co/js/filter-tracking.js"></script>
+```
+
 ## 📁 Project Structure
 
 ```
