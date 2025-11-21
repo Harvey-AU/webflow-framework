@@ -109,10 +109,24 @@
   .harvey-components-jan-25--border-colour:first-of-type,
   .harvey-components-jan-25--u_colour-variants:first-of-type,
   .u_colour-variants:first-of-type {
-    border-top-left-radius: var(--_sizing-border-corner---corner--full);
-    border-top-right-radius: var(--_sizing-border-corner---corner--full);
-    border-bottom-left-radius: var(--_sizing-border-corner---corner--full);
-    border-bottom-right-radius: var(--_sizing-border-corner---corner--full);
+    border-top-left-radius: var(--_sizing-border-corner---corner--button);
+    border-top-right-radius: var(--_sizing-border-corner---corner--button);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--button);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--button);
+  }
+}
+
+[data-wf--u_corners_size--corners="image"],
+[data-wf--harvey-components-jan-25--u_corners_size--corners="image"],
+[data-wf--components-library--u_corners_size--corners="image"] {
+  .border-colour:first-of-type,
+  .harvey-components-jan-25--border-colour:first-of-type,
+  .harvey-components-jan-25--u_colour-variants:first-of-type,
+  .u_colour-variants:first-of-type {
+    border-top-left-radius: var(--_sizing-border-corner---corner--image);
+    border-top-right-radius: var(--_sizing-border-corner---corner--image);
+    border-bottom-left-radius: var(--_sizing-border-corner---corner--image);
+    border-bottom-right-radius: var(--_sizing-border-corner---corner--image);
   }
 }
 
