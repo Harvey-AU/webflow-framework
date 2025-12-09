@@ -701,7 +701,7 @@
       width: var(--icon_document-edit-width, var(--icon-width));
       -webkit-mask-image: var(--icon-document-edit);
       mask-image: var(--icon-document-edit);
-      --icon-colour: var(--icon-document-edit, var(--icon-colour-default));
+      --icon-colour: var(--icon-document-edit-colour, var(--icon-colour-default));
     }
   }
   [data-wf--e_text_advanced--layout-icon-v1="location-pin"],
@@ -714,7 +714,7 @@
       width: var(--icon_location-pin-width, var(--icon-width));
       -webkit-mask-image: var(--icon-location-pin);
       mask-image: var(--icon-location-pin);
-      --icon-colour: var(--icon-location-pin, var(--icon-colour-default));
+      --icon-colour: var(--icon-location-pin-colour, var(--icon-colour-default));
     }
   }
   [data-wf--e_text_advanced--layout-icon-v1="graduate-cap"],
@@ -727,7 +727,7 @@
       width: var(--icon_graduate-cap-width, var(--icon-width));
       -webkit-mask-image: var(--icon-graduate-cap);
       mask-image: var(--icon-graduate-cap);
-      --icon-colour: var(--icon-graduate-cap, var(--icon-colour-default));
+      --icon-colour: var(--icon-graduate-cap-colour, var(--icon-colour-default));
     }
   }
 }
