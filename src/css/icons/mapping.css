@@ -646,7 +646,7 @@
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
-      width: var(--icon-law-hammer-width, var(--icon-width));
+      width: var(--icon_law-hammer-width, var(--icon-width));
       -webkit-mask-image: var(--icon-law-hammer);
       mask-image: var(--icon-law-hammer);
       --icon-colour: var(--icon-law-hammer-colour, var(--icon-colour-default));
@@ -659,7 +659,7 @@
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
-      width: var(--icon-book-open-width, var(--icon-width));
+      width: var(--icon_book-open-width, var(--icon-width));
       -webkit-mask-image: var(--icon-book-open);
       mask-image: var(--icon-book-open);
       --icon-colour: var(--icon-book-open-colour, var(--icon-colour-default));
@@ -672,7 +672,7 @@
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
-      width: var(--icon-video-play-width, var(--icon-width));
+      width: var(--icon_video-play-width, var(--icon-width));
       -webkit-mask-image: var(--icon-video-play);
       mask-image: var(--icon-video-play);
       --icon-colour: var(--icon-video-play-colour, var(--icon-colour-default));
@@ -685,7 +685,7 @@
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
-      width: var(--icon-document-simple-width, var(--icon-width));
+      width: var(--icon_document-simple-width, var(--icon-width));
       -webkit-mask-image: var(--icon-document-simple);
       mask-image: var(--icon-document-simple);
       --icon-colour: var(--icon-document-simple-colour, var(--icon-colour-default));
@@ -698,10 +698,10 @@
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
-      width: var(--icon-document-edit-width, var(--icon-width));
+      width: var(--icon_document-edit-width, var(--icon-width));
       -webkit-mask-image: var(--icon-document-edit);
       mask-image: var(--icon-document-edit);
-      --icon-colour: var(--icon_phone-colour, var(--icon-colour-default));
+      --icon-colour: var(--icon-document-edit, var(--icon-colour-default));
     }
   }
   [data-wf--e_text_advanced--layout-icon-v1="location-pin"],
@@ -711,10 +711,10 @@
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
-      width: var(--icon-location-pin-width, var(--icon-width));
+      width: var(--icon_location-pin-width, var(--icon-width));
       -webkit-mask-image: var(--icon-location-pin);
       mask-image: var(--icon-location-pin);
-      --icon-colour: var(--icon_phone-colour, var(--icon-colour-default));
+      --icon-colour: var(--icon-location-pin, var(--icon-colour-default));
     }
   }
   [data-wf--e_text_advanced--layout-icon-v1="graduate-cap"],
@@ -724,10 +724,10 @@
     &[lib="icon-after"] [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &:not([lib="icon-after"]):not([lib="icon-before"]) [lib="e_text_wrapper"] [lib="icon"]:last-child::after,
     &[lib="icon-before"] [lib="e_text_wrapper"] [lib="icon"]:first-child::before {
-      width: var(--icon-graduate-cap-width, var(--icon-width));
+      width: var(--icon_graduate-cap-width, var(--icon-width));
       -webkit-mask-image: var(--icon-graduate-cap);
       mask-image: var(--icon-graduate-cap);
-      --icon-colour: var(--icon_phone-colour, var(--icon-colour-default));
+      --icon-colour: var(--icon-graduate-cap, var(--icon-colour-default));
     }
   }
 }
