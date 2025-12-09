@@ -349,3 +349,52 @@
   mask-image: var(--icon_custom-5);
   --icon-colour: var(--icon_custom-5-colour, var(--icon-colour-default));
 }
+.icon_book-open::after,
+.icon-before_book-open::before {
+  width: var(--icon-book-open-width, var(--icon-width));
+  -webkit-mask-image: var(--icon-book-open);
+  mask-image: var(--icon-book-open);
+  --icon-colour: var(--icon-book-open-colour, var(--icon-colour-default));
+}
+.icon_law-hammer::after,
+.icon-before_law-hammer::before {
+  width: var(--icon-law-hammer-width, var(--icon-width));
+  -webkit-mask-image: var(--icon-law-hammer);
+  mask-image: var(--icon-law-hammer);
+  --icon-colour: var(--icon-law-hammer-colour, var(--icon-colour-default));
+}
+.icon_graduate-cap::after,
+.icon-before_graduate-cap::before {
+  width: var(--icon-graduate-cap-width, var(--icon-width));
+  -webkit-mask-image: var(--icon-graduate-cap);
+  mask-image: var(--icon-graduate-cap);
+  --icon-colour: var(--icon-graduate-cap-colour, var(--icon-colour-default));
+}
+.icon_video-play::after,
+.icon-before_video-play::before {
+  width: var(--icon-video-play-width, var(--icon-width));
+  -webkit-mask-image: var(--icon-video-play);
+  mask-image: var(--icon-video-play);
+  --icon-colour: var(--icon-video-play-colour, var(--icon-colour-default));
+}
+.icon_document-simple::after,
+.icon-before_document-simple::before {
+  width: var(--icon-document-simple-width, var(--icon-width));
+  -webkit-mask-image: var(--icon-document-simple);
+  mask-image: var(--icon-document-simple);
+  --icon-colour: var(--icon-document-simple-colour, var(--icon-colour-default));
+}
+.icon_document-edit::after,
+.icon-before_document-edit::before {
+  width: var(--icon-document-edit-width, var(--icon-width));
+  -webkit-mask-image: var(--icon-document-edit);
+  mask-image: var(--icon-document-edit);
+  --icon-colour: var(--icon-document-edit-colour, var(--icon-colour-default));
+}
+.icon_location-pin::after,
+.icon-before_location-pin::before {
+  width: var(--icon-location-pin-width, var(--icon-width));
+  -webkit-mask-image: var(--icon-location-pin);
+  mask-image: var(--icon-location-pin);
+  --icon-colour: var(--icon-location-pin-colour, var(--icon-colour-default));
+}
