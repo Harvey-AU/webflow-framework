@@ -10,6 +10,9 @@
    * submissions. Parameters accumulate across multiple page visits within the session.
    */
 
+  // Use WebflowFramework debug utility if available
+  const debug = window.WebflowFramework?.debug || function(feature, topic, detail, type) {};
+
 // Native cookie functions (no external library needed)
 const Cookie = {
   get: (name) => {
@@ -19,12 +22,34 @@ const Cookie = {
       ?.split("=")[1];
   },
   set: (name, value) => {
-    document.cookie = `${name}=${value}; path=/; max-age=86400`; // 1 day expiry
+    // Secure flag protects from MITM attacks (only works over HTTPS)
+    // SameSite=Lax prevents CSRF attacks while allowing normal navigation
+    const isSecure = window.location.protocol === 'https:';
+    const secureFlag = isSecure ? '; Secure' : '';
+    document.cookie = `${name}=${value}; path=/; max-age=86400; SameSite=Lax${secureFlag}`;
   },
   remove: (name) => {
-    document.cookie = `${name}=; path=/; max-age=0`;
+    const isSecure = window.location.protocol === 'https:';
+    const secureFlag = isSecure ? '; Secure' : '';
+    document.cookie = `${name}=; path=/; max-age=0${secureFlag}`;
   },
 };
+
+// Sanitise parameter name to prevent XSS (allow only alphanumeric, underscore, hyphen)
+function sanitiseParamName(name) {
+  if (typeof name !== 'string') return '';
+  // Allow only safe characters for HTML attribute names
+  return name.replace(/[^a-zA-Z0-9_-]/g, '');
+}
+
+// Sanitise parameter value to prevent XSS
+function sanitiseParamValue(value) {
+  if (typeof value !== 'string') return '';
+  // Create a text node to safely escape HTML special characters
+  const div = document.createElement('div');
+  div.textContent = value;
+  return div.innerHTML;
+}
 
 // Extract all URL query parameters as key-value object
 function getAllUrlParams() {
@@ -81,11 +106,21 @@ function createAndSetFormFields() {
   // Create hidden fields for each parameter in cookie and add to all forms
   forms.forEach((form) => {
     for (const [key, value] of Object.entries(cookieData.parameters || {})) {
+      // Sanitise both key and value to prevent XSS
+      const sanitisedKey = sanitiseParamName(key);
+      const sanitisedValue = sanitiseParamValue(value || emptyValue);
+
+      // Skip if sanitisation removed all content from the key
+      if (!sanitisedKey) {
+        debug("Query Params", "Security", `Blocked unsafe parameter name: ${key}`, "warn");
+        continue;
+      }
+
       const input = document.createElement("input");
       input.type = "hidden";
-      input.name = key;
-      input.className = key;
-      input.value = value || emptyValue;
+      input.name = sanitisedKey;
+      input.className = sanitisedKey;
+      input.value = sanitisedValue;
       input.setAttribute("data-query-param", "true");
       form.appendChild(input);
     }
@@ -99,13 +134,13 @@ function captureUrlParameters() {
   const hasParams = Object.keys(urlParams).length > 0;
 
   if (hasParams && !cookieExist) {
-    console.log("Created SessionParameters cookie");
+    debug("Query Params", "Cookie Created", "Created SessionParameters cookie");
     createLead(urlParams);
   } else if (hasParams && cookieExist) {
-    console.log("Added to SessionParameters cookie");
+    debug("Query Params", "Cookie Updated", "Added to SessionParameters cookie");
     createLead(urlParams);
   }
-  
+
   return { hasParams, cookieExist };
 }
 

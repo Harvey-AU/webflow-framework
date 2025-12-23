@@ -1,6 +1,9 @@
 (function () {
   "use strict";
 
+  // Use WebflowFramework debug utility if available
+  const debug = window.WebflowFramework?.debug || function(feature, topic, detail, type) {};
+
   function waitForGtag(maxAttempts = 10, interval = 500) {
     return new Promise((resolve, reject) => {
       if (typeof window.gtag === "function") {
@@ -55,7 +58,7 @@
   function buildFilterList() {
     const filterForm = document.querySelector('[fs-cmsfilter-element="filters"]');
     if (!filterForm) {
-      console.debug("Filter form not found; skipping filter tracking init.");
+      debug("Filter Tracking", "Initialisation", "Filter form not found; skipping filter tracking init.", "info");
       return;
     }
 
@@ -88,7 +91,7 @@
         }
       }
     });
-    console.log("Filter events built:", filterEvents);
+    debug("Filter Tracking", "Initialisation", `Filter events built: ${JSON.stringify(filterEvents)}`);
   }
 
   // Check for "no results" and send a GA event if needed.
@@ -100,7 +103,7 @@
     setTimeout(() => {
       const finalCheck = window.getComputedStyle(emptyEl);
       if (finalCheck.display !== "none") {
-        console.log(`Confirmed 'No Results': ${preMadeQuery}`);
+        debug("Filter Tracking", "No Results", `Confirmed 'No Results': ${preMadeQuery}`);
         sendEvent("filter_no_results", { value: preMadeQuery });
         emptyEl.classList.add("ga-tracked-no-results");
       }
@@ -142,12 +145,12 @@
             clearTimeout(filterEvents[filterName].timer);
           }
           filterEvents[filterName].timer = setTimeout(() => {
-            console.log(`Sending event (debounced): ${filterName} = ${values.join(",")}`);
+            debug("Filter Tracking", "Event Send", `Sending event (debounced): ${filterName} = ${values.join(",")}`);
             sendEvent(eventName, { filter_key: filterName, filter_value: values.join(",") });
             filterEvents[filterName].timer = null;
           }, debounceDelay);
         } else {
-          console.log(`Sending event: ${filterName} = ${values.join(",")}`);
+          debug("Filter Tracking", "Event Send", `Sending event: ${filterName} = ${values.join(",")}`);
           sendEvent(eventName, { filter_key: filterName, filter_value: values.join(",") });
         }
       }
@@ -159,7 +162,7 @@
     // Send the combined filter event immediately.
     if (usedFilters.size > 0) {
       const filterCombination = Array.from(usedFilters).sort().join(",");
-      console.log(`Filter combination used: ${filterCombination}`);
+      debug("Filter Tracking", "Event Send", `Filter combination used: ${filterCombination}`);
       sendEvent("filter_used", { value: filterCombination });
     }
 
@@ -170,9 +173,9 @@
     noResultsTimer = setTimeout(checkAndSendNoResults, delay);
   }
 
-  console.log("Building filter events list...");
+  debug("Filter Tracking", "Initialisation", "Building filter events list...");
   buildFilterList();
-  console.log("Starting filter tracking...");
+  debug("Filter Tracking", "Initialisation", "Starting filter tracking...");
   sendParamsToGA();
 
   // Hook into history state changes and popstate to track URL changes.

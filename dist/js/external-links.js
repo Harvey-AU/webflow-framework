@@ -1,6 +1,9 @@
 (function() {
   "use strict";
 
+  // Use WebflowFramework debug utility if available
+  const debug = window.WebflowFramework?.debug || function(feature, topic, detail, type) {};
+
   function initExternalLinks() {
   const links = document.querySelectorAll("a");
 
@@ -72,14 +75,21 @@
 
   links.forEach((link) => {
     // Skip links without href, javascript:, mailto:, or anchor links
-    if (!link.href || link.href.startsWith("javascript:") || link.href.startsWith("mailto:") || link.href === "#" || link.href.startsWith("#")) {
+    if (!link.href || link.href === "#" || link.href.startsWith("#")) {
       return;
     }
 
     try {
       const linkUrl = new URL(link.href);
 
-      // Skip non-HTTP protocols
+      // Security: Block dangerous protocols that could execute code or leak data
+      const dangerousProtocols = ["javascript:", "data:", "vbscript:", "file:", "about:"];
+      if (dangerousProtocols.includes(linkUrl.protocol)) {
+        debug("External Links", "Security", `Blocked dangerous protocol: ${linkUrl.protocol}`, "warn");
+        return;
+      }
+
+      // Skip non-HTTP protocols (mailto, tel, etc. are allowed)
       if (linkUrl.protocol !== "http:" && linkUrl.protocol !== "https:") {
         return;
       }
@@ -99,7 +109,7 @@
       }
     } catch (e) {
       // Handle invalid URLs gracefully
-      console.debug("Error processing link:", link.href);
+      debug("External Links", "URL Processing", `Error processing link: ${link.href}`, "warn");
     }
   });
 }
