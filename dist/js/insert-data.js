@@ -1,4 +1,4 @@
-/* 
+/*
 
 This is a prototype that was developed requiring adaptation to be adaptable to various projects / variables.
 Leaving here as a potential solution for multiple clients.
@@ -18,6 +18,9 @@ Means that we don't need to add a large collection element / list of many items 
 
 */
 
+// Use WebflowFramework debug utility if available
+const debug = window.WebflowFramework?.debug || function(feature, topic, detail, type) {};
+
 async function getAPIData(counterType) {
   // Check cache first
   try {
@@ -29,7 +32,7 @@ async function getAPIData(counterType) {
       document.querySelectorAll(`[data-insert="${counterType}"]`).forEach((el) => {
         el.textContent = cache.data[counterType];
       });
-      console.log(`Using cached value for ${counterType}: ${cache.data[counterType]}`);
+      debug("Insert Data", "Cache", `Using cached value for ${counterType}: ${cache.data[counterType]}`);
       return;
     }
   } catch (e) {

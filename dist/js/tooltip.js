@@ -1,11 +1,14 @@
 (function() {
   "use strict";
 
+  // Use WebflowFramework debug utility if available
+  const debug = window.WebflowFramework?.debug || function(feature, topic, detail, type) {};
+
   function initTooltips() {
   try {
     const tooltipTemplate = document.getElementById("tooltip-container");
     if (!tooltipTemplate) {
-      console.error("Tooltip: Container element with id 'tooltip-container' not found");
+      debug("Tooltip", "Initialisation", "Container element with id 'tooltip-container' not found", "info");
       return;
     }
 

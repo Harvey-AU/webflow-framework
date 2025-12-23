@@ -8,6 +8,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Multiple version updates may occur on the same date, each with its own version number.
 Each version represents a distinct set of changes, even if released on the same day.
 
+## [1.0.6] - 2025-12-23
+
+### Added
+
+- **Structured debug logging** - Logs only appear when `?debug` query parameter is present
+  - New signature: `debug(feature, topic, detail, type)`
+  - Example: `debug("Tooltip", "Initialisation", "Container not found", "info")`
+  - Logs formatted as `[Feature][Topic] Detail` for easy filtering
+  - Supports log types: "log" (default), "warn", "info", "error"
+- Global debug utility exposed via `window.WebflowFramework.debug()` and `window.WebflowFramework.isDebugMode`
+
+### Changed
+
+- Replaced all `console.log` and `console.debug` calls with structured debug logger across all modules
+- Console logs now hidden by default in production - add `?debug` to URL to enable detailed logging
+- Error messages (`console.error`) remain visible regardless of debug mode for critical issues
+- Warning messages (`console.warn`) remain visible regardless of debug mode for important notices
+
+### Fixed
+
+- Fixed race condition where child modules could load before `window.WebflowFramework` was initialized
+- Fixed "element not found" messages polluting production console - now only visible with `?debug` parameter
+  - Tooltip: "Container element not found" now uses debug logging
+  - Social share: "No containers found" now uses debug logging
+  - Filter tracking: "Filter form not found" already used debug logging
+  - These are normal when pages don't use these features, not errors
+
 ## [1.0.5] - 2025-07-17
 
 ### Changed

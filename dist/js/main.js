@@ -13,6 +13,24 @@
   // JavaScript modules to load
   const JS_MODULES = ["external-links.js", "tooltip.js", "social-share.js", "query-param-to-form.js"];
 
+  // Check if debug mode is enabled via query parameter
+  const isDebugMode = new URLSearchParams(window.location.search).has("debug");
+
+  /**
+   * Structured debug logger - only logs when ?debug is in the URL
+   * @param {string} feature - Feature name (e.g., "Tooltip", "Social Share", "Framework")
+   * @param {string} topic - Topic/context (e.g., "Initialisation", "Event Handler", "Load")
+   * @param {string} detail - Detailed message
+   * @param {string} type - Log type: "log" (default), "warn", "info", "error"
+   */
+  function debug(feature, topic, detail, type = "log") {
+    if (!isDebugMode) return;
+
+    const prefix = `[${feature}][${topic}]`;
+    const consoleMethod = console[type] || console.log;
+    consoleMethod(prefix, detail);
+  }
+
   /**
    * Dynamically load a JavaScript file with retry logic
    * @param {string} src - The source URL of the script
@@ -32,13 +50,13 @@
       script.async = true;
 
       script.onload = () => {
-        console.debug(`✅ Webflow Framework: Loaded ${src.split("/").pop()}`);
+        debug("Framework", "Module Load", `Loaded ${src.split("/").pop()}`);
         resolve();
       };
 
       script.onerror = () => {
         if (retryCount < 1) {
-          console.debug(`⚠️ Webflow Framework: Retrying ${src.split("/").pop()}`);
+          debug("Framework", "Module Load", `Retrying ${src.split("/").pop()}`, "warn");
           // Remove failed script element
           script.remove();
           // Retry after 300ms
@@ -59,7 +77,7 @@
    * Load all framework JavaScript modules
    */
   async function loadFramework() {
-    console.debug("🚀 Webflow Framework: Loading JavaScript modules...");
+    debug("Framework", "Initialisation", "Loading JavaScript modules...");
 
     try {
       // Load all modules in parallel
@@ -70,7 +88,7 @@
 
       await Promise.all(loadPromises);
 
-      console.log(`✨ Webflow Framework: ${JS_MODULES.length} modules loaded successfully`);
+      debug("Framework", "Initialisation", `${JS_MODULES.length} modules loaded successfully`);
 
       // Dispatch custom event when framework is ready
       const event = new CustomEvent("webflowFrameworkReady", {
@@ -84,6 +102,16 @@
       console.error("💥 Webflow Framework: Error loading modules:", error);
     }
   }
+
+  // Expose framework info to global scope for debugging
+  // IMPORTANT: Must be set up BEFORE loading child modules to avoid race condition
+  window.WebflowFramework = {
+    modules: JS_MODULES,
+    baseUrl: FRAMEWORK_BASE_URL,
+    reload: loadFramework,
+    debug: debug,
+    isDebugMode: isDebugMode,
+  };
 
   /**
    * Initialise the framework when DOM is ready
@@ -99,11 +127,4 @@
 
   // Start loading the framework
   init();
-
-  // Expose framework info to global scope for debugging
-  window.WebflowFramework = {
-    modules: JS_MODULES,
-    baseUrl: FRAMEWORK_BASE_URL,
-    reload: loadFramework,
-  };
 })();

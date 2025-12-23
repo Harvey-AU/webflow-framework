@@ -244,11 +244,31 @@ The framework dispatches a custom event when all modules are loaded:
 
 ### Debug Information
 
+**Enable debug logging** by adding `?debug` to your URL:
+
+```
+Visit: https://yoursite.com/?debug
+```
+
+When debug mode is active, you'll see structured logs in the console:
+
+```
+[Framework][Initialisation] Loading JavaScript modules...
+[Framework][Module Load] Loaded tooltip.js
+[Tooltip][Initialisation] Container element with id 'tooltip-container' not found
+```
+
 Access framework debug information in the browser console:
 
 ```javascript
+// Check if debug mode is active
+console.log(window.WebflowFramework.isDebugMode);
+
 // Check what modules are loaded
 console.log(window.WebflowFramework.modules);
+
+// Manually trigger debug logging (only works when ?debug is in URL)
+window.WebflowFramework.debug("My Feature", "Test", "Custom debug message");
 
 // Manually reload all JavaScript modules
 window.WebflowFramework.reload();
