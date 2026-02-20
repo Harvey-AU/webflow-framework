@@ -395,6 +395,10 @@ blockquote {
     content: " ";
     white-space: pre;
   }
+  [lib="first"]:not(:empty) + [lib="second"]:not(:empty)::before {
+    content: " ";
+    white-space: pre;
+  }
 }
 
 hr {
