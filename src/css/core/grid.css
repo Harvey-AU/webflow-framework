@@ -245,7 +245,7 @@
   }
 
   /* Reset the variable for nested grid slots to prevent inheritance */
-  &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+  [breakpoint="tablet"][data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
     --grid-cols-count: initial;
   }
 
@@ -345,7 +345,7 @@
   }
 
   /* Reset the variable for nested grid slots to prevent inheritance */
-  &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+  [breakpoint="mobile-landscape"][data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
     --grid-cols-count: initial;
   }
 
@@ -446,7 +446,7 @@
   }
 
   /* Reset the variable for nested grid slots to prevent inheritance */
-  &[data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
+  [breakpoint="mobile-portrait"][data-wf--harvey-components-jan-25--u_grid-cols_breakpoint-inner--columns="one-column"] .harvey-components-jan-25--grid-slot {
     --grid-cols-count: initial;
   }
 
