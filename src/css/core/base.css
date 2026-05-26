@@ -43,6 +43,9 @@ input[type="file"]:focus-visible {
   display: unset;
   background-color: inherit;
 }
+.button {
+  align-content: center;
+}
 
 /* Make sure containers never lose their center alignment */
 .container-medium,
@@ -478,7 +481,7 @@ hr {
   [lib="e_text_wrapper"]::after {
     top: 50%;
     height: var(--_font---strike-through--size);
-}
+  }
 }
 [lib="button-hover-underline"] {
   [lib="e_text_wrapper"]::after {
@@ -593,7 +596,7 @@ div.harvey-components-jan-25--card-content_image,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="light"] ul,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="light"] li,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="light"] p {
-    font-weight: var(--_font---weight--light);
+  font-weight: var(--_font---weight--light);
 }
 
 [data-wf--u_font-weight--weight="normal"] h1,
@@ -614,7 +617,7 @@ div.harvey-components-jan-25--card-content_image,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="normal"] ul,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="normal"] li,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="normal"] p {
-    font-weight: var(--_font---weight--normal);
+  font-weight: var(--_font---weight--normal);
 }
 
 [data-wf--u_font-weight--weight="medium"] h1,
@@ -635,7 +638,7 @@ div.harvey-components-jan-25--card-content_image,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="medium"] ul,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="medium"] li,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="medium"] p {
-    font-weight: var(--_font---weight--medium);
+  font-weight: var(--_font---weight--medium);
 }
 
 [data-wf--u_font-weight--weight="semibold"] h1,
@@ -656,7 +659,7 @@ div.harvey-components-jan-25--card-content_image,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="semibold"] ul,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="semibold"] li,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="semibold"] p {
-    font-weight: var(--_font---weight--semibold);
+  font-weight: var(--_font---weight--semibold);
 }
 
 [data-wf--u_font-weight--weight="bold"] h1,
@@ -677,7 +680,7 @@ div.harvey-components-jan-25--card-content_image,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="bold"] ul,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="bold"] li,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="bold"] p {
-    font-weight: var(--_font---weight--bold);
+  font-weight: var(--_font---weight--bold);
 }
 
 [data-wf--u_font-weight--weight="xbold"] h1,
@@ -698,6 +701,6 @@ div.harvey-components-jan-25--card-content_image,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="xbold"] ul,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="xbold"] li,
 [data-wf--harvey-components-jan-25--u_font-weight--weight="xbold"] p {
-    font-weight: var(--_font---weight--xbold);
+  font-weight: var(--_font---weight--xbold);
 }
 /* Font-weight override for each HTML element */
