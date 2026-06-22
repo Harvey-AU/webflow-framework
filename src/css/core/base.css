@@ -115,6 +115,11 @@ blockquote {
   font-size: unset;
   line-height: unset;
 }
+/* Blockquote override defaults */
+blockquote {
+  font-size: unset;
+  line-height: unset;
+}
 
 /* These classes are never overwritten */
 .hide {
