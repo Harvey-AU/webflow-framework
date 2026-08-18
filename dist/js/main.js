@@ -11,7 +11,7 @@
   const FRAMEWORK_BASE_URL = "https://webflow.teamharvey.co/js/";
 
   // JavaScript modules to load
-  const JS_MODULES = ["external-links.js", "tooltip.js", "social-share.js", "query-param-to-form.js"];
+  const JS_MODULES = ["external-links.js", "tooltip.js", "social-share.js", "query-param-to-form.js", "ga-outbound-tracking.js"];
 
   // Check if debug mode is enabled via query parameter
   const isDebugMode = new URLSearchParams(window.location.search).has("debug");
