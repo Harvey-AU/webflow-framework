@@ -1,0 +1,11 @@
+# CodeRabbit configuration
+# https://docs.coderabbit.ai/getting-started/configure-coderabbit/
+#
+# NOTE: In this repo, hand-written JavaScript lives in dist/js/ (there is no
+# src/js/ — build.js only concatenates CSS and version-tags existing JS).
+# CodeRabbit blocks **/dist/** by default as build output, which silently
+# skips review of our actual JS source. The filter below re-includes dist/js/
+# while leaving genuinely generated output (dist/css, dist/v, etc.) blocked.
+reviews:
+  path_filters:
+    - "**/dist/js/**"
