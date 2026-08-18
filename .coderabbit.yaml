@@ -8,4 +8,6 @@
 # while leaving genuinely generated output (dist/css, dist/v, etc.) blocked.
 reviews:
   path_filters:
-    - "**/dist/js/**"
+    - "**/dist/**" # override CodeRabbit's default block on dist/
+    - "!**/dist/css/**" # ...but keep generated CSS excluded
+    - "!**/dist/v/**" # ...and versioned snapshots excluded
