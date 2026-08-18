@@ -40,12 +40,23 @@
       return;
     }
 
-    window.gtag("event", "outbound_click", {
-      link_url: url.href,
-      link_domain: url.hostname,
-      link_text: linkText,
-      page_path: window.location.pathname,
-    });
+    // Strip credentials (userinfo) and fragment before sending. Fragments can
+    // carry auth tokens (e.g. OAuth implicit flow) and add no analytics value.
+    // Query string is kept to match GA4 Enhanced Measurement's link_url; use
+    // GA's data redaction for query-param PII if required.
+    const linkUrl = url.origin + url.pathname + url.search;
+
+    try {
+      window.gtag("event", "outbound_click", {
+        link_url: linkUrl,
+        link_domain: url.hostname,
+        link_text: linkText,
+        page_path: window.location.pathname,
+      });
+    } catch {
+      debug("Outbound Tracking", "Click", "gtag threw, event not sent", "warn");
+      return;
+    }
 
     debug("Outbound Tracking", "Click", `${url.hostname} — "${linkText}"`);
   });

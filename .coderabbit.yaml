@@ -1,5 +1,5 @@
 # CodeRabbit configuration
-# https://docs.coderabbit.ai/getting-started/configure-coderabbit/
+# https://docs.coderabbit.ai/guides/configure-coderabbit
 #
 # NOTE: In this repo, hand-written JavaScript lives in dist/js/ (there is no
 # src/js/ — build.js only concatenates CSS and version-tags existing JS).
