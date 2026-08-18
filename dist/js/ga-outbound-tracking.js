@@ -26,9 +26,11 @@
     )
       return;
 
-    const linkText = (link.innerText || link.getAttribute("aria-label") || "")
-      .trim()
-      .slice(0, 100);
+    const linkText = (
+      link.innerText?.trim() ||
+      link.getAttribute("aria-label")?.trim() ||
+      ""
+    ).slice(0, 100);
 
     if (typeof window.gtag !== "function") {
       debug(
