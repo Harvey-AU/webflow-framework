@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { PER_PAGE, selectEntries, useCatalogState } from "@/src/lib/catalog-state";
 
 export type WordGridProps = {
@@ -27,9 +28,12 @@ export function WordGrid({
   }
 
   return (
+    // Two columns on mobile per the design; the `columns` prop takes over at
+    // `sm`. Same reason as the catalog wrapper for going through a custom
+    // property - an inline template would beat the responsive classes.
     <div
-      className="bg-cream font-mono grid w-full gap-6 max-sm:grid-cols-1"
-      style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+      className="bg-cream font-mono grid w-full grid-cols-2 gap-4 sm:gap-6 sm:[grid-template-columns:repeat(var(--kt-cols),minmax(0,1fr))]"
+      style={{ "--kt-cols": columns } as CSSProperties}
     >
       {visible.map((e) => (
         <article key={e.slug} className="flex flex-col gap-2">

@@ -4,7 +4,7 @@ import { HeroBanner } from "./HeroBanner";
 
 export default declareComponent(HeroBanner, {
   name: "Hero Banner",
-  description: "Theme page hero: breadcrumb, title, gloss and intro copy on Country red.",
+  description: "Country-red banner: optional breadcrumb, title, gloss, intro copy, optional button and illustration.",
   group: "Kaytetye",
   props: {
     breadcrumb: props.Text({
@@ -17,5 +17,12 @@ export default declareComponent(HeroBanner, {
     subtitle: props.Text({ name: "Gloss", group: "Content", defaultValue: "(Country)" }),
     body: props.Text({ name: "Intro", group: "Content", defaultValue: "" }),
     image: props.Image({ name: "Illustration", group: "Content" }),
+    ctaLabel: props.Text({
+      name: "Button label",
+      group: "Content",
+      tooltip: "Leave empty for no button.",
+      defaultValue: "",
+    }),
+    cta: props.Link({ name: "Button link", group: "Content" }),
   },
 });

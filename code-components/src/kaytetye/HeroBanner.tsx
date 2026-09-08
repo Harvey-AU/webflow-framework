@@ -4,6 +4,8 @@ export type HeroBannerProps = {
   subtitle?: string;
   body?: string;
   image?: { src: string; alt?: string };
+  ctaLabel?: string;
+  cta?: { href: string; target?: string };
 };
 
 export function HeroBanner({
@@ -12,6 +14,8 @@ export function HeroBanner({
   subtitle = "(Country)",
   body = "",
   image,
+  ctaLabel = "",
+  cta = { href: "#" },
 }: HeroBannerProps) {
   const crumbs = breadcrumb.split("/").map((c) => c.trim()).filter(Boolean);
 
@@ -28,7 +32,11 @@ export function HeroBanner({
         </div>
       )}
 
-      <div className="mx-auto grid max-w-[1440px] items-center gap-16 px-8 pb-8 md:grid-cols-2">
+      <div
+        className={`mx-auto grid max-w-[1440px] items-center gap-16 px-8 md:grid-cols-2 ${
+          crumbs.length ? "pb-8" : "py-16"
+        }`}
+      >
         <div className="flex flex-col gap-2">
           <h1 className="text-sky font-display text-[44px] leading-[48px] tracking-wide">
             {title}
@@ -42,6 +50,15 @@ export function HeroBanner({
             <p className="text-sky-soft mt-2 max-w-[52ch] text-base leading-6 font-medium">
               {body}
             </p>
+          )}
+          {ctaLabel && (
+            <a
+              href={cta.href}
+              target={cta.target}
+              className="bg-sky text-country mt-4 self-start rounded-sm px-4 py-3 text-base font-medium"
+            >
+              {ctaLabel}
+            </a>
           )}
         </div>
         {image?.src && (

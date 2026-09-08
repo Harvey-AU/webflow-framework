@@ -10,7 +10,7 @@ npm install
 npm run dev     # http://localhost:4000
 ```
 
-Renders the whole theme-collection page with React, no Webflow account needed.
+Renders the theme-collection page at `/`, and the home page at `/home.html`, with React, no Webflow account needed.
 `npm run dev` runs the Tailwind watcher and esbuild together.
 
 ## Import into a Webflow workspace
@@ -28,15 +28,19 @@ On a free workspace the library uploads fine but the Designer refuses to install
 
 ## Components
 
-Five are registered with Webflow, all in `src/kaytetye/`, grouped as **Kaytetye** in the Designer's Add panel.
+Seven are registered with Webflow, all in `src/kaytetye/`, grouped as **Kaytetye** in the Designer's Add panel.
 
 | Component | What it does |
 | --- | --- |
 | Site Header | Wordmark and nav. The Nav slot takes Webflow link blocks; empty falls back to the design's three links. |
-| Hero Banner | Breadcrumb, title, gloss, intro copy and an illustration, on Country red. |
+| Hero Banner | Breadcrumb, title, gloss, intro copy, optional button and an illustration, on Country red. Empty breadcrumb gives the home page's Angke banner. |
+| Feature Grid | Home page theme strip: heading, gloss, View all link and a Cards slot for Feature Cards or a Collection List of them. |
+| Feature Card | Square image, Kaytetye word and gloss, whole card is a link. Built to be CMS-bound inside Feature Grid. |
 | Word Catalog | Filter panel, results grid and pagination in one droppable block. |
 | Resource Banner | Sky-blue call-out with a round image, heading, copy and a button. |
 | Site Footer | Wordmark, acknowledgement of Country, policy links. |
+
+The home page's full-width painting between header and Angke banner is a native Webflow Image block, not a component.
 
 ### The three inside Word Catalog
 
