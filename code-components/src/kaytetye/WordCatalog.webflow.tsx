@@ -1,0 +1,72 @@
+import { declareComponent } from "@webflow/react";
+import { props } from "@webflow/data-types";
+import { WordCatalog } from "./WordCatalog";
+
+export default declareComponent(WordCatalog, {
+  name: "Word Catalog",
+  description:
+    "Filter panel, results grid and pagination in one block. Drop it on a page and it works.",
+  group: "Kaytetye",
+  props: {
+    heading: props.Text({ name: "Filter heading", group: "Filters", defaultValue: "Filter by" }),
+    searchPlaceholder: props.Text({
+      name: "Search placeholder",
+      group: "Filters",
+      defaultValue: "Enter keywords",
+    }),
+    showSort: props.Boolean({
+      name: "Sort control",
+      group: "Filters",
+      defaultValue: true,
+      trueLabel: "Shown",
+      falseLabel: "Hidden",
+    }),
+    sortLabel: props.Text({ name: "Sort label", group: "Filters", defaultValue: "Sort" }),
+    showMedia: props.Boolean({
+      name: "Media facet",
+      group: "Filters",
+      defaultValue: true,
+      trueLabel: "Shown",
+      falseLabel: "Hidden",
+    }),
+    mediaLabel: props.Text({ name: "Media label", group: "Filters", defaultValue: "Media" }),
+    sidebarWidth: props.Number({
+      name: "Sidebar width",
+      group: "Layout",
+      defaultValue: 310,
+      min: 200,
+      max: 480,
+      decimals: 0,
+    }),
+    columns: props.Number({
+      name: "Columns",
+      group: "Layout",
+      defaultValue: 3,
+      min: 1,
+      max: 6,
+      decimals: 0,
+    }),
+    showGloss: props.Boolean({
+      name: "English gloss",
+      group: "Content",
+      defaultValue: true,
+      trueLabel: "Shown",
+      falseLabel: "Hidden",
+    }),
+    showScientificName: props.Boolean({
+      name: "Scientific name",
+      group: "Content",
+      defaultValue: false,
+      trueLabel: "Shown",
+      falseLabel: "Hidden",
+    }),
+    emptyMessage: props.Text({
+      name: "Empty message",
+      group: "Content",
+      defaultValue: "No words match those filters.",
+    }),
+    previousLabel: props.Text({ name: "Previous label", group: "Content", defaultValue: "Previous" }),
+    nextLabel: props.Text({ name: "Next label", group: "Content", defaultValue: "Next" }),
+  },
+  options: { ssr: false },
+});
