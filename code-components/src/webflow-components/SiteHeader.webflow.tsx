@@ -20,12 +20,12 @@ function ConnectedSiteHeader(headerProps: Omit<SiteHeaderProps, "navItems">) {
 
 export default declareComponent(ConnectedSiteHeader, {
   name: "Site Header",
-  description: "Wordmark and navigation bar. Links come from the Nav Items collection.",
+  description:
+    "Wordmark and navigation bar. Links come from the Nav Items collection, not from the canvas.",
   group: "Kaytetye",
   props: {
     wordmark: props.Text({ name: "Wordmark", defaultValue: "Kaytetye" }),
     home: props.Link({ name: "Wordmark link" }),
-    nav: props.Slot({ name: "Nav", tooltip: "Drop Webflow link blocks here to override the CMS." }),
   },
   // The nav comes from the CMS through a Code Function; prerendering it keeps
   // the links in the served HTML instead of popping in after hydration.

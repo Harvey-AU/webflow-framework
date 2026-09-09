@@ -1,19 +1,21 @@
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import type { NavItem } from "@/src/config/site";
 
 export type SiteHeaderProps = {
   wordmark?: string;
   home?: { href: string; target?: string };
-  /** Drop Webflow links in here. Takes precedence over `navItems`. */
-  nav?: ReactNode;
   /**
-   * Links to render when the Nav slot is empty.
+   * The links to render.
    *
    * Handed in by whoever renders the header - in Webflow that is
    * `SiteHeader.webflow.tsx`, which runs `navQuery` and passes the result. The
    * header does no fetching of its own, so `[]` really does mean a
    * wordmark-only header.
+   *
+   * There is deliberately no slot to drop Webflow links into. An empty slot
+   * still renders as an element, so it shadowed these links and left the nav
+   * blank; and hand-placed links are the thing the CMS collection replaces.
    */
   navItems?: NavItem[];
 };
@@ -21,25 +23,21 @@ export type SiteHeaderProps = {
 export function SiteHeader({
   wordmark = "Kaytetye",
   home = { href: "/" },
-  nav,
   navItems = [],
 }: SiteHeaderProps) {
-  const hasNav = Array.isArray(nav) ? nav.length > 0 : Boolean(nav);
   const [open, setOpen] = useState(false);
 
-  const links = hasNav
-    ? nav
-    : navItems.map(({ label, href, newTab }) => (
-        <a
-          key={label}
-          href={href}
-          target={newTab ? "_blank" : undefined}
-          rel={newTab ? "noopener noreferrer" : undefined}
-          className="hover:underline"
-        >
-          {label}
-        </a>
-      ));
+  const links = navItems.map(({ label, href, newTab }) => (
+    <a
+      key={label}
+      href={href}
+      target={newTab ? "_blank" : undefined}
+      rel={newTab ? "noopener noreferrer" : undefined}
+      className="hover:underline"
+    >
+      {label}
+    </a>
+  ));
 
   return (
     <header className="bg-cream font-mono w-full max-md:px-5 max-md:py-3 md:px-8 md:py-3">
