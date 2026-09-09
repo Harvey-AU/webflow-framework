@@ -1,9 +1,11 @@
 import { createRoot } from "react-dom/client";
-import { SiteHeader } from "../src/kaytetye/SiteHeader";
-import { HeroBanner } from "../src/kaytetye/HeroBanner";
-import { WordCatalog } from "../src/kaytetye/WordCatalog";
-import { ResourceBanner } from "../src/kaytetye/ResourceBanner";
-import { SiteFooter } from "../src/kaytetye/SiteFooter";
+import {
+  SiteHeader,
+  HeroBanner,
+  WordCatalog,
+  ResourceBanner,
+  SiteFooter,
+} from "../src/components";
 
 /**
  * Local harness only. In Webflow each of these is a separate code component

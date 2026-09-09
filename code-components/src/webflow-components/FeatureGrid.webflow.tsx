@@ -1,6 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { FeatureGrid } from "./FeatureGrid";
+import { FeatureGrid } from "@/src/components/FeatureGrid";
 
 export default declareComponent(FeatureGrid, {
   name: "Feature Grid",

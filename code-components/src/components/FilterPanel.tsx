@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
-import { Checkbox } from "@/src/components/ui/checkbox";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
 import {
+  Checkbox,
+  Input,
+  Label,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "@/src/ui";
 import {
   selectEntries,
   setCatalogState,

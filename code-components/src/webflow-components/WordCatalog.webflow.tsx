@@ -1,6 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { WordCatalog } from "./WordCatalog";
+import { WordCatalog } from "@/src/components/WordCatalog";
 
 export default declareComponent(WordCatalog, {
   name: "Word Catalog",

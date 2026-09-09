@@ -1,6 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { FeatureCard } from "./FeatureCard";
+import { FeatureCard } from "@/src/components/FeatureCard";
 
 export default declareComponent(FeatureCard, {
   name: "Feature Card",

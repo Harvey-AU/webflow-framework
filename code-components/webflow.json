@@ -2,7 +2,7 @@
   "library": {
     "name": "Kaytetye",
     "components": [
-      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+      "./src/webflow-components/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
     ],
     "functions": [
       "**/*.webflow.function.@(js|cjs|mjs|ts)"

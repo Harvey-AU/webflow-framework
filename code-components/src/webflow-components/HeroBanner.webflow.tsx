@@ -1,6 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { HeroBanner } from "./HeroBanner";
+import { HeroBanner } from "@/src/components/HeroBanner";
 
 export default declareComponent(HeroBanner, {
   name: "Hero Banner",

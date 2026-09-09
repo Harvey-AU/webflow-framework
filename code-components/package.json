@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -n preview,import -c cyan,magenta \"npm run dev:preview\" \"npm run import:watch\"",
-    "bundle": "webflow devlink bundle --public-path http://localhost:4000/",
-    "import": "webflow devlink import",
+    "bundle": "webflow devlink bundle",
+    "import": "webflow devlink import --no-input",
     "css": "tailwindcss -i src/globals.css -o preview/dist/globals.css",
     "import:watch": "node scripts/watch-import.mjs",
-    "dev:preview": "npm run css -- --watch & esbuild preview/home.tsx preview/words.tsx --bundle --outdir=preview/dist --servedir=preview --serve=4000"
+    "dev:preview": "npm run css -- --watch & esbuild preview/home.tsx preview/words.tsx --bundle --outdir=preview/dist --servedir=preview --serve=4000",
+    "ship": "npm run bundle && npm run import",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "bundle:local": "webflow devlink bundle --public-path http://localhost:4000/"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.11",

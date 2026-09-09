@@ -1,6 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { SiteHeader } from "./SiteHeader";
+import { SiteHeader } from "@/src/components/SiteHeader";
 
 export default declareComponent(SiteHeader, {
   name: "Site Header",

@@ -1,10 +1,12 @@
 import { createRoot } from "react-dom/client";
-import { SiteHeader } from "../src/kaytetye/SiteHeader";
-import { HeroBanner } from "../src/kaytetye/HeroBanner";
-import { FeatureGrid } from "../src/kaytetye/FeatureGrid";
-import { FeatureCard } from "../src/kaytetye/FeatureCard";
-import { ResourceBanner } from "../src/kaytetye/ResourceBanner";
-import { SiteFooter } from "../src/kaytetye/SiteFooter";
+import {
+  SiteHeader,
+  HeroBanner,
+  FeatureGrid,
+  FeatureCard,
+  ResourceBanner,
+  SiteFooter,
+} from "../src/components";
 
 /** Home page harness. The hero strip is a plain image - in Webflow that is a native Image block. */
 const THEMES = [

@@ -1,6 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { SiteFooter } from "./SiteFooter";
+import { SiteFooter } from "@/src/components/SiteFooter";
 
 export default declareComponent(SiteFooter, {
   name: "Site Footer",

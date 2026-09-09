@@ -1,6 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { ResourceBanner } from "./ResourceBanner";
+import { ResourceBanner } from "@/src/components/ResourceBanner";
 
 export default declareComponent(ResourceBanner, {
   name: "Resource Banner",
