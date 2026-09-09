@@ -1,27 +1,32 @@
 import { useState, type ReactNode } from "react";
 import { Menu, X } from "lucide-react";
+import { NAV_ITEMS, type NavItem } from "@/src/config/site";
 
 export type SiteHeaderProps = {
   wordmark?: string;
   home?: { href: string; target?: string };
-  /** Drop Webflow links in here. Falls back to the links from the design. */
+  /** Drop Webflow links in here. Takes precedence over `navItems`. */
   nav?: ReactNode;
+  /**
+   * Links to render when the Nav slot is empty. Defaults to the site config so
+   * the component holds no nav of its own; pass `[]` for a wordmark-only header.
+   */
+  navItems?: NavItem[];
 };
-
-const FALLBACK_NAV = ["Words", "Resources", "About"];
 
 export function SiteHeader({
   wordmark = "Kaytetye",
   home = { href: "/" },
   nav,
+  navItems = NAV_ITEMS,
 }: SiteHeaderProps) {
   const hasNav = Array.isArray(nav) ? nav.length > 0 : Boolean(nav);
   const [open, setOpen] = useState(false);
 
   const links = hasNav
     ? nav
-    : FALLBACK_NAV.map((label) => (
-        <a key={label} href="#" className="hover:underline">
+    : navItems.map(({ label, href }) => (
+        <a key={label} href={href} className="hover:underline">
           {label}
         </a>
       ));
