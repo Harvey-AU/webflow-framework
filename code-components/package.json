@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "npm run css -- --watch & esbuild preview/main.tsx --bundle --outdir=preview/dist --servedir=preview --serve=4000",
+    "dev": "npm run css -- --watch & esbuild preview/home.tsx preview/words.tsx --bundle --outdir=preview/dist --servedir=preview --serve=4000",
     "bundle": "webflow devlink bundle --public-path http://localhost:4000/",
     "import": "webflow devlink import",
     "css": "tailwindcss -i src/globals.css -o preview/dist/globals.css"

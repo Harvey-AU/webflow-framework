@@ -10,7 +10,7 @@ npm install
 npm run dev     # http://localhost:4000
 ```
 
-Renders the theme-collection page at `/`, and the home page at `/home.html`, with React, no Webflow account needed.
+Renders the home page at `/`, and the theme-collection page at `/words.html`, with React, no Webflow account needed.
 `npm run dev` runs the Tailwind watcher and esbuild together.
 
 ## Import into a Webflow workspace
