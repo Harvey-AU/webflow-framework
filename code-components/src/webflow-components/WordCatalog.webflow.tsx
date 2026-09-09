@@ -1,7 +1,7 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
 import { WordCatalog, type WordCatalogProps } from "@/src/components/WordCatalog";
-import { EMPTY_CATALOG } from "@/src/config/site";
+import { FALLBACK_CATALOG } from "@/src/config/fallback-catalog";
 import type { CatalogData } from "@/src/lib/catalog-types";
 import catalogFunction from "@/src/webflow-functions/catalog.webflow.function";
 import { useQuery } from "./use-query";
@@ -18,7 +18,7 @@ function ConnectedWordCatalog(
   const { entries, themeTree } = useQuery<CatalogData>(
     "kaytetye:catalog",
     catalogFunction,
-    EMPTY_CATALOG,
+    FALLBACK_CATALOG,
   );
   return <WordCatalog {...catalogProps} entries={entries} themeTree={themeTree} />;
 }
