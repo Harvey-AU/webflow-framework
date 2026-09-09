@@ -19,7 +19,17 @@ import type { JsonSerializable } from "@webflow/data-types";
  */
 export function useQuery<T>(key: string, fn: FunctionRef<EmptyParams, T>, fallback: T): T {
   const call = useFunction(fn);
-  const { data } = useSuspenseData<T>(key, () => call() as Promise<T & JsonSerializable<T>>);
+  const { data } = useSuspenseData<T>(key, () =>
+    (call() as Promise<T & JsonSerializable<T>>).catch((error: unknown) => {
+      // A rejected call must not take the page down. It rejects when the
+      // function was not deployed at all (the stable CLI stubs Code Functions
+      // out of the bundle) or when the worker has no site token, and in both
+      // cases a header that renders the site defaults beats a header that
+      // throws. Logged rather than swallowed, so the cause is still findable.
+      console.warn(`[kaytetye] query "${key}" failed, using fallback:`, error);
+      return fallback as T & JsonSerializable<T>;
+    }),
+  );
   // The hook's type says `data` is always there; a function that resolved to
   // null would still hand us undefined, and that must not blank the page.
   return (data as T | undefined) ?? fallback;
