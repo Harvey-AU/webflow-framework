@@ -7,6 +7,7 @@ import {
   ResourceBanner,
   SiteFooter,
 } from "../src/components";
+import { NAV_ITEMS } from "../src/config/site";
 
 /** Home page harness. The hero strip is a plain image - in Webflow that is a native Image block. */
 const THEMES = [
@@ -19,7 +20,7 @@ const THEMES = [
 function Page() {
   return (
     <div className="bg-cream min-h-screen">
-      <SiteHeader />
+      <SiteHeader navItems={NAV_ITEMS} />
       <img src="/assets/home-hero.png" alt="Painting of Country" className="block h-[500px] w-full object-cover" />
       <HeroBanner
         breadcrumb=""

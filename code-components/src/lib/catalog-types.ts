@@ -2,9 +2,10 @@
  * Shapes shared by the catalog components and the Code Functions that feed
  * them.
  *
- * This module holds no data. It exists so a component can describe what it
- * renders without importing a dataset: everything the catalog shows now comes
- * from the Webflow CMS through `words.webflow.function.ts`.
+ * This module holds no data and knows no CMS. It is the contract between a
+ * query, which builds these shapes from whatever content source it was handed,
+ * and a component, which renders them as props. `queries/catalog.ts` fills them
+ * from a `CmsClient`; a test or a local preview can fill them from a file.
  */
 
 /** One word, as the grid and filters need it. Mirrors the `Words` collection. */
@@ -85,7 +86,7 @@ export type ThemeGroup = {
   words: EntryDetail[];
 };
 
-/** What `words.webflow.function.ts` resolves to. */
+/** What `catalogQuery` resolves to. */
 export type CatalogData = {
   entries: Entry[];
   themeTree: ThemeNode[];

@@ -1,20 +1,15 @@
 import type { CSSProperties } from "react";
-import { useFunction, useSuspenseData } from "@webflow/react";
 import { FilterPanel, type FilterPanelProps } from "./FilterPanel";
 import { WordGrid, type WordGridProps } from "./WordGrid";
 import { Pagination, type PaginationProps } from "./Pagination";
-import type { CatalogData } from "@/src/lib/catalog-types";
-import wordsFunction from "@/src/webflow-functions/words.webflow.function";
 
-// `entries` and `themeTree` arrive from the CMS, not from the Designer, so they
-// are omitted here rather than surfaced as props on the composed component.
-export type WordCatalogProps = Omit<FilterPanelProps, "entries" | "themeTree"> &
+// `entries` and `themeTree` come in as props, from FilterPanelProps, so the
+// three children share one definition of them and the catalog fetches nothing.
+export type WordCatalogProps = FilterPanelProps &
   Omit<WordGridProps, "entries"> &
   Omit<PaginationProps, "entries"> & {
     sidebarWidth?: number;
   };
-
-const EMPTY: CatalogData = { entries: [], themeTree: [], details: {}, themeGroups: [] };
 
 /**
  * Filter panel, results grid and pagination as one droppable unit.
@@ -35,14 +30,9 @@ export function WordCatalog({
   previousLabel,
   nextLabel,
   sidebarWidth = 310,
+  entries,
+  themeTree,
 }: WordCatalogProps) {
-  const getWords = useFunction(wordsFunction);
-  // Suspends until the CMS read resolves. With `ssr: "prerender"` on the
-  // declaration that happens before first paint, so the words are in the served
-  // HTML rather than appearing after hydration.
-  const { data } = useSuspenseData<CatalogData>("kaytetye:words", () => getWords());
-  const { entries, themeTree } = (data as CatalogData | undefined) ?? EMPTY;
-
   return (
     // Same page gutter and content width as the other sections, so the block
     // carries its own padding wherever it's dropped in Webflow.

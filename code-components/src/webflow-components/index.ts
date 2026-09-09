@@ -2,7 +2,7 @@
  * Barrel for the Webflow component declarations.
  *
  * Webflow discovers these through the `library.components` glob in
- * webflow.json, which matches the `*.webflow.tsx` files directly — this file is
+ * webflow.json, which matches the `*.webflow.tsx` files directly - this file is
  * for humans and for anything that wants the declarations as a set. Adding a
  * declaration here does not register it; the glob does.
  */

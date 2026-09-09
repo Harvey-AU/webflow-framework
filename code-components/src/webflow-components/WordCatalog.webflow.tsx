@@ -1,8 +1,29 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
-import { WordCatalog } from "@/src/components/WordCatalog";
+import { WordCatalog, type WordCatalogProps } from "@/src/components/WordCatalog";
+import { EMPTY_CATALOG } from "@/src/config/site";
+import type { CatalogData } from "@/src/lib/catalog-types";
+import catalogFunction from "@/src/webflow-functions/catalog.webflow.function";
+import { useQuery } from "./use-query";
 
-export default declareComponent(WordCatalog, {
+/**
+ * The call site: run the query, hand the result to the component.
+ *
+ * `WordCatalog` takes `entries` and `themeTree` as props, so it renders the
+ * same whether they came from this CMS, another one, or a fixture in a test.
+ */
+function ConnectedWordCatalog(
+  catalogProps: Omit<WordCatalogProps, "entries" | "themeTree">,
+) {
+  const { entries, themeTree } = useQuery<CatalogData>(
+    "kaytetye:catalog",
+    catalogFunction,
+    EMPTY_CATALOG,
+  );
+  return <WordCatalog {...catalogProps} entries={entries} themeTree={themeTree} />;
+}
+
+export default declareComponent(ConnectedWordCatalog, {
   name: "Word Catalog",
   description:
     "Filter panel, results grid and pagination in one block. Drop it on a page and it works.",

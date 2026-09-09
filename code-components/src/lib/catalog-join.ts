@@ -3,11 +3,11 @@
  *
  * Kept out of the function file so the reverse lookups can be exercised
  * directly: see catalog-join.test.ts. Collection Lists can only traverse a
- * reference forwards, so the grouping here — parent, then every child tagged
- * with it — is the part that has no native equivalent.
+ * reference forwards, so the grouping here (a parent, then every child tagged
+ * with it) is the part that has no native equivalent.
  */
-import type { CmsItem } from "./webflow-cms";
-import { field } from "./webflow-cms";
+import { field } from "./cms/fields";
+import type { CmsRecord } from "./cms/types";
 import type {
   Entry,
   EntryDetail,
@@ -18,18 +18,18 @@ import type {
 } from "./catalog-types";
 
 /** Themes, keyed by id, so Words can resolve its Classifiers references. */
-function themeIndex(items: CmsItem[]) {
+function themeIndex(items: CmsRecord[]) {
   const bySlug = new Map<string, { slug: string; label: string; parent: string | null }>();
   const byId = new Map<string, string>();
 
   for (const item of items) {
-    const slug = field.text(item.fieldData, "slug");
+    const slug = field.text(item.fields, "slug");
     if (!slug) continue;
     byId.set(item.id, slug);
     bySlug.set(slug, {
       slug,
-      label: field.text(item.fieldData, "name"),
-      parent: field.ref(item.fieldData, "parent-theme"),
+      label: field.text(item.fields, "name"),
+      parent: field.ref(item.fields, "parent-theme"),
     });
   }
   return { bySlug, byId };
@@ -39,11 +39,11 @@ function themeIndex(items: CmsItem[]) {
  * Build the filter tree from Parent theme references.
  *
  * The panel shows two levels, so the top-level Theme ("Apmere (Country)") is
- * skipped and its Categories become the roots — matching the Filter by design.
+ * skipped and its Categories become the roots - matching the Filter by design.
  * Branches with no words behind them are dropped rather than rendered as
  * checkboxes that can only ever return nothing.
  */
-function buildThemeTree(items: CmsItem[], used: Set<string>): ThemeNode[] {
+function buildThemeTree(items: CmsRecord[], used: Set<string>): ThemeNode[] {
   const { bySlug, byId } = themeIndex(items);
   const parentSlug = (slug: string) => {
     const parentId = bySlug.get(slug)?.parent;
@@ -70,7 +70,7 @@ function buildThemeTree(items: CmsItem[], used: Set<string>): ThemeNode[] {
     if (!parent) continue;
     const grandparent = parentSlug(parent);
     if (!grandparent) {
-      // Parent is the top-level Theme, so this is a Category: it is a root.
+      // Parent is the top-level Theme, so this is a Category, so it is a root.
       ensureRoot(slug);
     } else {
       ensureRoot(parent).children!.push({
@@ -96,17 +96,17 @@ function buildThemeTree(items: CmsItem[], used: Set<string>): ThemeNode[] {
  * costs nothing.
  */
 function resourceIndex(
-  resourceItems: CmsItem[],
-  typeItems: CmsItem[],
+  resourceItems: CmsRecord[],
+  typeItems: CmsRecord[],
   themeLabel: (id: string) => ThemeRef | null,
 ): Map<string, EntryResource> {
   const typeName = new Map(
-    typeItems.map((t) => [t.id, field.text(t.fieldData, "name")] as const),
+    typeItems.map((t) => [t.id, field.text(t.fields, "name")] as const),
   );
 
   return new Map(
     resourceItems.map((item) => {
-      const d = item.fieldData;
+      const d = item.fields;
       const typeId = field.ref(d, "resource-type");
       const resource: EntryResource = {
         slug: field.text(d, "slug"),
@@ -114,8 +114,8 @@ function resourceIndex(
         description: field.text(d, "description"),
         type: typeId ? (typeName.get(typeId) ?? null) : null,
         readTime: field.number(d, "read-time"),
-        link: field.link(d, "link"),
-        image: field.imageUrl(d, "image"),
+        link: field.url(d, "link"),
+        image: field.url(d, "image"),
         topicTags: field
           .refs(d, "topic-tags")
           .map(themeLabel)

@@ -13,7 +13,7 @@ export type PaginationProps = {
   nextLabel?: string;
 };
 
-/** 1 … 4 5 6 … 10 — always first, last, and a window around the current page. */
+/** 1 … 4 5 6 … 10 - always first, last, and a window around the current page. */
 function pageItems(current: number, total: number): (number | "gap")[] {
   if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
   const window = new Set([1, total, current, current - 1, current + 1]);

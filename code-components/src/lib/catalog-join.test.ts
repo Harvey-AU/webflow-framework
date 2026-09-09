@@ -4,13 +4,13 @@
  * Run with: npm run test:join
  *
  * The case that matters is the reverse lookup. In the CMS, a child references
- * its parent — an Article points at a Blog, a Word points at its Themes. A
+ * its parent - an Article points at a Blog, a Word points at its Themes. A
  * Collection List can only follow that forwards, so it can render the Blog for
  * an Article but not the Articles for a Blog. `groupByTag` inverts it.
  */
 import assert from "node:assert/strict";
 import { groupByTag, themeIndex, buildThemeTree } from "./catalog-join";
-import type { CmsItem } from "./webflow-cms";
+import type { CmsRecord } from "./cms/types";
 import type { EntryDetail } from "./catalog-types";
 
 function word(slug: string, themes: string[]): EntryDetail {
@@ -30,8 +30,8 @@ function word(slug: string, themes: string[]): EntryDetail {
   };
 }
 
-function theme(id: string, slug: string, name: string, parent: string | null): CmsItem {
-  return { id, fieldData: { slug, name, "parent-theme": parent } };
+function theme(id: string, slug: string, name: string, parent: string | null): CmsRecord {
+  return { id, fields: { slug, name, "parent-theme": parent } };
 }
 
 // --- the reverse lookup -----------------------------------------------------

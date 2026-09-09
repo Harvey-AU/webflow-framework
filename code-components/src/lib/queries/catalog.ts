@@ -1,34 +1,30 @@
-import { declareFunction, type FunctionContext } from "@webflow/functions";
-import { field, liveItems } from "@/src/lib/webflow-cms";
-import {
-  buildThemeTree,
-  groupByTag,
-  resourceIndex,
-  themeIndex,
-} from "@/src/lib/catalog-join";
+import { field } from "../cms/fields";
+import type { CmsClient } from "../cms/types";
+import { buildThemeTree, groupByTag, resourceIndex, themeIndex } from "../catalog-join";
 import type {
   CatalogData,
   Entry,
   EntryDetail,
   EntryResource,
   ThemeRef,
-} from "@/src/lib/catalog-types";
+} from "../catalog-types";
 
 /**
- * The word catalog's data, from the `Words` and `Themes` collections.
+ * The word catalog, from the `Words`, `Themes`, `Resources` and
+ * `Resource Types` collections.
  *
- * Replaces the dataset that used to be compiled into the bundle. Runs
- * server-side with the site token from `ctx.env`; `WordCatalog` reads it
- * through `useSuspenseData` so the words are in the prerendered HTML, which
- * matters for a dictionary that should be indexable rather than JS-gated.
+ * Four reads in parallel and then every reference resolved in memory. This is
+ * the whole reason the catalog is a code component: the shape it returns is
+ * three levels deep - a theme holds words, a word holds the themes tagged on it
+ * and the resources linked to it, a resource holds its own type and tags - and
+ * the middle level is a reverse lookup a Collection List cannot express.
  */
-
-export default declareFunction(async (ctx: FunctionContext): Promise<CatalogData> => {
+export async function catalogQuery(cms: CmsClient): Promise<CatalogData> {
   const [wordItems, themeItems, resourceItems, typeItems] = await Promise.all([
-    liveItems(ctx.env, "words"),
-    liveItems(ctx.env, "themes"),
-    liveItems(ctx.env, "resources"),
-    liveItems(ctx.env, "resource-types"),
+    cms.records("words"),
+    cms.records("themes"),
+    cms.records("resources"),
+    cms.records("resource-types"),
   ]);
 
   const { bySlug, byId } = themeIndex(themeItems);
@@ -43,14 +39,14 @@ export default declareFunction(async (ctx: FunctionContext): Promise<CatalogData
   // by wordItems position would misalign every reference after the first skip.
   const pairs = wordItems
     .map((item) => {
-      const d = item.fieldData;
+      const d = item.fields;
       const entry: Entry = {
         slug: field.text(d, "slug"),
         word: field.text(d, "name"),
         gloss: field.text(d, "english-name"),
         scientific: field.text(d, "scientific-name"),
-        image: field.imageUrl(d, "image"),
-        audio: field.link(d, "pronunciation-audio-2"),
+        image: field.url(d, "image"),
+        audio: field.url(d, "pronunciation-audio-2"),
         definition: field.text(d, "definition"),
         examples: field.text(d, "examples"),
         themes: field
@@ -70,7 +66,7 @@ export default declareFunction(async (ctx: FunctionContext): Promise<CatalogData
 
   const details: Record<string, EntryDetail> = {};
   pairs.forEach(({ item, entry }) => {
-    const d = item.fieldData;
+    const d = item.fields;
     details[entry.slug] = {
       ...entry,
       themeRefs: field
@@ -98,4 +94,4 @@ export default declareFunction(async (ctx: FunctionContext): Promise<CatalogData
 
   const used = new Set(entries.flatMap((e) => e.themes));
   return { entries, themeTree: buildThemeTree(themeItems, used), details, themeGroups };
-});
+}
