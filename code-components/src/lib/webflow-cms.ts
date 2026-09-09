@@ -88,6 +88,20 @@ export async function collectionIdBySlug(
  *
  * Live items only: drafts and unpublished edits stay out of the rendered site,
  * which is the same content a visitor would see.
+ *
+ * Why whole collections rather than a filtered query: the API refuses to filter
+ * on a multi-reference field. Asking it for words tagged with a theme returns
+ *
+ *   Filter operator "eq" is not supported for collection field "classifiers"
+ *   with field type "MultiReference". Allowed operators: exists.
+ *
+ * So a reverse lookup — a parent and the children pointing at it — has to be
+ * built in memory from the full child collection. Fine at this size; if the
+ * collection grows into the thousands, either cache this result or mirror the
+ * tag slugs into a PlainText field, which *is* filterable with eq/contains.
+ *
+ * Known reference ids are a different case: those can be fetched directly with
+ * `filter: { id: { in: [...] } }`, which the API does evaluate server-side.
  */
 export async function liveItems(
   env: Record<string, unknown>,
