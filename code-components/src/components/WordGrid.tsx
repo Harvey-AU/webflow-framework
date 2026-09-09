@@ -1,7 +1,10 @@
 import type { CSSProperties } from "react";
 import { PER_PAGE, selectEntries, useCatalogState } from "@/src/lib/catalog-state";
+import type { Entry } from "@/src/lib/catalog-types";
 
 export type WordGridProps = {
+  /** Supplied by WordCatalog from the CMS; not a Designer prop. */
+  entries?: Entry[];
   columns?: number;
   emptyMessage?: string;
   showScientificName?: boolean;
@@ -9,13 +12,14 @@ export type WordGridProps = {
 };
 
 export function WordGrid({
+  entries = [],
   columns = 3,
   emptyMessage = "No words match those filters.",
   showScientificName = false,
   showGloss = true,
 }: WordGridProps) {
   const state = useCatalogState();
-  const all = selectEntries(state);
+  const all = selectEntries(entries, state);
   const start = (state.page - 1) * PER_PAGE;
   const visible = all.slice(start, start + PER_PAGE);
 
@@ -45,7 +49,7 @@ export function WordGrid({
               className="aspect-7/6 w-full rounded-sm object-cover"
             />
           ) : (
-            // 78 of the 118 entries are definitions with no photograph.
+            // Many entries are definitions with no photograph.
             <div className="bg-country/10 text-country/70 font-display aspect-7/6 flex w-full items-center justify-center rounded-sm px-4 text-center text-2xl tracking-wide">
               {e.word}
             </div>

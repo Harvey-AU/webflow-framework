@@ -5,7 +5,7 @@
       "./src/webflow-components/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
     ],
     "functions": [
-      "**/*.webflow.function.@(js|cjs|mjs|ts)"
+      "./src/webflow-functions/**/*.webflow.function.@(js|cjs|mjs|ts)"
     ],
     "description": "Theme collection components for the Kaytetye site: header, hero, filters, grid, pagination, banners.",
     "id": "harvey-store---elliott",

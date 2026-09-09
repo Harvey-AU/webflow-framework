@@ -4,8 +4,11 @@ import {
   setCatalogState,
   useCatalogState,
 } from "@/src/lib/catalog-state";
+import type { Entry } from "@/src/lib/catalog-types";
 
 export type PaginationProps = {
+  /** Supplied by WordCatalog from the CMS; not a Designer prop. */
+  entries?: Entry[];
   previousLabel?: string;
   nextLabel?: string;
 };
@@ -24,11 +27,12 @@ function pageItems(current: number, total: number): (number | "gap")[] {
 }
 
 export function Pagination({
+  entries = [],
   previousLabel = "Previous",
   nextLabel = "Next",
 }: PaginationProps) {
   const state = useCatalogState();
-  const total = pageCount(selectEntries(state).length);
+  const total = pageCount(selectEntries(entries, state).length);
   if (total <= 1) return null;
 
   const go = (page: number) => {

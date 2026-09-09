@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/src/ui";
 import {
+  hasMedia,
   selectEntries,
   setCatalogState,
   useCatalogState,
@@ -20,13 +21,15 @@ import {
 import {
   MEDIA_FACETS,
   SORTS,
-  THEME_TREE,
   type Entry,
   type SortKey,
   type ThemeNode,
-} from "@/src/data/words";
+} from "@/src/lib/catalog-types";
 
 export type FilterPanelProps = {
+  /** Supplied by WordCatalog from the CMS; not Designer props. */
+  entries?: Entry[];
+  themeTree?: ThemeNode[];
   heading?: string;
   searchPlaceholder?: string;
   showMedia?: boolean;
@@ -36,6 +39,8 @@ export type FilterPanelProps = {
 };
 
 export function FilterPanel({
+  entries = [],
+  themeTree = [],
   heading = "Filter by",
   searchPlaceholder = "Enter keywords",
   showMedia = true,
@@ -55,7 +60,7 @@ export function FilterPanel({
   const [root, setRoot] = useState<HTMLElement | null>(null);
 
   const countBy = (facet: ListFacet, test: (e: Entry) => boolean) =>
-    selectEntries(state, facet).filter(test).length;
+    selectEntries(entries, state, facet).filter(test).length;
 
   const renderNode = (node: ThemeNode, depth: number) => {
     const kids = node.children ?? [];
@@ -159,7 +164,7 @@ export function FilterPanel({
         id="kt-theme-tree"
         className={`flex flex-col ${treeOpen ? "" : "max-md:hidden"}`}
       >
-        {THEME_TREE.map((n) => renderNode(n, 0))}
+        {themeTree.map((n) => renderNode(n, 0))}
       </ul>
 
       {showMedia && (
@@ -171,13 +176,7 @@ export function FilterPanel({
           <ul className="flex flex-col">
             {MEDIA_FACETS.map((f) => {
               const id = `kt-media-${f.id}`;
-              const count = countBy("media", (e) =>
-                f.id === "photo"
-                  ? Boolean(e.image)
-                  : f.id === "audio"
-                    ? Boolean(e.audio)
-                    : Boolean(e.storyEnglish),
-              );
+              const count = countBy("media", (e) => hasMedia(e, f.id));
               return (
                 <li key={f.id} className="flex items-center gap-2 py-[3px]">
                   <Checkbox

@@ -1,10 +1,5 @@
 import { useCallback, useSyncExternalStore } from "react";
-import {
-  ENTRIES,
-  type Entry,
-  type MediaFilter,
-  type SortKey,
-} from "@/src/data/words";
+import type { Entry, MediaFilter, SortKey } from "@/src/lib/catalog-types";
 
 /**
  * Filter state shared between separate code components.
@@ -36,8 +31,8 @@ function parse(search: string): CatalogState {
     q: p.get("q") ?? "",
     themes: list("theme"),
     media: list("media") as MediaFilter[],
-    // Photos first by default: 78 of the 118 entries are definitions with no image,
-    // and an A-Z default leaves the grid looking half-empty.
+    // Photos first by default: most entries are definitions with no image, and
+    // an A-Z default leaves the grid looking half-empty.
     sort: sort === "gloss" || sort === "word" ? sort : "photos",
     page: Math.max(1, Number(p.get("page")) || 1),
   };
@@ -110,19 +105,29 @@ export function useToggleFacet() {
   );
 }
 
-const hasMedia = (e: Entry, m: MediaFilter) =>
-  m === "photo" ? Boolean(e.image) : m === "audio" ? Boolean(e.audio) : Boolean(e.storyEnglish);
+/** The one definition of whether an entry satisfies a media facet. */
+export const hasMedia = (e: Entry, m: MediaFilter) =>
+  m === "photo" ? Boolean(e.image) : m === "audio" ? Boolean(e.audio) : Boolean(e.examples);
+
+/** Rich text is searched as text; the markup would produce false matches on tags. */
+const plain = (html: string) => html.replace(/<[^>]*>/g, " ");
 
 /**
  * The single definition of "what is showing". Both the grid and the pagination
  * import this so their idea of the result set can't drift apart.
  */
-export function selectEntries(state: CatalogState, ignore?: ListFacet): Entry[] {
+export function selectEntries(
+  entries: Entry[],
+  state: CatalogState,
+  ignore?: ListFacet,
+): Entry[] {
   const q = state.q.trim().toLowerCase();
-  const out = ENTRIES.filter((e) => {
+  const out = entries.filter((e) => {
     if (
       q &&
-      !`${e.word} ${e.gloss} ${e.scientific} ${e.defEnglish}`.toLowerCase().includes(q)
+      !`${e.word} ${e.gloss} ${e.scientific} ${plain(e.definition)}`
+        .toLowerCase()
+        .includes(q)
     )
       return false;
     // Themes are OR within the facet: pick two leaves, see both.

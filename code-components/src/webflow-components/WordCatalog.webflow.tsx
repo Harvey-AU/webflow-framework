@@ -68,5 +68,7 @@ export default declareComponent(WordCatalog, {
     previousLabel: props.Text({ name: "Previous label", group: "Content", defaultValue: "Previous" }),
     nextLabel: props.Text({ name: "Next label", group: "Content", defaultValue: "Next" }),
   },
-  options: { ssr: false },
+  // Prerender rather than false: useSuspenseData resolves the CMS read before
+  // first paint, so all the words are in the served HTML and indexable.
+  options: { ssr: "prerender" },
 });

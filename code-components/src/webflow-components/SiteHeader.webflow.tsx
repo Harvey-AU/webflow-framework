@@ -11,4 +11,7 @@ export default declareComponent(SiteHeader, {
     home: props.Link({ name: "Wordmark link" }),
     nav: props.Slot({ name: "Nav", tooltip: "Drop Webflow link blocks here." }),
   },
+  // The nav comes from the CMS through a Code Function; prerendering it keeps
+  // the links in the served HTML instead of popping in after hydration.
+  options: { ssr: "prerender" },
 });

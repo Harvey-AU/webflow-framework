@@ -1833,19 +1833,7 @@ export const THEME_TREE: ThemeNode[] = [
   },
 ];
 
-export type MediaFilter = "photo" | "audio" | "story";
-
-export const MEDIA_FACETS: { id: MediaFilter; label: string }[] = [
-  { id: "photo", label: "Has a photo" },
-  { id: "audio", label: "Has a recording" },
-  { id: "story", label: "Has a story" },
-];
-
-export type SortKey = "word" | "gloss" | "photos";
-
-export const SORTS: { id: SortKey; label: string }[] = [
-  { id: "photos", label: "Photos first" },
-  { id: "word", label: "Kaytetye A\u2013Z" },
-  { id: "gloss", label: "English A\u2013Z" },
-];
+// MediaFilter, SortKey, MEDIA_FACETS and SORTS now live in
+// @/src/lib/catalog-types, so components can describe the catalog without
+// importing this dataset.
 

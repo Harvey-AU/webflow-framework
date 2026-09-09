@@ -1,13 +1,20 @@
 import type { CSSProperties } from "react";
+import { useFunction, useSuspenseData } from "@webflow/react";
 import { FilterPanel, type FilterPanelProps } from "./FilterPanel";
 import { WordGrid, type WordGridProps } from "./WordGrid";
 import { Pagination, type PaginationProps } from "./Pagination";
+import type { CatalogData } from "@/src/lib/catalog-types";
+import wordsFunction from "@/src/webflow-functions/words.webflow.function";
 
-export type WordCatalogProps = FilterPanelProps &
-  WordGridProps &
-  PaginationProps & {
+// `entries` and `themeTree` arrive from the CMS, not from the Designer, so they
+// are omitted here rather than surfaced as props on the composed component.
+export type WordCatalogProps = Omit<FilterPanelProps, "entries" | "themeTree"> &
+  Omit<WordGridProps, "entries"> &
+  Omit<PaginationProps, "entries"> & {
     sidebarWidth?: number;
   };
+
+const EMPTY: CatalogData = { entries: [], themeTree: [] };
 
 /**
  * Filter panel, results grid and pagination as one droppable unit.
@@ -29,6 +36,13 @@ export function WordCatalog({
   nextLabel,
   sidebarWidth = 310,
 }: WordCatalogProps) {
+  const getWords = useFunction(wordsFunction);
+  // Suspends until the CMS read resolves. With `ssr: "prerender"` on the
+  // declaration that happens before first paint, so the words are in the served
+  // HTML rather than appearing after hydration.
+  const { data } = useSuspenseData<CatalogData>("kaytetye:words", () => getWords());
+  const { entries, themeTree } = (data as CatalogData | undefined) ?? EMPTY;
+
   return (
     // Same page gutter and content width as the other sections, so the block
     // carries its own padding wherever it's dropped in Webflow.
@@ -42,6 +56,8 @@ export function WordCatalog({
         style={{ "--kt-sidebar": `${sidebarWidth}px` } as CSSProperties}
       >
         <FilterPanel
+          entries={entries}
+          themeTree={themeTree}
           heading={heading}
           searchPlaceholder={searchPlaceholder}
           showMedia={showMedia}
@@ -51,12 +67,13 @@ export function WordCatalog({
         />
         <div className="flex flex-col gap-5 md:gap-10">
           <WordGrid
+            entries={entries}
             columns={columns}
             emptyMessage={emptyMessage}
             showScientificName={showScientificName}
             showGloss={showGloss}
           />
-          <Pagination previousLabel={previousLabel} nextLabel={nextLabel} />
+          <Pagination entries={entries} previousLabel={previousLabel} nextLabel={nextLabel} />
         </div>
       </div>
     </section>

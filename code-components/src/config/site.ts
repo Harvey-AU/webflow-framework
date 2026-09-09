@@ -10,6 +10,8 @@
 export type NavItem = {
   label: string;
   href: string;
+  /** Set by CMS-sourced items; the defaults below all stay in the same tab. */
+  newTab?: boolean;
 };
 
 /** Header and mobile-dropdown navigation, per the Buttons/Nav design frame. */

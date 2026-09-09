@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from "react";
 import { Menu, X } from "lucide-react";
+import { useFunction, useSuspenseData } from "@webflow/react";
 import { NAV_ITEMS, type NavItem } from "@/src/config/site";
+import navFunction from "@/src/webflow-functions/nav.webflow.function";
 
 export type SiteHeaderProps = {
   wordmark?: string;
@@ -8,8 +10,9 @@ export type SiteHeaderProps = {
   /** Drop Webflow links in here. Takes precedence over `navItems`. */
   nav?: ReactNode;
   /**
-   * Links to render when the Nav slot is empty. Defaults to the site config so
-   * the component holds no nav of its own; pass `[]` for a wordmark-only header.
+   * Links to render when the Nav slot is empty. Left unset, the header reads the
+   * `Nav Items` collection and falls back to the site config only if that comes
+   * back empty. Pass `[]` for a wordmark-only header.
    */
   navItems?: NavItem[];
 };
@@ -18,15 +21,31 @@ export function SiteHeader({
   wordmark = "Kaytetye",
   home = { href: "/" },
   nav,
-  navItems = NAV_ITEMS,
+  navItems,
 }: SiteHeaderProps) {
   const hasNav = Array.isArray(nav) ? nav.length > 0 : Boolean(nav);
   const [open, setOpen] = useState(false);
 
+  const getNav = useFunction(navFunction);
+  // Suspends until the CMS read resolves; with `ssr: "prerender"` the links are
+  // in the served HTML. An explicit `navItems` prop skips the read entirely.
+  const { data } = useSuspenseData<{ nav: NavItem[] }>("kaytetye:nav", () =>
+    navItems ? Promise.resolve({ nav: navItems }) : getNav(),
+  );
+  const fromCms = (data as { nav?: NavItem[] } | undefined)?.nav ?? [];
+  // Config is the last resort, so an empty collection does not blank the header.
+  const items = navItems ?? (fromCms.length ? fromCms : NAV_ITEMS);
+
   const links = hasNav
     ? nav
-    : navItems.map(({ label, href }) => (
-        <a key={label} href={href} className="hover:underline">
+    : items.map(({ label, href, newTab }) => (
+        <a
+          key={label}
+          href={href}
+          target={newTab ? "_blank" : undefined}
+          rel={newTab ? "noopener noreferrer" : undefined}
+          className="hover:underline"
+        >
           {label}
         </a>
       ));
