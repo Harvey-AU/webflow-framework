@@ -14,7 +14,7 @@ export type WordCatalogProps = Omit<FilterPanelProps, "entries" | "themeTree"> &
     sidebarWidth?: number;
   };
 
-const EMPTY: CatalogData = { entries: [], themeTree: [] };
+const EMPTY: CatalogData = { entries: [], themeTree: [], details: {}, themeGroups: [] };
 
 /**
  * Filter panel, results grid and pagination as one droppable unit.

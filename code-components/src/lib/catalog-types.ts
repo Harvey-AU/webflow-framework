@@ -46,8 +46,51 @@ export const SORTS: { id: SortKey; label: string }[] = [
   { id: "gloss", label: "English A–Z" },
 ];
 
+/** A theme as it appears tagged on a word or a resource. */
+export type ThemeRef = {
+  id: string;
+  label: string;
+};
+
+/** A linked resource, with its own type and topic tags resolved. */
+export type EntryResource = {
+  slug: string;
+  name: string;
+  description: string;
+  /** From the Resource Types collection, e.g. "Audio", "Video", "Art". */
+  type: string | null;
+  readTime: number | null;
+  link: string | null;
+  image: string | null;
+  topicTags: ThemeRef[];
+};
+
+/**
+ * One word with every reference resolved, for the detail and theme pages.
+ *
+ * This is the three-level shape: a theme group holds words, each word holds the
+ * themes tagged on it and the resources linked to it, and each resource holds
+ * its own type and topic tags.
+ */
+export type EntryDetail = Entry & {
+  /** The word's Classifiers, with labels rather than bare slugs. */
+  themeRefs: ThemeRef[];
+  resources: EntryResource[];
+  relatedWords: { slug: string; word: string; gloss: string }[];
+};
+
+/** Words grouped under the theme they are tagged with. */
+export type ThemeGroup = {
+  theme: ThemeRef;
+  words: EntryDetail[];
+};
+
 /** What `words.webflow.function.ts` resolves to. */
 export type CatalogData = {
   entries: Entry[];
   themeTree: ThemeNode[];
+  /** Every word with references resolved, keyed by slug. */
+  details: Record<string, EntryDetail>;
+  /** Classifier-level themes, each with the words tagged under it. */
+  themeGroups: ThemeGroup[];
 };

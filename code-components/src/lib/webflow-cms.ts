@@ -45,6 +45,10 @@ async function get<T>(path: string, token: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+// One function invocation reads several collections. Without this, each
+// liveItems() call re-fetches the whole collection list.
+let collectionCache: { siteId: string; map: Map<string, string> } | null = null;
+
 /**
  * Resolve a collection id from its slug.
  *
@@ -56,10 +60,18 @@ export async function collectionIdBySlug(
   slug: string,
 ): Promise<string> {
   const { token, siteId } = credentials(env);
+  if (collectionCache?.siteId === siteId) {
+    const hit = collectionCache.map.get(slug);
+    if (hit) return hit;
+  }
   const { collections } = await get<{ collections: { id: string; slug: string }[] }>(
     `/sites/${siteId}/collections`,
     token,
   );
+  collectionCache = {
+    siteId,
+    map: new Map(collections.map((c) => [c.slug, c.id])),
+  };
   const match = collections.find((c) => c.slug === slug);
   if (!match) {
     throw new Error(

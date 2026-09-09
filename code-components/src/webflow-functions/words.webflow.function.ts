@@ -1,6 +1,14 @@
 import { declareFunction, type FunctionContext } from "@webflow/functions";
 import { field, liveItems, type CmsItem } from "@/src/lib/webflow-cms";
-import type { CatalogData, Entry, ThemeNode } from "@/src/lib/catalog-types";
+import type {
+  CatalogData,
+  Entry,
+  EntryDetail,
+  EntryResource,
+  ThemeGroup,
+  ThemeNode,
+  ThemeRef,
+} from "@/src/lib/catalog-types";
 
 /**
  * The word catalog's data, from the `Words` and `Themes` collections.
@@ -81,18 +89,67 @@ function buildThemeTree(items: CmsItem[], used: Set<string>): ThemeNode[] {
   return roots.sort((a, b) => a.label.localeCompare(b.label, "en"));
 }
 
+/**
+ * Resources with their own references resolved.
+ *
+ * This is the third level: a word links to resources, and each resource carries
+ * a Resource Type and its own Topic tags into Themes. Nested Collection Lists
+ * would need a request per row here; indexing each collection once means depth
+ * costs nothing.
+ */
+function resourceIndex(
+  resourceItems: CmsItem[],
+  typeItems: CmsItem[],
+  themeLabel: (id: string) => ThemeRef | null,
+): Map<string, EntryResource> {
+  const typeName = new Map(
+    typeItems.map((t) => [t.id, field.text(t.fieldData, "name")] as const),
+  );
+
+  return new Map(
+    resourceItems.map((item) => {
+      const d = item.fieldData;
+      const typeId = field.ref(d, "resource-type");
+      const resource: EntryResource = {
+        slug: field.text(d, "slug"),
+        name: field.text(d, "name"),
+        description: field.text(d, "description"),
+        type: typeId ? (typeName.get(typeId) ?? null) : null,
+        readTime: field.number(d, "read-time"),
+        link: field.link(d, "link"),
+        image: field.imageUrl(d, "image"),
+        topicTags: field
+          .refs(d, "topic-tags")
+          .map(themeLabel)
+          .filter((t): t is ThemeRef => Boolean(t)),
+      };
+      return [item.id, resource] as const;
+    }),
+  );
+}
+
 export default declareFunction(async (ctx: FunctionContext): Promise<CatalogData> => {
-  const [wordItems, themeItems] = await Promise.all([
+  const [wordItems, themeItems, resourceItems, typeItems] = await Promise.all([
     liveItems(ctx.env, "words"),
     liveItems(ctx.env, "themes"),
+    liveItems(ctx.env, "resources"),
+    liveItems(ctx.env, "resource-types"),
   ]);
 
-  const { byId } = themeIndex(themeItems);
+  const { bySlug, byId } = themeIndex(themeItems);
+  const themeRef = (id: string): ThemeRef | null => {
+    const slug = byId.get(id);
+    if (!slug) return null;
+    return { id: slug, label: bySlug.get(slug)?.label ?? slug };
+  };
+  const resources = resourceIndex(resourceItems, typeItems, themeRef);
 
-  const entries: Entry[] = wordItems
+  // Item and entry stay paired: filtering a flat entries[] and then indexing it
+  // by wordItems position would misalign every reference after the first skip.
+  const pairs = wordItems
     .map((item) => {
       const d = item.fieldData;
-      return {
+      const entry: Entry = {
         slug: field.text(d, "slug"),
         word: field.text(d, "name"),
         gloss: field.text(d, "english-name"),
@@ -106,9 +163,49 @@ export default declareFunction(async (ctx: FunctionContext): Promise<CatalogData
           .map((id) => byId.get(id))
           .filter((slug): slug is string => Boolean(slug)),
       };
+      return { item, entry };
     })
-    .filter((e) => e.slug && e.word);
+    .filter(({ entry }) => entry.slug && entry.word);
+
+  const entries: Entry[] = pairs.map(({ entry }) => entry);
+
+  // Keyed by CMS id so related-words resolves against every entry: a word can
+  // point at one that appears later in the list.
+  const entryByItemId = new Map(pairs.map(({ item, entry }) => [item.id, entry] as const));
+
+  const details: Record<string, EntryDetail> = {};
+  pairs.forEach(({ item, entry }) => {
+    const d = item.fieldData;
+    details[entry.slug] = {
+      ...entry,
+      themeRefs: field
+        .refs(d, "classifiers")
+        .map(themeRef)
+        .filter((t): t is ThemeRef => Boolean(t)),
+      resources: field
+        .refs(d, "external-links")
+        .map((id) => resources.get(id))
+        .filter((r): r is EntryResource => Boolean(r)),
+      relatedWords: field
+        .refs(d, "related-words")
+        .map((id) => entryByItemId.get(id))
+        .filter((e): e is Entry => Boolean(e))
+        .map(({ slug, word, gloss }) => ({ slug, word, gloss })),
+    };
+  });
+
+  // Collection -> its items -> the collections tagged on each item. Grouped by
+  // classifier, which is the level the Theme Collection page renders.
+  const themeGroups: ThemeGroup[] = [];
+  for (const slug of [...bySlug.keys()].sort()) {
+    const words = Object.values(details).filter((e) => e.themes.includes(slug));
+    if (!words.length) continue;
+    themeGroups.push({
+      theme: { id: slug, label: bySlug.get(slug)?.label ?? slug },
+      words: words.sort((a, b) => a.word.localeCompare(b.word, "en")),
+    });
+  }
 
   const used = new Set(entries.flatMap((e) => e.themes));
-  return { entries, themeTree: buildThemeTree(themeItems, used) };
+  return { entries, themeTree: buildThemeTree(themeItems, used), details, themeGroups };
 });
