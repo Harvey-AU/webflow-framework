@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -46,6 +46,11 @@ export function FilterPanel({
   const state = useCatalogState();
   const toggle = useToggleFacet();
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  // The mobile design collapses the whole theme list behind the heading so the
+  // results stay reachable; on desktop it's always open and the toggle is gone.
+  const [treeOpen, setTreeOpen] = useState(
+    () => typeof window === "undefined" || window.matchMedia("(min-width: 768px)").matches,
+  );
   // Radix portals to document.body by default, which is outside this shadow root.
   const [root, setRoot] = useState<HTMLElement | null>(null);
 
@@ -70,7 +75,7 @@ export function FilterPanel({
           <Label htmlFor={id} className="text-country-deep flex-1 text-xs font-semibold">
             {node.label}
           </Label>
-          <span className="text-country/60 text-[11px] tabular-nums">{count}</span>
+          <span className="text-country/60 max-md:hidden text-[11px] tabular-nums">{count}</span>
           {kids.length > 0 && (
             <button
               type="button"
@@ -105,7 +110,7 @@ export function FilterPanel({
       </div>
 
       {showSort && (
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5 max-md:hidden">
           <span className="text-country-deep text-xs font-semibold tracking-wider uppercase">
             {sortLabel}
           </span>
@@ -130,15 +135,35 @@ export function FilterPanel({
         </div>
       )}
 
-      <h2 className="text-country-deep font-display text-lg leading-[26px] tracking-wide">
-        {heading}
-      </h2>
+      <div className="flex items-center justify-between gap-2">
+        <h2
+          id="kt-filter-heading"
+          className="text-country-deep font-display text-lg leading-[26px] tracking-wide"
+        >
+          {heading}
+        </h2>
+        <button
+          type="button"
+          aria-controls="kt-theme-tree"
+          aria-expanded={treeOpen}
+          aria-labelledby="kt-filter-heading"
+          onClick={() => setTreeOpen((open) => !open)}
+          className="text-country cursor-pointer p-0.5 md:hidden"
+        >
+          {treeOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+        </button>
+      </div>
       <hr className="border-country/30" />
 
-      <ul className="flex flex-col">{THEME_TREE.map((n) => renderNode(n, 0))}</ul>
+      <ul
+        id="kt-theme-tree"
+        className={`flex flex-col ${treeOpen ? "" : "max-md:hidden"}`}
+      >
+        {THEME_TREE.map((n) => renderNode(n, 0))}
+      </ul>
 
       {showMedia && (
-        <>
+        <div className="hidden flex-col gap-4 md:flex">
           <hr className="border-country/30" />
           <h3 className="text-country-deep text-xs font-semibold tracking-wider uppercase">
             {mediaLabel}
@@ -164,13 +189,15 @@ export function FilterPanel({
                   <Label htmlFor={id} className="text-country-deep flex-1 text-xs font-semibold">
                     {f.label}
                   </Label>
-                  <span className="text-country/60 text-[11px] tabular-nums">{count}</span>
+                  <span className="text-country/60 max-md:hidden text-[11px] tabular-nums">{count}</span>
                 </li>
               );
             })}
           </ul>
-        </>
+        </div>
       )}
+      {/* The design closes the mobile panel with a rule under the tree. */}
+      <hr className="border-country/30 md:hidden" />
     </aside>
   );
 }

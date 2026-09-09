@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { FilterPanel, type FilterPanelProps } from "./FilterPanel";
 import { WordGrid, type WordGridProps } from "./WordGrid";
 import { Pagination, type PaginationProps } from "./Pagination";
@@ -31,10 +32,14 @@ export function WordCatalog({
   return (
     // Same page gutter and content width as the other sections, so the block
     // carries its own padding wherever it's dropped in Webflow.
-    <section className="bg-cream w-full px-8 py-16">
+    <section className="bg-cream w-full px-5 py-[42px] md:px-8 md:py-16">
+      {/* The sidebar width arrives as a custom property rather than an inline
+          `grid-template-columns`: an inline style outranks every class, so
+          setting the template directly stopped the one-column stack below `md`
+          from ever applying and squeezed the results into a sliver. */}
       <div
-        className="mx-auto grid max-w-[1376px] gap-16 max-md:grid-cols-1"
-        style={{ gridTemplateColumns: `${sidebarWidth}px minmax(0, 1fr)` }}
+        className="mx-auto grid max-w-[1376px] grid-cols-1 gap-7 md:gap-16 md:[grid-template-columns:var(--kt-sidebar)_minmax(0,1fr)]"
+        style={{ "--kt-sidebar": `${sidebarWidth}px` } as CSSProperties}
       >
         <FilterPanel
           heading={heading}
@@ -44,7 +49,7 @@ export function WordCatalog({
           showSort={showSort}
           sortLabel={sortLabel}
         />
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-5 md:gap-10">
           <WordGrid
             columns={columns}
             emptyMessage={emptyMessage}
