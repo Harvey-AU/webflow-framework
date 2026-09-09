@@ -24,3 +24,6 @@ Desktop.ini
 npm-debug.log*
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md
+
+# Lavish review artifacts (scratch, not part of the framework)
+.lavish/
