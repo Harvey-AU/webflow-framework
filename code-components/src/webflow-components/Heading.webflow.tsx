@@ -16,30 +16,35 @@ export default declareComponent(DeclaredHeading, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", defaultValue: "Heading" }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Heading" }),
     tag: props.Variant({
       name: "Tag",
+      group: "Content",
       options: ["h1", "h2", "h3", "h4", "h5", "h6"],
       defaultValue: "h2",
       tooltip: "SEO/structure only — Size controls how it looks.",
     }),
     size: props.Variant({
       name: "Size",
+      group: "Style",
       options: ["inherit", ...typeSizeOptions()],
       defaultValue: "inherit",
     }),
     weight: props.Variant({
       name: "Weight",
+      group: "Style",
       options: ["inherit", ...tokenOptions("weight")],
       defaultValue: "inherit",
     }),
     align: props.Variant({
       name: "Align",
+      group: "Style",
       options: ["inherit", ...tokenOptions("textAlign")],
       defaultValue: "inherit",
     }),
     decoration: props.Variant({
       name: "Decoration",
+      group: "Style",
       options: [...DECORATION_OPTIONS],
       defaultValue: "none",
     }),

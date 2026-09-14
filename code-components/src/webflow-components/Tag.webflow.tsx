@@ -17,30 +17,35 @@ export default declareComponent(DeclaredTag, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", defaultValue: "Tag" }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Tag" }),
     colour: props.Variant({
       name: "Colour",
+      group: "Style",
       options: BUTTON_COLOUR_OPTIONS,
       defaultValue: "standard",
     }),
     size: props.Variant({
       name: "Size",
+      group: "Style",
       options: [...BUTTON_SIZE_OPTIONS],
       defaultValue: "standard",
     }),
     corners: props.Variant({
       name: "Corners",
+      group: "Style",
       options: tokenOptions("corners"),
       defaultValue: "button",
     }),
     iconBefore: props.Variant({
-      name: "Icon before",
+      name: "Before text",
+      group: "Icon",
       options: ["none", ...GLYPH_NAMES],
       defaultValue: "none",
       tooltip: "Glyph before the text. None hides it.",
     }),
     iconAfter: props.Variant({
-      name: "Icon after",
+      name: "After text",
+      group: "Icon",
       options: ["none", ...GLYPH_NAMES],
       defaultValue: "none",
       tooltip: "Glyph after the text. None hides it.",

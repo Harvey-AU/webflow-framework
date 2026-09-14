@@ -21,10 +21,11 @@ export default declareComponent(DeclaredButton, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", defaultValue: "Button" }),
-    link: props.Link({ name: "Link" }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Button" }),
+    link: props.Link({ name: "Link", group: "Content" }),
     colour: props.Variant({
       name: "Colour",
+      group: "Style",
       options: BUTTON_COLOUR_OPTIONS,
       defaultValue: "standard",
       tooltip:
@@ -32,17 +33,20 @@ export default declareComponent(DeclaredButton, {
     }),
     size: props.Variant({
       name: "Size",
+      group: "Style",
       options: [...BUTTON_SIZE_OPTIONS],
       defaultValue: "standard",
     }),
     corners: props.Variant({
       name: "Corners",
+      group: "Style",
       options: tokenOptions("corners"),
       defaultValue: "button",
       tooltip: "For a pill use full — the button token is square on the library.",
     }),
     icon: props.Variant({
-      name: "Icon",
+      name: "Glyph",
+      group: "Icon",
       options: ["none", ...GLYPH_NAMES],
       defaultValue: "none",
       tooltip: "None hides the icon. CAF's usual glyph is arrow-stem-up-right.",

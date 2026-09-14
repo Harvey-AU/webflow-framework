@@ -17,26 +17,31 @@ export default declareComponent(DeclaredRichText, {
     show: props.Visibility({ name: "Show", defaultValue: true }),
     content: props.RichText({
       name: "Rich text",
+      group: "Content",
       defaultValue:
         "<p>This is a rich text box. Swap this content with your own, and use the settings to change the style, size, alignment and colour.</p>",
     }),
     styleMode: props.Variant({
       name: "Style",
+      group: "Style",
       options: ["standard", "article"],
       defaultValue: "standard",
     }),
     size: props.Variant({
       name: "Size",
+      group: "Style",
       options: ["inherit", ...typeSizeOptions()],
       defaultValue: "inherit",
     }),
     align: props.Variant({
       name: "Align",
+      group: "Style",
       options: ["inherit", ...tokenOptions("textAlign")],
       defaultValue: "inherit",
     }),
     colour: props.Variant({
       name: "Colour",
+      group: "Style",
       options: tokenOptions("colour"),
       defaultValue: "inherit",
     }),

@@ -186,7 +186,7 @@
         "circle"
       ]
     },
-    "Icon": {
+    "Glyph": {
       "default": "none",
       "options": [
         "none",
@@ -1015,7 +1015,7 @@
         "circle"
       ]
     },
-    "Icon before": {
+    "Before text": {
       "default": "none",
       "options": [
         "none",
@@ -1070,7 +1070,7 @@
         "graduate-cap"
       ]
     },
-    "Icon after": {
+    "After text": {
       "default": "none",
       "options": [
         "none",
@@ -1184,7 +1184,7 @@
         "strike-through"
       ]
     },
-    "Icon": {
+    "Glyph": {
       "default": "none",
       "options": [
         "none",

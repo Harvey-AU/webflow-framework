@@ -17,29 +17,34 @@ export default declareComponent(DeclaredText, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", defaultValue: "Text", multiline: true }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Text", multiline: true }),
     size: props.Variant({
       name: "Size",
+      group: "Style",
       options: ["inherit", ...typeSizeOptions()],
       defaultValue: "inherit",
     }),
     weight: props.Variant({
       name: "Weight",
+      group: "Style",
       options: ["inherit", ...tokenOptions("weight")],
       defaultValue: "inherit",
     }),
     align: props.Variant({
       name: "Align",
+      group: "Style",
       options: ["inherit", ...tokenOptions("textAlign")],
       defaultValue: "inherit",
     }),
     decoration: props.Variant({
       name: "Decoration",
+      group: "Style",
       options: [...DECORATION_OPTIONS],
       defaultValue: "none",
     }),
     icon: props.Variant({
-      name: "Icon",
+      name: "Glyph",
+      group: "Icon",
       options: ["none", ...GLYPH_NAMES],
       defaultValue: "none",
       tooltip: "Inline glyph after the text. None hides it.",
