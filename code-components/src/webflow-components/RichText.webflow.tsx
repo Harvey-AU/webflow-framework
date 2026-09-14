@@ -43,7 +43,7 @@ export default declareComponent(DeclaredRichText, {
       name: "Rich text",
       group: "Content",
       defaultValue:
-        "<p>This is a rich text box. Swap this content with your own, and use the settings to change the style, size, alignment and colour.</p>",
+        "This is a rich text box. Swap this content with your own, and use the settings to change the style, size, alignment and colour.",
     }),
   },
 });
