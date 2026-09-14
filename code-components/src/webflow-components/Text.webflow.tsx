@@ -38,16 +38,11 @@ export default declareComponent(DeclaredText, {
       options: [...DECORATION_OPTIONS],
       defaultValue: "none",
     }),
-    showIcon: props.Boolean({
-      name: "Show icon",
-      defaultValue: false,
-      trueLabel: "Shown",
-      falseLabel: "Hidden",
-    }),
     icon: props.Variant({
       name: "Icon",
-      options: [...GLYPH_NAMES],
-      defaultValue: "arrow-stem-right",
+      options: ["none", ...GLYPH_NAMES],
+      defaultValue: "none",
+      tooltip: "Inline glyph after the text. None hides it.",
     }),
   },
 });

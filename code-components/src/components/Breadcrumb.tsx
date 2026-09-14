@@ -1,10 +1,12 @@
 import type { CSSProperties, ReactNode } from "react";
-import { typeSize, tokenValue, type ColourOption } from "@/src/tokens";
+import { typeSize, tokenValue, type ColourOption, type TypeSizeOption } from "@/src/tokens";
 import { Icon } from "./Icon";
+import type { GlyphName } from "@/src/icons/glyphs";
 
 /**
- * v3 Breadcrumb — port of v1's e_breadcrumb: Home plus up to three items,
- * forward-slash separators, breadcrumb tag sizing from the site variables.
+ * v3 Breadcrumb — port of v1's e_breadcrumb: Home plus up to three items.
+ * Separator is any glyph (default forward-slash) and Size any type size
+ * (default the breadcrumb tag size) — user 2026-09-14.
  */
 export type BreadcrumbLink = { href: string; target?: string };
 
@@ -19,6 +21,8 @@ export type BreadcrumbProps = {
   showItem3?: boolean;
   item3Text?: ReactNode;
   item3Link?: BreadcrumbLink;
+  separator?: GlyphName | "none";
+  size?: TypeSizeOption;
   colour?: ColourOption;
 };
 
@@ -40,8 +44,6 @@ function Crumb({ text, link }: { text?: ReactNode; link?: BreadcrumbLink }) {
   );
 }
 
-const Sep = () => <Icon glyph="forward-slash" size="small" />;
-
 export function Breadcrumb({
   homeText = "Home",
   homeLink,
@@ -53,9 +55,12 @@ export function Breadcrumb({
   showItem3 = false,
   item3Text,
   item3Link,
+  separator = "forward-slash",
+  size = "breadcrumb",
   colour = "inherit",
 }: BreadcrumbProps) {
-  const sized = typeSize("breadcrumb");
+  const Sep = () => (separator === "none" ? null : <Icon glyph={separator} size="small" />);
+  const sized = typeSize(size);
   const style: CSSProperties = {
     fontSize: sized.fontSize,
     lineHeight: sized.lineHeight,

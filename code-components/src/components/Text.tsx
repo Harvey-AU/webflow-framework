@@ -23,8 +23,7 @@ export type TextProps = {
   weight?: WeightOption | "inherit";
   align?: TextAlignOption | "inherit";
   decoration?: DecorationOption;
-  showIcon?: boolean;
-  icon?: GlyphName;
+  icon?: GlyphName | "none";
 };
 
 export function Text({
@@ -33,8 +32,7 @@ export function Text({
   weight = "inherit",
   align = "inherit",
   decoration = "none",
-  showIcon = false,
-  icon = "arrow-stem-right",
+  icon = "none",
 }: TextProps) {
   const sized = typeSize(size === "inherit" ? "p" : size);
   const style: CSSProperties = {
@@ -47,7 +45,7 @@ export function Text({
     <p className="t" style={{ ...style, ...decorationStyle(decoration) }}>
       <style>{TYPE_CSS}</style>
       {text}
-      {showIcon && (
+      {icon !== "none" && (
         <span style={{ marginLeft: cssVar("sizing-spacer-gap---gap--icon-base") }}>
           <Icon glyph={icon} />
         </span>

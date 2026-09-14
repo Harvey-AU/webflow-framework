@@ -19,7 +19,7 @@ export default declareComponent(DeclaredSpacer, {
       name: "Size",
       options: tokenOptions("spacer"),
       defaultValue: "small",
-      tooltip: "Library values: xxsmall 1.5rem, xsmall 2rem, small 3rem, medium 5rem, large 8rem.",
+      tooltip: "Library values: xxsmall 1.5rem, xsmall 2rem, small 3rem, medium 5rem, large 8rem, xlarge 12rem, huge 16rem.",
     }),
     sizeMobileL: props.Variant({
       name: "Size mobile",

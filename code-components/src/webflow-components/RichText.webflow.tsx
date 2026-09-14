@@ -15,7 +15,11 @@ export default declareComponent(DeclaredRichText, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    content: props.RichText({ name: "Rich text" }),
+    content: props.RichText({
+      name: "Rich text",
+      defaultValue:
+        "<p>This is a rich text box. Swap this content with your own, and use the settings to change the style, size, alignment and colour.</p>",
+    }),
     styleMode: props.Variant({
       name: "Style",
       options: ["standard", "article"],

@@ -41,16 +41,11 @@ export default declareComponent(DeclaredButton, {
       defaultValue: "button",
       tooltip: "For a pill use full — the button token is square on the library.",
     }),
-    showIcon: props.Boolean({
-      name: "Show icon",
-      defaultValue: true,
-      trueLabel: "Shown",
-      falseLabel: "Hidden",
-    }),
     icon: props.Variant({
       name: "Icon",
-      options: [...GLYPH_NAMES],
-      defaultValue: "arrow-stem-up-right",
+      options: ["none", ...GLYPH_NAMES],
+      defaultValue: "none",
+      tooltip: "None hides the icon. CAF's usual glyph is arrow-stem-up-right.",
     }),
   },
 });

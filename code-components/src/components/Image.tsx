@@ -8,7 +8,21 @@ import { tokenValue, type CornersOption } from "@/src/tokens";
  * asset ≤767 via <picture>. Custom style is the re-admitted escape hatch —
  * any override used twice graduates to a real prop.
  */
-export const RATIO_OPTIONS = ["auto", "1x1", "3x2", "4x3", "16x9", "2x1", "fill"] as const;
+export const RATIO_OPTIONS = [
+  "auto",
+  "1x1",
+  "3x2",
+  "4x3",
+  "5x4",
+  "16x9",
+  "21x9",
+  "2x1",
+  "2x3",
+  "3x4",
+  "4x5",
+  "9x16",
+  "fill",
+] as const;
 export type RatioOption = (typeof RATIO_OPTIONS)[number];
 
 const RATIOS: Record<string, string | undefined> = {
@@ -16,8 +30,14 @@ const RATIOS: Record<string, string | undefined> = {
   "1x1": "1 / 1",
   "3x2": "3 / 2",
   "4x3": "4 / 3",
+  "5x4": "5 / 4",
   "16x9": "16 / 9",
+  "21x9": "21 / 9",
   "2x1": "2 / 1",
+  "2x3": "2 / 3",
+  "3x4": "3 / 4",
+  "4x5": "4 / 5",
+  "9x16": "9 / 16",
   fill: undefined, // fill = stretch to the parent's height instead
 };
 

@@ -103,14 +103,15 @@ ${BUTTON_RESTING_CSS}
 .btn:focus-visible { outline: 0.125rem solid currentColor; outline-offset: 0.125rem; }
 `;
 
+export type IconChoice = GlyphName | "none";
+
 export type ButtonProps = {
   text?: ReactNode;
   link?: { href: string; target?: string };
   colour?: ButtonColour;
   size?: ButtonSize;
   corners?: CornersOption;
-  showIcon?: boolean;
-  icon?: GlyphName;
+  icon?: IconChoice;
 };
 
 export function Button({
@@ -119,8 +120,7 @@ export function Button({
   colour = "standard",
   size = "standard",
   corners = "button",
-  showIcon = true,
-  icon = "arrow-stem-up-right",
+  icon = "none",
 }: ButtonProps) {
   const style = {
     ...buttonColourVars(colour),
@@ -137,7 +137,7 @@ export function Button({
     >
       <style>{BUTTON_CSS}</style>
       <span>{text}</span>
-      {showIcon && <Icon glyph={icon} />}
+      {icon !== "none" && <Icon glyph={icon} />}
     </a>
   );
 }

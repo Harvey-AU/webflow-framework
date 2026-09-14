@@ -1,7 +1,8 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
 import { Breadcrumb, type BreadcrumbProps } from "@/src/components/Breadcrumb";
-import { tokenOptions } from "@/src/tokens";
+import { GLYPH_NAMES } from "@/src/icons/glyphs";
+import { tokenOptions, typeSizeOptions } from "@/src/tokens";
 
 function DeclaredBreadcrumb({ show = true, ...rest }: BreadcrumbProps & { show?: boolean }) {
   if (!show) return null;
@@ -35,6 +36,17 @@ export default declareComponent(DeclaredBreadcrumb, {
     }),
     item3Text: props.TextNode({ name: "Item 3 text", defaultValue: "Page" }),
     item3Link: props.Link({ name: "Item 3 link" }),
+    separator: props.Variant({
+      name: "Separator",
+      options: ["none", ...GLYPH_NAMES],
+      defaultValue: "forward-slash",
+      tooltip: "Glyph between items. None removes it.",
+    }),
+    size: props.Variant({
+      name: "Size",
+      options: typeSizeOptions(),
+      defaultValue: "breadcrumb",
+    }),
     colour: props.Variant({
       name: "Colour",
       options: tokenOptions("colour"),

@@ -31,7 +31,7 @@ function App() {
       <h2>Text — sizes, icon</h2>
       <div className="frame">
         <Text text="Default paragraph (p size). Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-        <Text text="Small with icon after" size="small" showIcon />
+        <Text text="Small with icon after" size="small" icon="arrow-stem-right" />
         <Text text="underline-1 decorated" decoration="underline-1" />
       </div>
 
@@ -53,22 +53,22 @@ function App() {
       <h2>Button — colour ways (hover them)</h2>
       <p className="note">outline/text/no-fill hover behaviour is ASSUMED pending v2 stylesheet check.</p>
       <div className="frame row">
-        <Button text="standard" />
-        <Button text="colour-2" colour="colour-2" />
+        <Button text="standard + icon" icon="arrow-stem-up-right" />
+        <Button text="colour-2" colour="colour-2" icon="arrow-stem-up-right" />
         <Button text="colour-3" colour="colour-3" />
         <Button text="outline-4" colour="outline-4" />
         <Button text="outline-no-fill-1" colour="outline-no-fill-1" />
         <Button text="hover-5" colour="hover-5" />
-        <Button text="text-4" colour="text-4" />
+        <Button text="text-4" colour="text-4" icon="arrow-stem-right" />
         <Button text="pill" colour="colour-2" corners="full" />
-        <Button text="short, no icon" size="short" showIcon={false} />
+        <Button text="short, default no icon" size="short" />
       </div>
 
       <h2>Tag</h2>
       <div className="frame row">
         <Tag text="standard" />
-        <Tag text="colour-2 pill" colour="colour-2" corners="full" />
-        <Tag text="outline-4" colour="outline-4" size="short-narrow" />
+        <Tag text="colour-2 pill" colour="colour-2" corners="full" iconBefore="check-mark" />
+        <Tag text="outline-4" colour="outline-4" size="short-narrow" iconAfter="close" />
       </div>
 
       <h2>HorizontalLine — hr defaults, then thick brand</h2>
