@@ -16,14 +16,6 @@ export default declareComponent(DeclaredHeading, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Heading" }),
-    tag: props.Variant({
-      name: "Tag",
-      group: "Content",
-      options: ["h1", "h2", "h3", "h4", "h5", "h6"],
-      defaultValue: "h2",
-      tooltip: "SEO/structure only — Size controls how it looks.",
-    }),
     size: props.Variant({
       name: "Size",
       group: "Style",
@@ -47,6 +39,14 @@ export default declareComponent(DeclaredHeading, {
       group: "Style",
       options: [...DECORATION_OPTIONS],
       defaultValue: "none",
+    }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Heading" }),
+    tag: props.Variant({
+      name: "Tag",
+      group: "Content",
+      options: ["h1", "h2", "h3", "h4", "h5", "h6"],
+      defaultValue: "h2",
+      tooltip: "SEO/structure only — Size controls how it looks.",
     }),
   },
 });

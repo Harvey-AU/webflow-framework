@@ -17,7 +17,6 @@ export default declareComponent(DeclaredTag, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Tag" }),
     colour: props.Variant({
       name: "Colour",
       group: "Style",
@@ -36,6 +35,7 @@ export default declareComponent(DeclaredTag, {
       options: tokenOptions("corners"),
       defaultValue: "button",
     }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Tag" }),
     iconBefore: props.Variant({
       name: "Before text",
       group: "Icon",

@@ -499,17 +499,6 @@
     }
   },
   "Heading": {
-    "Tag": {
-      "default": "h2",
-      "options": [
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6"
-      ]
-    },
     "Size": {
       "default": "inherit",
       "options": [
@@ -565,6 +554,17 @@
         "underline-2",
         "underline-3",
         "strike-through"
+      ]
+    },
+    "Tag": {
+      "default": "h2",
+      "options": [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6"
       ]
     }
   },

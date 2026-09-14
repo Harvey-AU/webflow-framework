@@ -21,8 +21,6 @@ export default declareComponent(DeclaredButton, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Button" }),
-    link: props.Link({ name: "Link", group: "Content" }),
     colour: props.Variant({
       name: "Colour",
       group: "Style",
@@ -44,6 +42,8 @@ export default declareComponent(DeclaredButton, {
       defaultValue: "button",
       tooltip: "For a pill use full — the button token is square on the library.",
     }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Button" }),
+    link: props.Link({ name: "Link", group: "Content" }),
     icon: props.Variant({
       name: "Glyph",
       group: "Icon",

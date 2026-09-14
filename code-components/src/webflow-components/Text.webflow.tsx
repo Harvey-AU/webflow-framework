@@ -17,7 +17,6 @@ export default declareComponent(DeclaredText, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
-    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Text", multiline: true }),
     size: props.Variant({
       name: "Size",
       group: "Style",
@@ -42,6 +41,7 @@ export default declareComponent(DeclaredText, {
       options: [...DECORATION_OPTIONS],
       defaultValue: "none",
     }),
+    text: props.TextNode({ name: "Text", group: "Content", defaultValue: "Text", multiline: true }),
     icon: props.Variant({
       name: "Glyph",
       group: "Icon",

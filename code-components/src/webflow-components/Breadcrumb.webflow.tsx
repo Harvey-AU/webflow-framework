@@ -16,6 +16,25 @@ export default declareComponent(DeclaredBreadcrumb, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
+    separator: props.Variant({
+      name: "Separator",
+      group: "Style",
+      options: ["none", ...GLYPH_NAMES],
+      defaultValue: "forward-slash",
+      tooltip: "Glyph between items. None removes it.",
+    }),
+    size: props.Variant({
+      name: "Size",
+      group: "Style",
+      options: typeSizeOptions(),
+      defaultValue: "breadcrumb",
+    }),
+    colour: props.Variant({
+      name: "Colour",
+      group: "Style",
+      options: tokenOptions("colour"),
+      defaultValue: "inherit",
+    }),
     homeText: props.TextNode({ name: "Text", group: "Home", defaultValue: "Home" }),
     homeLink: props.Link({ name: "Link", group: "Home" }),
     item1Text: props.TextNode({ name: "Text", group: "Item 1", defaultValue: "Page" }),
@@ -38,24 +57,5 @@ export default declareComponent(DeclaredBreadcrumb, {
     }),
     item3Text: props.TextNode({ name: "Text", group: "Item 3", defaultValue: "Page" }),
     item3Link: props.Link({ name: "Link", group: "Item 3" }),
-    separator: props.Variant({
-      name: "Separator",
-      group: "Style",
-      options: ["none", ...GLYPH_NAMES],
-      defaultValue: "forward-slash",
-      tooltip: "Glyph between items. None removes it.",
-    }),
-    size: props.Variant({
-      name: "Size",
-      group: "Style",
-      options: typeSizeOptions(),
-      defaultValue: "breadcrumb",
-    }),
-    colour: props.Variant({
-      name: "Colour",
-      group: "Style",
-      options: tokenOptions("colour"),
-      defaultValue: "inherit",
-    }),
   },
 });
