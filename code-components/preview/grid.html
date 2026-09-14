@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>v3 Grid preview</title>
+    <style>
+      body { margin: 0; font-family: monospace; }
+      h1 { padding: 1rem 2.5rem 0; }
+      h2 { padding: 0 2.5rem; margin: 2rem 0 0.5rem; }
+      p.note { padding: 0 2.5rem; margin: 0 0 0.5rem; color: #666; font-size: 13px; }
+      .frame { padding: 0 2.5rem 0.5rem; }
+
+      /* Token stub — gap scale values copied from the library site 2026-09-11.
+         Columns/alignment are literals in tokens.json, no variables needed. */
+      :root {
+        --_sizing-spacer-gap---gap--zero: 0rem;
+        --_sizing-spacer-gap---gap--tiny: 0.25rem;
+        --_sizing-spacer-gap---gap--xxsmall: 0.5rem;
+        --_sizing-spacer-gap---gap--xsmall: 0.75rem;
+        --_sizing-spacer-gap---gap--small: 1rem;
+        --_sizing-spacer-gap---gap--medium: 2rem;
+        --_sizing-spacer-gap---gap--large: 3rem;
+        --_sizing-spacer-gap---gap--xlarge: 4rem;
+        --_sizing-spacer-gap---gap--xxlarge: 5rem;
+        --_sizing-spacer-gap---gap--huge: 6rem;
+        --_sizing-spacer-gap---gap--xhuge: 8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/dist/grid.js"></script>
+  </body>
+</html>

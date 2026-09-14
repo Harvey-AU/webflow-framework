@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>v3 Container preview</title>
+    <style>
+      body { margin: 0; }
+      .outline { outline: 1px dashed #999; }
+      h1 { padding: 1rem 2.5rem 0; }
+      h2 { padding: 0 2.5rem; margin: 1.5rem 0 0.25rem; }
+
+      /* Token stub — the site-local (--_) form of every variable Container
+         references, values copied from the Component Library site 2026-09-11.
+         In Webflow these come from the site; locally this stub stands in. */
+      :root {
+        --_sizing-spacer-gap---padding--xtiny: 0.125rem;
+        --_sizing-spacer-gap---padding--tiny: 0.25rem;
+        --_sizing-spacer-gap---padding--xxsmall: 0.5rem;
+        --_sizing-spacer-gap---padding--xsmall: 0.75rem;
+        --_sizing-spacer-gap---padding--small: 1rem;
+        --_sizing-spacer-gap---padding--medium: 2rem;
+        --_sizing-spacer-gap---padding--large: 3rem;
+        --_sizing-spacer-gap---padding--xlarge: 4rem;
+        --_sizing-spacer-gap---padding--xxlarge: 5rem;
+        --_sizing-spacer-gap---padding--huge: 6rem;
+        --_sizing-spacer-gap---padding--xhuge: 8rem;
+        --_sizing-spacer-gap---padding--xxhuge: 12rem;
+        --_sizing-spacer-gap---padding--custom-1: 1.5rem;
+        --_sizing-spacer-gap---padding--custom-2: 2.5rem;
+        --_sizing-spacer-gap---padding--custom-3: 3.5rem;
+
+        --_sizing-general---gutters--standard: 2.5rem;
+
+        --_colour-primitive---brand--1: #404040;
+        --_colour-primitive---brand--2: #f9f9f9;
+        --_colour-primitive---brand--3: #ffb200;
+        --_colour-primitive---brand--4: #114e0b;
+        --_colour-primitive---brand--5: #be2078;
+        --_colour-primitive---brand--6: #56266c;
+        --_colour-primitive---brand--7: #3b6559;
+        --_colour-primitive---brand--8: #e76f51;
+        --_colour-primitive---brand--9: #4a6fa5;
+        --_colour-primitive---brand--10: #5e503f;
+        --_colour-primitive---neutral--white: #ffffff;
+        --_colour-primitive---neutral--lightest: #eeeeee;
+        --_colour-primitive---neutral--lighter: #cccccc;
+        --_colour-primitive---neutral--light: #aaaaaa;
+        --_colour-primitive---neutral--neutral: #666666;
+        --_colour-primitive---neutral--dark: #444444;
+        --_colour-primitive---neutral--darker: #222222;
+        --_colour-primitive---neutral--darkest: #111111;
+        --_colour-primitive---neutral--black: #000000;
+      }
+
+      /* Theme B — different values, same variables: proves the component
+         re-skins per site with zero code changes (v3-tests.md, Test 4). */
+      .theme-caf {
+        --_colour-primitive---brand--1: #0a1b22;
+        --_colour-primitive---brand--3: #1f6f8b;
+        --_colour-primitive---brand--4: #e6efda;
+        --_sizing-spacer-gap---padding--large: 4rem;
+        --_sizing-general---gutters--standard: 4rem;
+        background: #fbfaf7;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/dist/container.js"></script>
+  </body>
+</html>

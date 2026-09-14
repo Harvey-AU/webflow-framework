@@ -1,6 +1,6 @@
 {
   "library": {
-    "name": "Kaytetye",
+    "name": "Component Library V3",
     "components": [
       "./src/webflow-components/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
     ],

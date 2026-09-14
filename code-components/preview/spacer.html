@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>v3 Spacer preview</title>
+    <style>
+      body { margin: 0; font-family: monospace; }
+      h1 { padding: 1rem 2.5rem 0; }
+      h2 { padding: 0 2.5rem; margin: 2rem 0 0.5rem; }
+      .frame { padding: 0 2.5rem 1rem; }
+
+      /* Spacer token stub — resolved library values (via padding aliases), 2026-09-13 */
+      :root {
+        --_sizing-spacer-gap---spacer--xtiny: 0.5rem;
+        --_sizing-spacer-gap---spacer--tiny: 0.75rem;
+        --_sizing-spacer-gap---spacer--xxxsmall: 1rem;
+        --_sizing-spacer-gap---spacer--xxsmall: 1.5rem;
+        --_sizing-spacer-gap---spacer--xsmall: 2rem;
+        --_sizing-spacer-gap---spacer--small: 3rem;
+        --_sizing-spacer-gap---spacer--medium: 5rem;
+        --_sizing-spacer-gap---spacer--large: 8rem;
+        --_sizing-spacer-gap---spacer--xlarge: 12rem;
+        --_sizing-spacer-gap---spacer--custom-1: 5rem;
+        --_sizing-spacer-gap---spacer--custom-2: 12rem;
+        --_sizing-spacer-gap---spacer--custom-3: 90rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/dist/spacer.js"></script>
+  </body>
+</html>
