@@ -60,6 +60,20 @@ export type ImageProps = {
   customStyle?: string;
 };
 
+/**
+ * The Designer fills unset Image props with its placeholder asset rather
+ * than leaving them empty, so "no mobile override" arrives as placeholder.svg
+ * (verified in CAF DOM 2026-09-14). An override only counts when it's a real
+ * asset: blank or placeholder both mean "use the main image everywhere".
+ */
+const WEBFLOW_PLACEHOLDER = /plugins\/Basic\/assets\/placeholder/;
+
+function realSrc(asset?: { src: string }): string | undefined {
+  const src = asset?.src;
+  if (!src || WEBFLOW_PLACEHOLDER.test(src)) return undefined;
+  return src;
+}
+
 /** "border-radius: 4px; opacity: .5" → { borderRadius: "4px", opacity: ".5" } */
 function parseCustomStyle(input: string): CSSProperties {
   const out: Record<string, string> = {};
@@ -100,10 +114,11 @@ export function Image({
     ...parseCustomStyle(customStyle),
   };
   const img = <img src={image.src} alt={image.alt ?? ""} loading={loading} style={style} />;
-  if (!imageMobile?.src) return img;
+  const mobileSrc = realSrc(imageMobile);
+  if (!mobileSrc) return img;
   return (
     <picture>
-      <source media="(max-width: 767px)" srcSet={imageMobile.src} />
+      <source media="(max-width: 767px)" srcSet={mobileSrc} />
       {img}
     </picture>
   );
