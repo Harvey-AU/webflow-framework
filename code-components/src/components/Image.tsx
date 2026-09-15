@@ -55,6 +55,8 @@ export type ImageProps = {
   fit?: ImageFit;
   corners?: CornersOption;
   maxWidth?: MaxWidthOption;
+  /** Fixed pixel width for logos/icons; 0 = fill the container (default). */
+  widthPx?: number;
   align?: ImageAlign;
   loading?: ImageLoading;
   customStyle?: string;
@@ -96,6 +98,7 @@ export function Image({
   fit = "cover",
   corners = "none",
   maxWidth = "100",
+  widthPx = 0,
   align = "center",
   loading = "lazy",
   customStyle = "",
@@ -103,12 +106,16 @@ export function Image({
   if (!image?.src) return null;
   const style: CSSProperties = {
     display: "block",
-    width: "100%",
+    // Full container width by default (a photo in a grid cell); a fixed px
+    // width for logos/icons — the gap v1/v2 never closed.
+    width: widthPx > 0 ? `${widthPx}px` : "100%",
     height: ratio === "fill" ? "100%" : "auto",
     aspectRatio: RATIOS[ratio],
     objectFit: fit,
     borderRadius: tokenValue("corners", corners),
-    maxWidth: maxWidth === "100" ? undefined : `${maxWidth}%`,
+    // Percentage cap from the Max width option; a fixed px width still gets
+    // a 100% cap so it can't overflow a narrow container.
+    maxWidth: maxWidth !== "100" ? `${maxWidth}%` : widthPx > 0 ? "100%" : undefined,
     marginLeft: align === "left" ? 0 : "auto",
     marginRight: align === "right" ? 0 : "auto",
     ...parseCustomStyle(customStyle),

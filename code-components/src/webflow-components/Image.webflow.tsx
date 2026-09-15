@@ -46,6 +46,14 @@ export default declareComponent(DeclaredImage, {
       options: [...MAX_WIDTH_OPTIONS],
       defaultValue: "100",
     }),
+    widthPx: props.Number({
+      name: "Width px",
+      defaultValue: 0,
+      min: 0,
+      max: 2000,
+      decimals: 0,
+      tooltip: "Fixed pixel width for logos and icons. 0 = fill the container.",
+    }),
     align: props.Variant({
       name: "Align",
       options: ["left", "center", "right"],
