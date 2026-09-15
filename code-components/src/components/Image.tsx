@@ -120,13 +120,28 @@ export function Image({
     marginRight: align === "right" ? 0 : "auto",
     ...parseCustomStyle(customStyle),
   };
-  const img = <img src={image.src} alt={image.alt ?? ""} loading={loading} style={style} />;
   const mobileSrc = realSrc(imageMobile);
-  if (!mobileSrc) return img;
+  if (!mobileSrc) {
+    return <img src={image.src} alt={image.alt ?? ""} loading={loading} style={style} />;
+  }
+  // Real mobile override: two imgs swapped by a plain media query — the
+  // <picture> approach hit a Webflow limitation (reverted 2026-09-15, user).
+  // display comes from the classes here, so strip it from the inline style.
+  const { display: _display, ...shared } = style;
   return (
-    <picture>
-      <source media="(max-width: 767px)" srcSet={mobileSrc} />
-      {img}
-    </picture>
+    <>
+      <style>{IMG_SWAP_CSS}</style>
+      <img className="img-d" src={image.src} alt={image.alt ?? ""} loading={loading} style={shared} />
+      <img className="img-m" src={mobileSrc} alt={imageMobile?.alt ?? image.alt ?? ""} loading={loading} style={shared} />
+    </>
   );
 }
+
+const IMG_SWAP_CSS = `
+.img-d { display: block; }
+.img-m { display: none; }
+@media (max-width: 767px) {
+  .img-d { display: none; }
+  .img-m { display: block; }
+}
+`;

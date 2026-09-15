@@ -343,6 +343,22 @@
         "neutral-darkest",
         "black"
       ]
+    },
+    "Corners": {
+      "default": "none",
+      "options": [
+        "none",
+        "xsmall",
+        "small",
+        "medium",
+        "large",
+        "xlarge",
+        "full",
+        "custom-1",
+        "button",
+        "image",
+        "circle"
+      ]
     }
   },
   "Flex": {
@@ -398,7 +414,9 @@
         "two-70-30",
         "two-30-70",
         "three",
-        "four"
+        "four",
+        "five",
+        "six"
       ]
     },
     "Columns tablet": {
@@ -414,7 +432,9 @@
         "two-70-30",
         "two-30-70",
         "three",
-        "four"
+        "four",
+        "five",
+        "six"
       ]
     },
     "Columns mobile L": {
@@ -430,7 +450,9 @@
         "two-70-30",
         "two-30-70",
         "three",
-        "four"
+        "four",
+        "five",
+        "six"
       ]
     },
     "Column gap": {

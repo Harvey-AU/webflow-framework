@@ -51,6 +51,13 @@ export default declareComponent(DeclaredContainer, {
       options: tokenOptions("colour"),
       defaultValue: "inherit",
     }),
+    corners: props.Variant({
+      name: "Corners",
+      group: "Style",
+      options: tokenOptions("corners"),
+      defaultValue: "none",
+      tooltip: "Border radius — for card-style containers.",
+    }),
     children: props.Slot({ name: "Content" }),
   },
 });

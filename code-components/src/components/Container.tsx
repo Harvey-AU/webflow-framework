@@ -4,6 +4,7 @@ import {
   type PaddingOption,
   type GuttersOption,
   type ColourOption,
+  type CornersOption,
 } from "@/src/tokens";
 
 /**
@@ -17,6 +18,7 @@ export type ContainerProps = {
   gutters?: GuttersOption;
   background?: ColourOption;
   textColour?: ColourOption;
+  corners?: CornersOption;
   children?: ReactNode;
 };
 
@@ -31,6 +33,7 @@ export function Container({
   gutters = "standard",
   background = "transparent",
   textColour = "inherit",
+  corners = "none",
   children,
 }: ContainerProps) {
   const outer: CSSProperties = {
@@ -40,6 +43,7 @@ export function Container({
     paddingBottom: tokenValue("padding", paddingBottom),
     backgroundColor: tokenValue("colour", background),
     color: tokenValue("colour", textColour),
+    borderRadius: tokenValue("corners", corners),
   };
   const inner: CSSProperties = {
     paddingLeft: tokenValue("gutters", gutters),
