@@ -57,6 +57,8 @@ export type ImageProps = {
   maxWidth?: MaxWidthOption;
   /** Fixed pixel width for logos/icons; 0 = fill the container (default). */
   widthPx?: number;
+  /** Overrides Width px below 767px; 0 = no override (default). */
+  widthPxMobile?: number;
   align?: ImageAlign;
   loading?: ImageLoading;
   customStyle?: string;
@@ -99,27 +101,37 @@ export function Image({
   corners = "none",
   maxWidth = "100",
   widthPx = 0,
+  widthPxMobile = 0,
   align = "center",
   loading = "lazy",
   customStyle = "",
 }: ImageProps) {
   if (!image?.src) return null;
-  const style: CSSProperties = {
+  const style = {
     display: "block",
-    // Full container width by default (a photo in a grid cell); a fixed px
-    // width for logos/icons — the gap v1/v2 never closed.
-    width: widthPx > 0 ? `${widthPx}px` : "100%",
     height: ratio === "fill" ? "100%" : "auto",
     aspectRatio: RATIOS[ratio],
     objectFit: fit,
     borderRadius: tokenValue("corners", corners),
     // Percentage cap from the Max width option; a fixed px width still gets
     // a 100% cap so it can't overflow a narrow container.
-    maxWidth: maxWidth !== "100" ? `${maxWidth}%` : widthPx > 0 ? "100%" : undefined,
+    maxWidth:
+      maxWidth !== "100"
+        ? `${maxWidth}%`
+        : widthPx > 0 || widthPxMobile > 0
+          ? "100%"
+          : undefined,
     marginLeft: align === "left" ? 0 : "auto",
     marginRight: align === "right" ? 0 : "auto",
+    // Full container width by default (a photo in a grid cell); a fixed px
+    // width for logos/icons — the gap v1/v2 never closed. Width lives in
+    // IMG_CSS via custom properties so Width px mobile can take over ≤767
+    // (the Grid fallback-chain pattern); a `width` in Custom style is inline
+    // and still beats both, on every breakpoint.
+    ...(widthPx > 0 && { "--img-w": `${widthPx}px` }),
+    ...(widthPxMobile > 0 && { "--img-w-m": `${widthPxMobile}px` }),
     ...parseCustomStyle(customStyle),
-  };
+  } as CSSProperties;
   const mobileSrc = realSrc(imageMobile);
   // The wrapper div is load-bearing: the Designer's constructed stylesheet
   // scaffolds `[data-root] > :empty` with a 75px min box, inset shadows and a
@@ -130,7 +142,8 @@ export function Image({
   if (!mobileSrc) {
     return (
       <div style={{ display: "contents" }}>
-        <img src={image.src} alt={image.alt ?? ""} loading={loading} style={style} />
+        <style>{IMG_CSS}</style>
+        <img className="img" src={image.src} alt={image.alt ?? ""} loading={loading} style={style} />
       </div>
     );
   }
@@ -140,12 +153,22 @@ export function Image({
   const { display: _display, ...shared } = style;
   return (
     <div style={{ display: "contents" }}>
-      <style>{IMG_SWAP_CSS}</style>
-      <img className="img-d" src={image.src} alt={image.alt ?? ""} loading={loading} style={shared} />
-      <img className="img-m" src={mobileSrc} alt={imageMobile?.alt ?? image.alt ?? ""} loading={loading} style={shared} />
+      <style>
+        {IMG_CSS}
+        {IMG_SWAP_CSS}
+      </style>
+      <img className="img img-d" src={image.src} alt={image.alt ?? ""} loading={loading} style={shared} />
+      <img className="img img-m" src={mobileSrc} alt={imageMobile?.alt ?? image.alt ?? ""} loading={loading} style={shared} />
     </div>
   );
 }
+
+const IMG_CSS = `
+.img { width: var(--img-w, 100%); }
+@media (max-width: 767px) {
+  .img { width: var(--img-w-m, var(--img-w, 100%)); }
+}
+`;
 
 const IMG_SWAP_CSS = `
 .img-d { display: block; }

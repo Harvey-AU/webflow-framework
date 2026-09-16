@@ -54,6 +54,14 @@ export default declareComponent(DeclaredImage, {
       decimals: 0,
       tooltip: "Fixed pixel width for logos and icons. 0 = fill the container.",
     }),
+    widthPxMobile: props.Number({
+      name: "Mobile width px",
+      defaultValue: 0,
+      min: 0,
+      max: 2000,
+      decimals: 0,
+      tooltip: "Overrides Width px below 767px. 0 = no override.",
+    }),
     align: props.Variant({
       name: "Align",
       options: ["left", "center", "right"],

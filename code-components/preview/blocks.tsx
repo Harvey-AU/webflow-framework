@@ -91,7 +91,7 @@ function App() {
         />
       </div>
 
-      <h2>Image — ratio/fit/corners/max-width</h2>
+      <h2>Image — ratio/fit/corners/max-width/width px (last: 200px, 100px under 767)</h2>
       <div className="frame row">
         <div style={{ width: 260 }}>
           <Image image={{ src: IMG, alt: "demo" }} ratio="1x1" corners="small" />
@@ -101,6 +101,9 @@ function App() {
         </div>
         <div style={{ width: 260 }}>
           <Image image={{ src: IMG, alt: "demo" }} maxWidth="50" align="right" customStyle="opacity: .6; border: 2px dashed #be2078" />
+        </div>
+        <div style={{ width: 260 }}>
+          <Image image={{ src: IMG, alt: "demo" }} widthPx={200} widthPxMobile={100} ratio="1x1" corners="small" />
         </div>
       </div>
 
