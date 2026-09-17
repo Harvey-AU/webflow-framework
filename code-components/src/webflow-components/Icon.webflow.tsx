@@ -10,7 +10,7 @@ function DeclaredIcon({ show = true, ...rest }: IconProps & { show?: boolean }) 
 }
 
 export default declareComponent(DeclaredIcon, {
-  name: "Icon",
+  name: "Icon | Library",
   description:
     "Inline SVG glyph from the v1 icon set (49 glyphs, same names). Weight adjusts stroke thickness on line glyphs; filled glyphs (triangles, dot, plus, content icons) ignore it.",
   group: "Harvey v3",

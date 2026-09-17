@@ -10,7 +10,7 @@ function DeclaredAccordion({ show = true, ...rest }: AccordionProps & { show?: b
 }
 
 export default declareComponent(DeclaredAccordion, {
-  name: "Accordion",
+  name: "Accordion | Library",
   description:
     "One accordion/FAQ item on native details/summary — no JS, keyboard and screen-reader semantics built in. Stack items for a list. The body is the Rich Text block with identical settings. Open state swaps the background and adds a thin hr-variable border.",
   group: "Harvey v3",

@@ -9,7 +9,7 @@ function DeclaredStack({ show = true, ...rest }: StackProps & { show?: boolean }
 }
 
 export default declareComponent(DeclaredStack, {
-  name: "Stack",
+  name: "Stack | Library",
   description:
     "Vertical column of blocks. Space children with Spacer blocks so spacing stays visible in the tree. Alignment sets the children's horizontal alignment.",
   group: "Harvey v3",

@@ -11,7 +11,7 @@ function DeclaredTag({ show = true, ...rest }: TagProps & { show?: boolean }) {
 }
 
 export default declareComponent(DeclaredTag, {
-  name: "Tag",
+  name: "Tag | Library",
   description:
     "Label chip — looks exactly like Button (same colour, size and corner options) but has no link and no hover.",
   group: "Harvey v3",

@@ -11,7 +11,7 @@ function DeclaredFlex({ show = true, ...rest }: FlexProps & { show?: boolean }) 
 const DIRECTIONS = ["row", "column"] as const;
 
 export default declareComponent(DeclaredFlex, {
-  name: "Flex",
+  name: "Flex | Library",
   description:
     "Row or column group for buttons, tags and similar. Rows centre items, columns stretch them; wrapping is off unless turned on.",
   group: "Harvey v3",

@@ -10,7 +10,7 @@ function DeclaredBreadcrumb({ show = true, ...rest }: BreadcrumbProps & { show?:
 }
 
 export default declareComponent(DeclaredBreadcrumb, {
-  name: "Breadcrumb",
+  name: "Breadcrumb | Library",
   description:
     "Breadcrumb trail — Home plus up to three items with slash separators, sized by the site's breadcrumb variables.",
   group: "Harvey v3",

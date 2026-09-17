@@ -14,7 +14,7 @@ function DeclaredContainer({ show = true, ...rest }: ContainerProps & { show?: b
 }
 
 export default declareComponent(DeclaredContainer, {
-  name: "Container",
+  name: "Container | Library",
   description:
     "Layout box with a slot — the full-width section container. Background spans full width; gutters pad the content. Styles resolve from the site's Webflow variables.",
   group: "Harvey v3",

@@ -9,7 +9,7 @@ function DeclaredRichText({ show = true, ...rest }: RichTextProps & { show?: boo
 }
 
 export default declareComponent(DeclaredRichText, {
-  name: "Rich Text",
+  name: "Rich Text | Library",
   description:
     "Rich text block. Style article swaps the divider styling to the article variables, as v1's two rich text classes did.",
   group: "Harvey v3",

@@ -9,7 +9,7 @@ function DeclaredSpacer({ show = true, ...rest }: SpacerProps & { show?: boolean
 }
 
 export default declareComponent(DeclaredSpacer, {
-  name: "Spacer",
+  name: "Spacer | Library",
   description:
     "Explicit space between blocks — use inside Stack instead of gaps so spacing stays visible in the tree. Note the scale runs big: small is 3rem on the library.",
   group: "Harvey v3",

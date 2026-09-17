@@ -11,7 +11,7 @@ function DeclaredLine({ show = true, ...rest }: HorizontalLineProps & { show?: b
 const THICKNESS = ["hr", ...tokenOptions("border").filter((o) => o !== "none" && o !== "button")];
 
 export default declareComponent(DeclaredLine, {
-  name: "Horizontal Line",
+  name: "Horizontal Line | Library",
   description:
     "Divider with built-in space above and below. The hr defaults follow the site's divider variables; override thickness/colour per instance if a design needs it.",
   group: "Harvey v3",

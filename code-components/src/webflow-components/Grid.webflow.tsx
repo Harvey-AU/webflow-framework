@@ -16,7 +16,7 @@ function DeclaredGrid({ show = true, ...rest }: GridProps & { show?: boolean }) 
 const DIRECTIONS = ["standard", "reverse"] as const;
 
 export default declareComponent(DeclaredGrid, {
-  name: "Grid",
+  name: "Grid | Library",
   description:
     "CSS grid layout — each element dropped in the slot is one cell. Responsive columns and direction; auto-stacks to one column on mobile when nothing is set.",
   group: "Harvey v3",

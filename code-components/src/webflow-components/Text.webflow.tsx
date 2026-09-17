@@ -11,7 +11,7 @@ function DeclaredText({ show = true, ...rest }: TextProps & { show?: boolean }) 
 }
 
 export default declareComponent(DeclaredText, {
-  name: "Text",
+  name: "Text | Library",
   description:
     "Paragraph block; also the typography source for Button and Tag labels. Optional inline icon after the text.",
   group: "Harvey v3",

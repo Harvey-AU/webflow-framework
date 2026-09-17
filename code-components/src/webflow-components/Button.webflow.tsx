@@ -15,7 +15,7 @@ function DeclaredButton({ show = true, ...rest }: ButtonProps & { show?: boolean
 }
 
 export default declareComponent(DeclaredButton, {
-  name: "Button",
+  name: "Button | Library",
   description:
     "Button — link with a label and optional icon, coloured by the site's semantic button variables. Hover states come with the colour choice.",
   group: "Harvey v3",

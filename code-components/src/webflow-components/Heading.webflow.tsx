@@ -10,7 +10,7 @@ function DeclaredHeading({ show = true, ...rest }: HeadingProps & { show?: boole
 }
 
 export default declareComponent(DeclaredHeading, {
-  name: "Heading",
+  name: "Heading | Library",
   description:
     "Heading block. Tag is SEO-only; Size styles independently (inherit = the tag's size from the site's variables). Font family comes from the site, not a prop.",
   group: "Harvey v3",

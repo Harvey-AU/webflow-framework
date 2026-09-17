@@ -14,7 +14,7 @@ function DeclaredImage({ show = true, ...rest }: ImageProps & { show?: boolean }
 }
 
 export default declareComponent(DeclaredImage, {
-  name: "Image",
+  name: "Image | Library",
   description:
     "Image block. Alt text comes from the asset. Fit contain protects logos from cropping; Loading eager is for above-the-fold heroes (LCP).",
   group: "Harvey v3",
