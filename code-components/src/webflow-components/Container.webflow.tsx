@@ -21,6 +21,13 @@ export default declareComponent(DeclaredContainer, {
   group: "Harvey v3",
   props: {
     show: props.Visibility({ name: "Show", defaultValue: true }),
+    size: props.Variant({
+      name: "Container size",
+      group: "Layout",
+      options: tokenOptions("container"),
+      defaultValue: "medium",
+      tooltip: "Max width of the content (the site's container variables). Full = no constraint.",
+    }),
     paddingTop: props.Variant({
       name: "Padding top",
       group: "Layout",

@@ -28,9 +28,11 @@ export type ButtonSize = (typeof BUTTON_SIZE_OPTIONS)[number];
 
 /* Paddings from the site's Sizing Button variables (site's own --_ set first,
    library-namespaced copy as fallback). Verified on the Component Library and
-   CAF variable panels 2026-09-20: variables exist for standard / wide /
-   short-narrow / xshort-narrow only — short and no-side-padding compose from
-   those groups, matching the literals v2 shipped. */
+   CAF variable panels 2026-09-20: standard / wide / short-narrow /
+   xshort-narrow. Short/padding-* variables were added by the user 2026-09-20;
+   sites that predate them fall back to the composite (short-narrow vertical +
+   standard horizontal, the v2 behaviour). no-side-padding composes; no-padding
+   is literal 0. */
 const sp = (group: string, side: "top-bottom" | "left-right") =>
   cssVar(`sizing-button---${group}--padding-${side}`);
 
@@ -38,7 +40,7 @@ export const SIZE_PADDING: Record<ButtonSize, string> = {
   standard: `${sp("standard", "top-bottom")} ${sp("standard", "left-right")}`,
   "xshort-narrow": `${sp("xshort-narrow", "top-bottom")} ${sp("xshort-narrow", "left-right")}`,
   "short-narrow": `${sp("short-narrow", "top-bottom")} ${sp("short-narrow", "left-right")}`,
-  short: `${sp("short-narrow", "top-bottom")} ${sp("standard", "left-right")}`,
+  short: `${cssVar("sizing-button---short--padding-top-bottom", sp("short-narrow", "top-bottom"))} ${cssVar("sizing-button---short--padding-left-right", sp("standard", "left-right"))}`,
   wider: `${sp("wide", "top-bottom")} ${sp("wide", "left-right")}`,
   "no-side-padding": `${sp("standard", "top-bottom")} 0`,
   "no-padding": "0",

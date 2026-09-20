@@ -66,9 +66,13 @@ export function tokenOptions<S extends Scale>(scale: S): TokenOption<S>[] {
  * Dual-fallback reference for a one-off variable outside the scales
  * (semantic button colours, hr, the icon gap). Only use with paths verified
  * against the site — this bypasses the vocabulary check the scales provide.
+ * An optional `fallback` becomes the last resort after both variable forms —
+ * for variables that may not exist on older sites yet.
  */
-export function cssVar(path: string): string {
-  return `var(--_${path}, var(--${NS}_${path}))`;
+export function cssVar(path: string, fallback?: string): string {
+  return fallback === undefined
+    ? `var(--_${path}, var(--${NS}_${path}))`
+    : `var(--_${path}, var(--${NS}_${path}, ${fallback}))`;
 }
 
 /* ---- Typography sizes: the one multi-value scale (font-size + line-height

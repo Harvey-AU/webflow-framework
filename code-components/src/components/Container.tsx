@@ -5,6 +5,7 @@ import {
   type GuttersOption,
   type ColourOption,
   type CornersOption,
+  type ContainerWidthOption,
 } from "@/src/tokens";
 
 /**
@@ -13,6 +14,7 @@ import {
  * variant, so an instance with nothing set renders the same as v2's default.
  */
 export type ContainerProps = {
+  size?: ContainerWidthOption;
   paddingTop?: PaddingOption;
   paddingBottom?: PaddingOption;
   gutters?: GuttersOption;
@@ -28,6 +30,7 @@ export type ContainerProps = {
  * so a future Container width prop constrains the content, not the box.
  */
 export function Container({
+  size = "medium",
   paddingTop = "large",
   paddingBottom = "large",
   gutters = "standard",
@@ -46,6 +49,11 @@ export function Container({
     borderRadius: tokenValue("corners", corners),
   };
   const inner: CSSProperties = {
+    // Width constrains the CONTENT (the v1 "Container size"); the outer box
+    // stays full-bleed. "full" resolves to max-width: none.
+    maxWidth: tokenValue("container", size),
+    marginLeft: "auto",
+    marginRight: "auto",
     paddingLeft: tokenValue("gutters", gutters),
     paddingRight: tokenValue("gutters", gutters),
   };
