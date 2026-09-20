@@ -1,12 +1,13 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Tag, type TagProps } from "@/src/components/Tag";
 import { BUTTON_COLOUR_OPTIONS, BUTTON_SIZE_OPTIONS } from "@/src/components/Button";
 import { GLYPH_NAMES } from "@/src/icons/glyphs";
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredTag({ show = true, ...rest }: TagProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Tag {...rest} />;
 }
 

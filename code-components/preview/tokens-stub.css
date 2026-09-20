@@ -103,6 +103,41 @@
   --_font---size--huge: 48px;     --_font---height--huge: 1.1;
   --_font---size--xhuge: 56px;    --_font---height--xhuge: 1.05;
 
+  /* Families (INVENTED — sans for headings so the tag-family fix is visible
+     against the preview pages' Georgia body font) */
+  --_font---family--base: Georgia, serif;
+  --_font---family--tag--h1: Arial, Helvetica, sans-serif;
+  --_font---family--tag--h2: Arial, Helvetica, sans-serif;
+  --_font---family--tag--h3: Arial, Helvetica, sans-serif;
+  --_font---family--tag--h4: Arial, Helvetica, sans-serif;
+  --_font---family--tag--h5: Arial, Helvetica, sans-serif;
+  --_font---family--tag--h6: Arial, Helvetica, sans-serif;
+  --_font---family--tag--p: Georgia, serif;
+  --_font---family--tag--breadcrumb: Georgia, serif;
+
+  /* Letter spacing (INVENTED — negative on headings/large sizes so the
+     typeSize spacing wiring is visible) */
+  --_font---letter-spacing--tag--h1: -0.02em;
+  --_font---letter-spacing--tag--h2: -0.02em;
+  --_font---letter-spacing--tag--h3: -0.015em;
+  --_font---letter-spacing--tag--h4: -0.01em;
+  --_font---letter-spacing--tag--h5: -0.01em;
+  --_font---letter-spacing--tag--h6: 0em;
+  --_font---letter-spacing--tag--p: 0em;
+  --_font---letter-spacing--tag--breadcrumb: 0.01em;
+  --_font---letter-spacing--tiny: 0.01em;
+  --_font---letter-spacing--xxxsmall: 0.01em;
+  --_font---letter-spacing--xxsmall: 0em;
+  --_font---letter-spacing--xsmall: 0em;
+  --_font---letter-spacing--small: 0em;
+  --_font---letter-spacing--medium: -0.01em;
+  --_font---letter-spacing--large: -0.01em;
+  --_font---letter-spacing--xlarge: -0.015em;
+  --_font---letter-spacing--xxlarge: -0.02em;
+  --_font---letter-spacing--xxxlarge: -0.02em;
+  --_font---letter-spacing--huge: -0.025em;
+  --_font---letter-spacing--xhuge: -0.025em;
+
   /* Weights (INVENTED, standard mapping) */
   --_font---weight--light: 300;
   --_font---weight--normal: 400;

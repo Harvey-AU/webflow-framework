@@ -1,10 +1,11 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Spacer, type SpacerProps } from "@/src/components/Spacer";
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredSpacer({ show = true, ...rest }: SpacerProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Spacer {...rest} />;
 }
 

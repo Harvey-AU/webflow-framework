@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import { cssVar, tokenValue, type CornersOption } from "@/src/tokens";
+import { cssVar, tokenValue, typeSize, type CornersOption } from "@/src/tokens";
 import { Icon } from "./Icon";
 import type { GlyphName } from "@/src/icons/glyphs";
 
@@ -26,14 +26,21 @@ export const BUTTON_SIZE_OPTIONS = [
 ] as const;
 export type ButtonSize = (typeof BUTTON_SIZE_OPTIONS)[number];
 
-/* Literal paddings, verified from the v2 stylesheet. */
+/* Paddings from the site's Sizing Button variables (site's own --_ set first,
+   library-namespaced copy as fallback). Verified on the Component Library and
+   CAF variable panels 2026-09-20: variables exist for standard / wide /
+   short-narrow / xshort-narrow only — short and no-side-padding compose from
+   those groups, matching the literals v2 shipped. */
+const sp = (group: string, side: "top-bottom" | "left-right") =>
+  cssVar(`sizing-button---${group}--padding-${side}`);
+
 export const SIZE_PADDING: Record<ButtonSize, string> = {
-  standard: ".75rem 1.5rem",
-  "xshort-narrow": ".25rem .75rem",
-  "short-narrow": ".5rem 1rem",
-  short: ".5rem 1.5rem",
-  wider: ".75rem 2.5rem",
-  "no-side-padding": ".75rem 0",
+  standard: `${sp("standard", "top-bottom")} ${sp("standard", "left-right")}`,
+  "xshort-narrow": `${sp("xshort-narrow", "top-bottom")} ${sp("xshort-narrow", "left-right")}`,
+  "short-narrow": `${sp("short-narrow", "top-bottom")} ${sp("short-narrow", "left-right")}`,
+  short: `${sp("short-narrow", "top-bottom")} ${sp("standard", "left-right")}`,
+  wider: `${sp("wide", "top-bottom")} ${sp("wide", "left-right")}`,
+  "no-side-padding": `${sp("standard", "top-bottom")} 0`,
   "no-padding": "0",
 };
 
@@ -73,7 +80,10 @@ export function buttonFamilyClass(option: string): string {
   return "btn-fill"; // standard + colour-N
 }
 
-/* Resting rules shared with Tag (which has no hover states). */
+/* Resting rules shared with Tag (which has no hover states). Label typography
+   is the p tag's variables — in the old library the label was paragraph-styled
+   text, and the shadow root gets no typography from the site's cascade. */
+const P_TYPE = typeSize("p");
 export const BUTTON_RESTING_CSS = `
 .btn {
   display: inline-flex;
@@ -83,6 +93,11 @@ export const BUTTON_RESTING_CSS = `
   text-decoration: none;
   border-radius: var(--btn-r);
   padding: var(--btn-p);
+  font-family: ${cssVar("font---family--tag--p")};
+  font-size: ${P_TYPE.fontSize};
+  line-height: ${P_TYPE.lineHeight};
+  letter-spacing: ${P_TYPE.letterSpacing};
+  font-weight: ${cssVar("font---weight--tag--p")};
 }
 .btn-fill { background: var(--btn-bg); color: var(--btn-fg); border: 1px solid var(--btn-bg); }
 .btn-outline, .btn-nofill { background: transparent; color: var(--btn-bg); border: 1px solid var(--btn-bg); }

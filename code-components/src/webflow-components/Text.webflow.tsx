@@ -1,12 +1,13 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Text, type TextProps } from "@/src/components/Text";
 import { DECORATION_OPTIONS } from "@/src/components/typography";
 import { GLYPH_NAMES } from "@/src/icons/glyphs";
 import { tokenOptions, typeSizeOptions } from "@/src/tokens";
 
 function DeclaredText({ show = true, ...rest }: TextProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Text {...rest} />;
 }
 

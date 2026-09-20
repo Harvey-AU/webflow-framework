@@ -1,5 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Grid, type GridProps } from "@/src/components/Grid";
 import { tokenOptions } from "@/src/tokens";
 
@@ -9,7 +10,7 @@ import { tokenOptions } from "@/src/tokens";
  * to inherit; with nothing set the grid auto-stacks below 767px.
  */
 function DeclaredGrid({ show = true, ...rest }: GridProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Grid {...rest} />;
 }
 

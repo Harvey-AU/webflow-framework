@@ -1,11 +1,12 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Accordion, type AccordionProps } from "@/src/components/Accordion";
 import { GLYPH_NAMES } from "@/src/icons/glyphs";
 import { tokenOptions, typeSizeOptions } from "@/src/tokens";
 
 function DeclaredAccordion({ show = true, ...rest }: AccordionProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Accordion {...rest} />;
 }
 

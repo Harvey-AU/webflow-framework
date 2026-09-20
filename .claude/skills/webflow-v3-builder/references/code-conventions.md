@@ -31,7 +31,7 @@ preview/<name>.html + .tsx    ← local harness, npm run dev:preview, port 4000
 5. **Defaults mirror the v2 base variant** so a props-less instance renders like its v2 counterpart and migration maps 1:1.
 
 ## Declarations
-- `props.Visibility` "Show" first, handled in a `Declared<Name>` wrapper that returns `null`.
+- `props.Visibility` "Show" first, handled in a `Declared<Name>` wrapper that returns `null`. **TEMP (2026-09-17): all wrappers currently return `<HiddenPlaceholder />` instead** — a Webflow Designer bug breaks code components that return `null` when Visibility is off; Webflow support supplied the hidden-div workaround and is fixing the underlying bug. When the user says the fix shipped: delete `src/webflow-components/HiddenPlaceholder.tsx` and revert every `return <HiddenPlaceholder />;` (plus its import) back to `return null;` — grep for `HiddenPlaceholder`.
 - Every `declareComponent` gets a real `description` — it's how designers and future sessions know what it is.
 - `options: { ssr: "prerender" }` only when the component reads data; omit for pure presentation.
 - Slot props cannot carry defaults (`Slot` is in `PropTypesWithoutDefaultValue`). Pre-built content = a composition component with Show props; slot fallback JSX only for "if you provided nothing" cases, and verify empty-slot detection on canvas first.

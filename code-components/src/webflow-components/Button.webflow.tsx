@@ -1,5 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import {
   Button,
   BUTTON_COLOUR_OPTIONS,
@@ -10,7 +11,7 @@ import { GLYPH_NAMES } from "@/src/icons/glyphs";
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredButton({ show = true, ...rest }: ButtonProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Button {...rest} />;
 }
 

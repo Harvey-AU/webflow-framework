@@ -1,10 +1,11 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Stack, type StackProps } from "@/src/components/Stack";
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredStack({ show = true, ...rest }: StackProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Stack {...rest} />;
 }
 

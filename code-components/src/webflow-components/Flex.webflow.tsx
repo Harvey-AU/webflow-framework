@@ -1,10 +1,11 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Flex, type FlexProps } from "@/src/components/Flex";
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredFlex({ show = true, ...rest }: FlexProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Flex {...rest} />;
 }
 

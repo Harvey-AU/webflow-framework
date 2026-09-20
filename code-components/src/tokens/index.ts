@@ -71,20 +71,28 @@ export function cssVar(path: string): string {
   return `var(--_${path}, var(--${NS}_${path}))`;
 }
 
-/* ---- Typography sizes: the one two-value scale (font-size + line-height).
-   Every size option pairs both, per the site's --_font---size/--_font---height
-   variable pairs. "inherit" is handled by callers as "don't set". ---- */
+/* ---- Typography sizes: the one multi-value scale (font-size + line-height
+   + letter-spacing). Every size option pairs all three, per the site's
+   --_font---size/--_font---height/--_font---letter-spacing variable sets
+   (tag options use the --tag-- spacing variables, scale options the scale
+   ones — verified in the framework's fonts/base.css, 2026-09-20).
+   "inherit" is handled by callers as "don't set". ---- */
 
 export type TypeSizeOption = keyof typeof raw.typeSizes & string;
 
-const typeSizes = raw.typeSizes as Record<string, { size: string; height: string }>;
+const typeSizes = raw.typeSizes as Record<string, { size: string; height: string; spacing: string }>;
 
-/** font-size + line-height CSS values for a type size option. */
-export function typeSize(option: TypeSizeOption): { fontSize: string; lineHeight: string } {
+/** font-size + line-height + letter-spacing CSS values for a type size option. */
+export function typeSize(option: TypeSizeOption): {
+  fontSize: string;
+  lineHeight: string;
+  letterSpacing: string;
+} {
   const t = typeSizes[option];
   return {
     fontSize: `var(--_${t.size}, var(--${NS}_${t.size}))`,
     lineHeight: `var(--_${t.height}, var(--${NS}_${t.height}))`,
+    letterSpacing: `var(--_${t.spacing}, var(--${NS}_${t.spacing}))`,
   };
 }
 

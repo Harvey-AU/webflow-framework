@@ -1,5 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Container, type ContainerProps } from "@/src/components/Container";
 import { tokenOptions } from "@/src/tokens";
 
@@ -9,7 +10,7 @@ import { tokenOptions } from "@/src/tokens";
  * instance with nothing set renders like a default Attr | Container.
  */
 function DeclaredContainer({ show = true, ...rest }: ContainerProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Container {...rest} />;
 }
 

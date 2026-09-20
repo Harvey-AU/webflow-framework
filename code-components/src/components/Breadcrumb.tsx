@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import { typeSize, tokenValue, type ColourOption, type TypeSizeOption } from "@/src/tokens";
+import { typeSize, tokenValue, cssVar, type ColourOption, type TypeSizeOption } from "@/src/tokens";
 import { Icon } from "./Icon";
 import type { GlyphName } from "@/src/icons/glyphs";
 
@@ -62,8 +62,13 @@ export function Breadcrumb({
   const Sep = () => (separator === "none" ? null : <Icon glyph={separator} size="small" />);
   const sized = typeSize(size);
   const style: CSSProperties = {
+    // Shadow root: the breadcrumb tag's family/weight come from its tag
+    // variables (Size only swaps the size pair, as in v1).
+    fontFamily: cssVar("font---family--tag--breadcrumb"),
+    fontWeight: cssVar("font---weight--tag--breadcrumb"),
     fontSize: sized.fontSize,
     lineHeight: sized.lineHeight,
+    letterSpacing: sized.letterSpacing,
     color: tokenValue("colour", colour),
   };
   return (

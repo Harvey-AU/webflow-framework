@@ -73,8 +73,10 @@ const ACC_CSS = `
   align-items: center;
   gap: var(--acc-gap);
   padding: var(--acc-p);
+  font-family: var(--acc-ff);
   font-size: var(--acc-fs);
   line-height: var(--acc-lh);
+  letter-spacing: var(--acc-ls);
   font-weight: var(--acc-fw, inherit);
   cursor: pointer;
   list-style: none;
@@ -126,9 +128,14 @@ export function Accordion({
     "--acc-r": tokenValue("corners", corners),
     "--acc-p": tokenValue("padding", padding),
     "--acc-gap": tokenValue("gap", "xsmall"),
+    "--acc-ff": cssVar(`font---family--tag--${titleTag}`), // shadow root: the tag's family must come from variables, as Heading
     "--acc-fs": sized.fontSize,
     "--acc-lh": sized.lineHeight,
-    ...(titleWeight === "inherit" ? {} : { "--acc-fw": tokenValue("weight", titleWeight) }),
+    "--acc-ls": sized.letterSpacing,
+    // inherit resolves to the tag's weight variable — otherwise the summary's
+    // heading tag renders browser-default bold inside the shadow root, as Heading.
+    "--acc-fw":
+      titleWeight === "inherit" ? cssVar(`font---weight--tag--${titleTag}`) : tokenValue("weight", titleWeight),
     "--acc-hr-w": cssVar("sizing-border-corner---border--hr"),
     "--acc-hr-c":
       borderColour === "hr"

@@ -1,11 +1,12 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Icon, ICON_SIZE_OPTIONS, type IconProps } from "@/src/components/Icon";
 import { GLYPH_NAMES } from "@/src/icons/glyphs";
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredIcon({ show = true, ...rest }: IconProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Icon {...rest} />;
 }
 

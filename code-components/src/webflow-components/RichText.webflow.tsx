@@ -1,10 +1,11 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { RichText, type RichTextProps } from "@/src/components/RichText";
 import { tokenOptions, typeSizeOptions } from "@/src/tokens";
 
 function DeclaredRichText({ show = true, ...rest }: RichTextProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <RichText {...rest} />;
 }
 

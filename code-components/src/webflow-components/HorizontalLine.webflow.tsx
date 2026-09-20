@@ -1,10 +1,11 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { HorizontalLine, type HorizontalLineProps } from "@/src/components/HorizontalLine";
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredLine({ show = true, ...rest }: HorizontalLineProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <HorizontalLine {...rest} />;
 }
 

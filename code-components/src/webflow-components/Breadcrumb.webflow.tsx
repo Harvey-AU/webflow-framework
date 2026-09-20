@@ -1,11 +1,12 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Breadcrumb, type BreadcrumbProps } from "@/src/components/Breadcrumb";
 import { GLYPH_NAMES } from "@/src/icons/glyphs";
 import { tokenOptions, typeSizeOptions } from "@/src/tokens";
 
 function DeclaredBreadcrumb({ show = true, ...rest }: BreadcrumbProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Breadcrumb {...rest} />;
 }
 

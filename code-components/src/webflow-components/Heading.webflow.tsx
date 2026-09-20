@@ -1,11 +1,12 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import { Heading, type HeadingProps } from "@/src/components/Heading";
 import { DECORATION_OPTIONS } from "@/src/components/typography";
 import { tokenOptions, typeSizeOptions } from "@/src/tokens";
 
 function DeclaredHeading({ show = true, ...rest }: HeadingProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Heading {...rest} />;
 }
 

@@ -1,5 +1,6 @@
 import { declareComponent } from "@webflow/react";
 import { props } from "@webflow/data-types";
+import { HiddenPlaceholder } from "./HiddenPlaceholder";
 import {
   Image,
   RATIO_OPTIONS,
@@ -9,7 +10,7 @@ import {
 import { tokenOptions } from "@/src/tokens";
 
 function DeclaredImage({ show = true, ...rest }: ImageProps & { show?: boolean }) {
-  if (!show) return null;
+  if (!show) return <HiddenPlaceholder />;
   return <Image {...rest} />;
 }
 

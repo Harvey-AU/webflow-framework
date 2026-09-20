@@ -36,9 +36,13 @@ export function Text({
 }: TextProps) {
   const sized = typeSize(size === "inherit" ? "p" : size);
   const style: CSSProperties = {
+    // Shadow root: the site's paragraph styles can't reach us, so the p tag's
+    // family/weight come from the tag variables, as Heading does with its tag.
+    fontFamily: cssVar("font---family--tag--p"),
     fontSize: sized.fontSize,
     lineHeight: sized.lineHeight,
-    fontWeight: weight === "inherit" ? undefined : tokenValue("weight", weight),
+    letterSpacing: sized.letterSpacing,
+    fontWeight: weight === "inherit" ? cssVar("font---weight--tag--p") : tokenValue("weight", weight),
     textAlign: align === "inherit" ? undefined : (tokenValue("textAlign", align) as CSSProperties["textAlign"]),
   };
   return (
