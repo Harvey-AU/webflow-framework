@@ -172,6 +172,38 @@
   --_sizing-border-corner---border--hr: 1px;
   --_sizing-border-corner---border--hr-article: 3px;
 
+  /* Rich text tag variables (INVENTED, p + list only — enough to see the
+     RT_TAGS wiring incl. lists borrowing the p family; other tags fall back
+     by inheritance) */
+  --_font-rich-text---family--tag--p: Georgia, serif;
+  --_font-rich-text---family--tag--p-article: Georgia, serif;
+  --_font-rich-text---size--tag--p: 16px;
+  --_font-rich-text---height--tag--p: 1.5;
+  --_font-rich-text---weight--tag--p: 400;
+  --_font-rich-text---letter-spacing--tag--p: 0em;
+  --_font-rich-text---spacing--p-margin-top: 0.75rem;
+  --_font-rich-text---spacing--p-margin-bottom: 0.75rem;
+  --_font-rich-text---size--tag--p-article: 16px;
+  --_font-rich-text---height--tag--p-article: 1.5;
+  --_font-rich-text---weight--tag--p-article: 400;
+  --_font-rich-text---letter-spacing--tag--p-article: 0em;
+  --_font-rich-text---spacing--p-article-margin-top: 0.75rem;
+  --_font-rich-text---spacing--p-article-margin-bottom: 0.75rem;
+  --_font-rich-text---size--tag--list: 16px;
+  --_font-rich-text---height--tag--list: 1.5;
+  --_font-rich-text---weight--tag--list: 400;
+  --_font-rich-text---letter-spacing--tag--list: 0em;
+  --_font-rich-text---spacing--list-margin-top: 0.75rem;
+  --_font-rich-text---spacing--list-margin-bottom: 1rem;
+  --_font-rich-text---spacing--list-padding-left: 1.5rem;
+  --_font-rich-text---size--tag--list-article: 16px;
+  --_font-rich-text---height--tag--list-article: 1.5;
+  --_font-rich-text---weight--tag--list-article: 400;
+  --_font-rich-text---letter-spacing--tag--list-article: 0em;
+  --_font-rich-text---spacing--list-article-margin-top: 0.75rem;
+  --_font-rich-text---spacing--list-article-margin-bottom: 1rem;
+  --_font-rich-text---spacing--list-article-padding-left: 1.5rem;
+
   /* hr semantics (INVENTED) */
   --_colour-semantic---border--hr: #cccccc;
   --_colour-semantic---border--hr-article: #ffb200;

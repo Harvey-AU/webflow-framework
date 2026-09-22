@@ -117,6 +117,10 @@ function App() {
                 <>
                   <h3>{mode}</h3>
                   <p>First paragraph — top margin should be trimmed.</p>
+                  <ul>
+                    <li>Lists take the list variables…</li>
+                    <li>…but the <em>p</em> font family (no list family in v1).</li>
+                  </ul>
                   <hr />
                   <p>After the divider. <a href="#">A link in currentColor</a>.</p>
                 </>

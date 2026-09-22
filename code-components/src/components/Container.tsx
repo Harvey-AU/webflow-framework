@@ -39,23 +39,25 @@ export function Container({
   corners = "none",
   children,
 }: ContainerProps) {
+  // v1 structure: ALL padding (vertical + gutters) sits on the full-bleed
+  // outer wrapper; the inner div is purely the width constraint. Gutters
+  // inside the constrained box would shave 2×gutter off the content width.
   const outer: CSSProperties = {
     display: "block",
     width: "100%",
     paddingTop: tokenValue("padding", paddingTop),
     paddingBottom: tokenValue("padding", paddingBottom),
+    paddingLeft: tokenValue("gutters", gutters),
+    paddingRight: tokenValue("gutters", gutters),
     backgroundColor: tokenValue("colour", background),
     color: tokenValue("colour", textColour),
     borderRadius: tokenValue("corners", corners),
   };
   const inner: CSSProperties = {
-    // Width constrains the CONTENT (the v1 "Container size"); the outer box
-    // stays full-bleed. "full" resolves to max-width: none.
+    // The v1 "Container size"; "full" resolves to max-width: none.
     maxWidth: tokenValue("container", size),
     marginLeft: "auto",
     marginRight: "auto",
-    paddingLeft: tokenValue("gutters", gutters),
-    paddingRight: tokenValue("gutters", gutters),
   };
   return (
     <section style={outer}>
