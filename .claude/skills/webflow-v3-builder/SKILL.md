@@ -23,7 +23,7 @@ Harvey has ~20 Webflow sites sharing a component library. v1 was a monolith: one
 
 ## The Kaytetye spike is not a style reference
 
-`code-components/` in this repo (the "Kaytetye" library) was a throwaway trial of the code-components CLI, built before these rules existed. It hardcodes everything via Tailwind/shadcn — the opposite of rule 10. Decision (2026-09-11): it stays as-is, **do not refactor it**, and do not copy its styling conventions into v3 library components. What it *is* good for: the CLI/runtime mechanics its README documents — Shadow DOM per instance (why cross-component state goes through the URL), Radix portals needing a `container` inside the shadow root, `library.globals` as the only stylesheet route, the `.cjs` bundleConfig requirement, Node 22.13+ and the workspace-plan requirement for installing libraries.
+`code-components/` in this repo (the "Kaytetye" library) was a throwaway trial of the code-components CLI, built before these rules existed. It hardcodes everything via Tailwind/shadcn — the opposite of rule 10. Decision (2026-09-11): it stays as-is, **do not refactor it**, and do not copy its styling conventions into v3 library components. What it *is* good for: the CLI/runtime mechanics its README documents — Shadow DOM per instance (why cross-component state goes through the URL), Radix portals needing a `container` inside the shadow root, the `.cjs` bundleConfig requirement (note: `library.globals` is injected per-island INTO the shadow templates — it is NOT page-level CSS; document-level styles must be injected from a component, see code-conventions.md), Node 22.13+ and the workspace-plan requirement for installing libraries.
 
 ## Non-negotiable rules
 

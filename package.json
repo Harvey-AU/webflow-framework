@@ -12,5 +12,11 @@
   "devDependencies": {
     "esbuild": "^0.25.10",
     "lightningcss": "^1.30.2"
+  },
+  "dependencies": {
+    "@webflow/data-types": "^2.4.0",
+    "@webflow/functions": "^2.4.0",
+    "@webflow/react": "^2.4.0",
+    "@webflow/webflow-cli": "^2.8.0"
   }
 }

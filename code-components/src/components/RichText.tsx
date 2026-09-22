@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import { useEffect, type CSSProperties, type ReactNode } from "react";
 import {
   typeSize,
   tokenValue,
@@ -9,71 +9,23 @@ import {
 } from "@/src/tokens";
 
 /**
- * v3 RichText. Two styles, ported from v1's two rich text classes
- * (user 2026-09-13): `standard` uses the plain font-rich-text/hr variables,
- * `article` swaps every one for its -article counterpart. Content rules carry
- * the v1 baseline: first/last margin trim, links in currentColor, hr from
- * variables, buttons-in-content spacing — plus (2026-09-20) the full per-tag
- * typography and spacing from the font-rich-text variable system
- * (fonts/rich-text.css), since the site's rich text classes can't reach into
- * the shadow root. The Size prop overrides body text (p/lists) only —
- * headings etc. always follow their tag variables, as in v1.
+ * v3 RichText. Two styles: `standard` uses the plain hr variables, `article`
+ * swaps them for the -article set.
+ *
+ * Prop-delivered rich text renders as slotted LIGHT DOM
+ * (<div class="w-richtext" slot="content">). Neither shadow CSS nor
+ * library.globals (also injected per-island into the shadow) can style it,
+ * so the stylesheet below goes into document.head once, scoped
+ * `.w-richtext[slot]` — it only ever matches rich text slotted into a code
+ * component (this Content, Accordion's Body, …), never a site's own rich
+ * text. The component renders the same wrapper itself so the local preview
+ * is covered by the same rules.
+ *
+ * Per-tag typography uses the STANDARD variables — static page CSS can't see
+ * the Style prop (known gap for article-mode tags); hr styling stays
+ * mode-aware through the inherited --rt-hr-* props.
  */
 export type RichTextStyle = "standard" | "article";
-
-/* The tag table behind the generated rules. Slugs are the variable names in
-   fonts/rich-text.css verbatim; `family` is the slug whose FAMILY variable
-   the tag uses (lists have no family variable in v1, so they borrow p's).
-   `margins` = has spacing--<slug>-margin-* vars.
-
-   NOTE (2026-09-23): in production, a Rich Text PROP is slotted light DOM
-   (<div class="w-richtext" slot="content">), which shadow CSS cannot reach —
-   these rules style the local preview and real children only. The rules that
-   style slotted content live in src/styles/slotted-rich-text.css (shipped via
-   library.globals into page CSS) and must stay in step with this table. */
-type RtTag = { sels: string[]; slug: string; family: string; margins: boolean; body?: boolean };
-const RT_TAGS: RtTag[] = [
-  { sels: ["h1"], slug: "h1", family: "h1", margins: true },
-  { sels: ["h2"], slug: "h2", family: "h2", margins: true },
-  { sels: ["h3"], slug: "h3", family: "h3", margins: true },
-  { sels: ["h4"], slug: "h4", family: "h4", margins: true },
-  { sels: ["h5"], slug: "h5", family: "h5", margins: true },
-  { sels: ["h6"], slug: "h6", family: "h6", margins: true },
-  { sels: ["p"], slug: "p", family: "p", margins: true, body: true },
-  { sels: ["ul", "ol"], slug: "list", family: "p", margins: true, body: true },
-  { sels: ["blockquote"], slug: "block-quote", family: "block-quote", margins: true },
-  { sels: ["sup"], slug: "superscript", family: "superscript", margins: false },
-  { sels: ["sub"], slug: "subscript", family: "subscript", margins: false },
-  { sels: ["figcaption"], slug: "captions", family: "captions", margins: false },
-];
-
-function rtTagCss(suffix: "" | "-article"): string {
-  return RT_TAGS.map((t) => {
-    const sel = t.sels.map((s) => `.rt ${s}`).join(", ");
-    const v = (part: string) => cssVar(`font-rich-text---${part}--tag--${t.slug}${suffix}`);
-    const sp = (prop: string) => cssVar(`font-rich-text---spacing--${t.slug}${suffix}-${prop}`);
-    const lines = [
-      `font-family: ${cssVar(`font-rich-text---family--tag--${t.family}${suffix}`)};`,
-      // Body tags respect the Size prop (--rt-fs/--rt-lh, set only when
-      // Size ≠ inherit); headings and the rest always follow their variables.
-      `font-size: ${t.body ? `var(--rt-fs, ${v("size")})` : v("size")};`,
-      `line-height: ${t.body ? `var(--rt-lh, ${v("height")})` : v("height")};`,
-      `font-weight: ${v("weight")};`,
-      `letter-spacing: ${v("letter-spacing")};`,
-      ...(t.margins ? ["margin: 0;", `margin-top: ${sp("margin-top")};`, `margin-bottom: ${sp("margin-bottom")};`] : []),
-      ...(t.slug === "list" ? [`padding-left: ${sp("padding-left")};`] : []),
-      ...(t.slug === "block-quote"
-        ? [`padding: ${sp("padding-top")} ${sp("padding-right")} ${sp("padding-bottom")} ${sp("padding-left")};`]
-        : []),
-    ];
-    return `${sel} {\n  ${lines.join("\n  ")}\n}`;
-  }).join("\n");
-}
-
-const RT_TYPE_CSS: Record<RichTextStyle, string> = {
-  standard: rtTagCss(""),
-  article: rtTagCss("-article"),
-};
 
 export type RichTextProps = {
   content?: ReactNode;
@@ -83,25 +35,58 @@ export type RichTextProps = {
   colour?: ColourOption;
 };
 
+/* Variable shorthands for fonts/rich-text.css. `face` = family/weight/
+   letter-spacing; lists have no family variable in v1, so they use p's. */
+const t = (part: string, slug: string) => cssVar(`font-rich-text---${part}--tag--${slug}`);
+const sp = (name: string) => cssVar(`font-rich-text---spacing--${name}`);
+const face = (slug: string, family = slug) =>
+  `font-family: ${t("family", family)}; font-weight: ${t("weight", slug)}; letter-spacing: ${t("letter-spacing", slug)};`;
+
+const RT = ".w-richtext[slot]";
 const RT_CSS = `
-.rt > :first-child { margin-top: 0; }
-.rt > :last-child { margin-bottom: 0; }
-.rt a:not(.button) { color: currentColor; }
-.rt sub { bottom: unset; }
-.rt hr {
+${RT} > :first-child { margin-top: 0; }
+${RT} > :last-child { margin-bottom: 0; }
+${RT} a:not(.button) { color: currentColor; }
+${RT} hr {
   border: none;
   border-top: var(--rt-hr-w) solid var(--rt-hr-c);
   margin-top: var(--rt-hr-mt);
   margin-bottom: var(--rt-hr-mb);
 }
-.rt .button {
+${RT} .button {
   display: inline-block;
   text-decoration: none;
   margin-right: var(--_sizing-button---rich-text--margin-right, ${cssVar("sizing-spacer-gap---padding--small")});
   margin-top: var(--_sizing-button---rich-text--margin-top, ${cssVar("sizing-spacer-gap---padding--medium")});
   margin-bottom: var(--_sizing-button---rich-text--margin-bottom, ${cssVar("sizing-spacer-gap---padding--large")});
 }
+${RT} h1 { ${face("h1")} font-size: ${t("size", "h1")}; line-height: ${t("height", "h1")}; margin: ${sp("h1-margin-top")} 0 ${sp("h1-margin-bottom")}; }
+${RT} h2 { ${face("h2")} font-size: ${t("size", "h2")}; line-height: ${t("height", "h2")}; margin: ${sp("h2-margin-top")} 0 ${sp("h2-margin-bottom")}; }
+${RT} h3 { ${face("h3")} font-size: ${t("size", "h3")}; line-height: ${t("height", "h3")}; margin: ${sp("h3-margin-top")} 0 ${sp("h3-margin-bottom")}; }
+${RT} h4 { ${face("h4")} font-size: ${t("size", "h4")}; line-height: ${t("height", "h4")}; margin: ${sp("h4-margin-top")} 0 ${sp("h4-margin-bottom")}; }
+${RT} h5 { ${face("h5")} font-size: ${t("size", "h5")}; line-height: ${t("height", "h5")}; margin: ${sp("h5-margin-top")} 0 ${sp("h5-margin-bottom")}; }
+${RT} h6 { ${face("h6")} font-size: ${t("size", "h6")}; line-height: ${t("height", "h6")}; margin: ${sp("h6-margin-top")} 0 ${sp("h6-margin-bottom")}; }
+${RT} p { ${face("p")} font-size: var(--rt-fs, ${t("size", "p")}); line-height: var(--rt-lh, ${t("height", "p")}); margin: ${sp("p-margin-top")} 0 ${sp("p-margin-bottom")}; }
+${RT} ul, ${RT} ol {
+  ${face("list", "p")}
+  font-size: var(--rt-fs, ${t("size", "list")});
+  line-height: var(--rt-lh, ${t("height", "list")});
+  margin: ${sp("list-margin-top")} 0 ${sp("list-margin-bottom")};
+  padding-left: ${sp("list-padding-left")};
+}
+${RT} blockquote {
+  ${face("block-quote")}
+  font-size: ${t("size", "block-quote")};
+  line-height: ${t("height", "block-quote")};
+  margin: ${sp("block-quote-margin-top")} 0 ${sp("block-quote-margin-bottom")};
+  padding: ${sp("block-quote-padding-top")} ${sp("block-quote-padding-right")} ${sp("block-quote-padding-bottom")} ${sp("block-quote-padding-left")};
+}
+${RT} sup { ${face("superscript")} font-size: ${t("size", "superscript")}; line-height: ${t("height", "superscript")}; }
+${RT} sub { ${face("subscript")} font-size: ${t("size", "subscript")}; line-height: ${t("height", "subscript")}; bottom: unset; }
+${RT} figcaption { ${face("captions")} font-size: ${t("size", "captions")}; line-height: ${t("height", "captions")}; }
 `;
+
+const STYLE_ID = "harvey-rich-text";
 
 export function RichText({
   content,
@@ -110,11 +95,16 @@ export function RichText({
   align = "inherit",
   colour = "inherit",
 }: RichTextProps) {
+  useEffect(() => {
+    if (document.getElementById(STYLE_ID)) return;
+    const el = document.createElement("style");
+    el.id = STYLE_ID;
+    el.textContent = RT_CSS;
+    document.head.appendChild(el);
+  }, []);
   const suffix = styleMode === "article" ? "-article" : "";
   const sized = size === "inherit" ? undefined : typeSize(size);
   const style = {
-    // Size ≠ inherit overrides BODY text only (p/lists, via --rt-fs/--rt-lh);
-    // headings and the rest always follow their font-rich-text tag variables.
     ...(sized ? { "--rt-fs": sized.fontSize, "--rt-lh": sized.lineHeight } : {}),
     textAlign: align === "inherit" ? undefined : tokenValue("textAlign", align),
     color: tokenValue("colour", colour), // undefined for inherit
@@ -125,11 +115,9 @@ export function RichText({
   } as CSSProperties;
   return (
     <div className="rt" style={style}>
-      <style>
-        {RT_CSS}
-        {RT_TYPE_CSS[styleMode]}
-      </style>
-      {content}
+      <div className="w-richtext" slot="content">
+        {content}
+      </div>
     </div>
   );
 }
