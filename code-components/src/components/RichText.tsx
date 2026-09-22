@@ -23,19 +23,15 @@ export type RichTextStyle = "standard" | "article";
 
 /* The tag table behind the generated rules. Slugs are the variable names in
    fonts/rich-text.css verbatim; `family` is the slug whose FAMILY variable
-   the tag uses (lists have no family variable in v1, so they borrow p's);
-   false = don't set. `margins` = has spacing--<slug>-margin-* vars.
-   `fallback` (user ruling 2026-09-20): the slug whose variables are the
-   LAST resort in every chain — lists/blockquote follow p wherever a site
-   doesn't define their own vars. */
-type RtTag = {
-  sels: string[];
-  slug: string;
-  family: string | false;
-  margins: boolean;
-  body?: boolean;
-  fallback?: string;
-};
+   the tag uses (lists have no family variable in v1, so they borrow p's).
+   `margins` = has spacing--<slug>-margin-* vars.
+
+   NOTE (2026-09-23): in production, a Rich Text PROP is slotted light DOM
+   (<div class="w-richtext" slot="content">), which shadow CSS cannot reach —
+   these rules style the local preview and real children only. The rules that
+   style slotted content live in src/styles/slotted-rich-text.css (shipped via
+   library.globals into page CSS) and must stay in step with this table. */
+type RtTag = { sels: string[]; slug: string; family: string; margins: boolean; body?: boolean };
 const RT_TAGS: RtTag[] = [
   { sels: ["h1"], slug: "h1", family: "h1", margins: true },
   { sels: ["h2"], slug: "h2", family: "h2", margins: true },
@@ -44,8 +40,8 @@ const RT_TAGS: RtTag[] = [
   { sels: ["h5"], slug: "h5", family: "h5", margins: true },
   { sels: ["h6"], slug: "h6", family: "h6", margins: true },
   { sels: ["p"], slug: "p", family: "p", margins: true, body: true },
-  { sels: ["ul", "ol"], slug: "list", family: "p", margins: true, body: true, fallback: "p" },
-  { sels: ["blockquote"], slug: "block-quote", family: "block-quote", margins: true, fallback: "p" },
+  { sels: ["ul", "ol"], slug: "list", family: "p", margins: true, body: true },
+  { sels: ["blockquote"], slug: "block-quote", family: "block-quote", margins: true },
   { sels: ["sup"], slug: "superscript", family: "superscript", margins: false },
   { sels: ["sub"], slug: "subscript", family: "subscript", margins: false },
   { sels: ["figcaption"], slug: "captions", family: "captions", margins: false },
@@ -54,32 +50,17 @@ const RT_TAGS: RtTag[] = [
 function rtTagCss(suffix: "" | "-article"): string {
   return RT_TAGS.map((t) => {
     const sel = t.sels.map((s) => `.rt ${s}`).join(", ");
-    // Own variable first; if the row has a fallback slug, its variables are
-    // the last resort in the chain (own site → own lib → p site → p lib).
-    const chain = (path: (slug: string) => string) =>
-      t.fallback && t.fallback !== t.slug
-        ? cssVar(path(t.slug), cssVar(path(t.fallback)))
-        : cssVar(path(t.slug));
-    const v = (part: string) => chain((slug) => `font-rich-text---${part}--tag--${slug}${suffix}`);
+    const v = (part: string) => cssVar(`font-rich-text---${part}--tag--${t.slug}${suffix}`);
     const sp = (prop: string) => cssVar(`font-rich-text---spacing--${t.slug}${suffix}-${prop}`);
-    const spm = (prop: string) => chain((slug) => `font-rich-text---spacing--${slug}${suffix}-${prop}`);
     const lines = [
-      ...(t.family
-        ? [
-            `font-family: ${
-              t.family === t.slug
-                ? v("family")
-                : cssVar(`font-rich-text---family--tag--${t.family}${suffix}`)
-            };`,
-          ]
-        : []),
+      `font-family: ${cssVar(`font-rich-text---family--tag--${t.family}${suffix}`)};`,
       // Body tags respect the Size prop (--rt-fs/--rt-lh, set only when
       // Size ≠ inherit); headings and the rest always follow their variables.
       `font-size: ${t.body ? `var(--rt-fs, ${v("size")})` : v("size")};`,
       `line-height: ${t.body ? `var(--rt-lh, ${v("height")})` : v("height")};`,
       `font-weight: ${v("weight")};`,
       `letter-spacing: ${v("letter-spacing")};`,
-      ...(t.margins ? ["margin: 0;", `margin-top: ${spm("margin-top")};`, `margin-bottom: ${spm("margin-bottom")};`] : []),
+      ...(t.margins ? ["margin: 0;", `margin-top: ${sp("margin-top")};`, `margin-bottom: ${sp("margin-bottom")};`] : []),
       ...(t.slug === "list" ? [`padding-left: ${sp("padding-left")};`] : []),
       ...(t.slug === "block-quote"
         ? [`padding: ${sp("padding-top")} ${sp("padding-right")} ${sp("padding-bottom")} ${sp("padding-left")};`]

@@ -1,0 +1,169 @@
+/* Page-level styles for rich text delivered through a code component's
+   Rich Text PROP. Webflow renders prop content as slotted light DOM
+   (<div class="w-richtext" slot="content">), which shadow CSS cannot style —
+   so the per-tag rules live here and ship into the page via library.globals.
+
+   Scope: `.w-richtext[slot]` matches ONLY rich text slotted into a code
+   component (RichText's Content, Accordion's Body, …) — never a site's own
+   rich text elements.
+
+   KEEP IN STEP with RT_TAGS in src/components/RichText.tsx — same tags, same
+   variables (site's own --_ variable first, library-namespaced copy second;
+   the library install creates the namespaced variables on every site).
+   Lists have no family variable in v1 — they use p's, per the 2026-09-20
+   ruling. --rt-fs/--rt-lh (the Size prop override, set on .rt inside the
+   shadow root) inherit across the slot boundary, so body tags respect them
+   here exactly as in the shadow rules.
+
+   Not covered yet: article mode — static page CSS cannot see the component's
+   Style prop, so slotted content always gets the standard variables. */
+
+.w-richtext[slot] h1 {
+  font-family: var(--_font-rich-text---family--tag--h1, var(--harvey-components-jan-25_font-rich-text---family--tag--h1));
+  font-size: var(--_font-rich-text---size--tag--h1, var(--harvey-components-jan-25_font-rich-text---size--tag--h1));
+  line-height: var(--_font-rich-text---height--tag--h1, var(--harvey-components-jan-25_font-rich-text---height--tag--h1));
+  font-weight: var(--_font-rich-text---weight--tag--h1, var(--harvey-components-jan-25_font-rich-text---weight--tag--h1));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--h1, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--h1));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--h1-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--h1-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--h1-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--h1-margin-bottom));
+}
+
+.w-richtext[slot] h2 {
+  font-family: var(--_font-rich-text---family--tag--h2, var(--harvey-components-jan-25_font-rich-text---family--tag--h2));
+  font-size: var(--_font-rich-text---size--tag--h2, var(--harvey-components-jan-25_font-rich-text---size--tag--h2));
+  line-height: var(--_font-rich-text---height--tag--h2, var(--harvey-components-jan-25_font-rich-text---height--tag--h2));
+  font-weight: var(--_font-rich-text---weight--tag--h2, var(--harvey-components-jan-25_font-rich-text---weight--tag--h2));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--h2, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--h2));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--h2-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--h2-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--h2-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--h2-margin-bottom));
+}
+
+.w-richtext[slot] h3 {
+  font-family: var(--_font-rich-text---family--tag--h3, var(--harvey-components-jan-25_font-rich-text---family--tag--h3));
+  font-size: var(--_font-rich-text---size--tag--h3, var(--harvey-components-jan-25_font-rich-text---size--tag--h3));
+  line-height: var(--_font-rich-text---height--tag--h3, var(--harvey-components-jan-25_font-rich-text---height--tag--h3));
+  font-weight: var(--_font-rich-text---weight--tag--h3, var(--harvey-components-jan-25_font-rich-text---weight--tag--h3));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--h3, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--h3));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--h3-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--h3-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--h3-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--h3-margin-bottom));
+}
+
+.w-richtext[slot] h4 {
+  font-family: var(--_font-rich-text---family--tag--h4, var(--harvey-components-jan-25_font-rich-text---family--tag--h4));
+  font-size: var(--_font-rich-text---size--tag--h4, var(--harvey-components-jan-25_font-rich-text---size--tag--h4));
+  line-height: var(--_font-rich-text---height--tag--h4, var(--harvey-components-jan-25_font-rich-text---height--tag--h4));
+  font-weight: var(--_font-rich-text---weight--tag--h4, var(--harvey-components-jan-25_font-rich-text---weight--tag--h4));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--h4, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--h4));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--h4-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--h4-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--h4-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--h4-margin-bottom));
+}
+
+.w-richtext[slot] h5 {
+  font-family: var(--_font-rich-text---family--tag--h5, var(--harvey-components-jan-25_font-rich-text---family--tag--h5));
+  font-size: var(--_font-rich-text---size--tag--h5, var(--harvey-components-jan-25_font-rich-text---size--tag--h5));
+  line-height: var(--_font-rich-text---height--tag--h5, var(--harvey-components-jan-25_font-rich-text---height--tag--h5));
+  font-weight: var(--_font-rich-text---weight--tag--h5, var(--harvey-components-jan-25_font-rich-text---weight--tag--h5));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--h5, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--h5));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--h5-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--h5-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--h5-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--h5-margin-bottom));
+}
+
+.w-richtext[slot] h6 {
+  font-family: var(--_font-rich-text---family--tag--h6, var(--harvey-components-jan-25_font-rich-text---family--tag--h6));
+  font-size: var(--_font-rich-text---size--tag--h6, var(--harvey-components-jan-25_font-rich-text---size--tag--h6));
+  line-height: var(--_font-rich-text---height--tag--h6, var(--harvey-components-jan-25_font-rich-text---height--tag--h6));
+  font-weight: var(--_font-rich-text---weight--tag--h6, var(--harvey-components-jan-25_font-rich-text---weight--tag--h6));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--h6, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--h6));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--h6-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--h6-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--h6-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--h6-margin-bottom));
+}
+
+.w-richtext[slot] p {
+  font-family: var(--_font-rich-text---family--tag--p, var(--harvey-components-jan-25_font-rich-text---family--tag--p));
+  font-size: var(--rt-fs, var(--_font-rich-text---size--tag--p, var(--harvey-components-jan-25_font-rich-text---size--tag--p)));
+  line-height: var(--rt-lh, var(--_font-rich-text---height--tag--p, var(--harvey-components-jan-25_font-rich-text---height--tag--p)));
+  font-weight: var(--_font-rich-text---weight--tag--p, var(--harvey-components-jan-25_font-rich-text---weight--tag--p));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--p, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--p));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--p-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--p-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--p-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--p-margin-bottom));
+}
+
+/* Lists: no family variable exists in v1 — they use p's (ruling 2026-09-20). */
+.w-richtext[slot] ul,
+.w-richtext[slot] ol {
+  font-family: var(--_font-rich-text---family--tag--p, var(--harvey-components-jan-25_font-rich-text---family--tag--p));
+  font-size: var(--rt-fs, var(--_font-rich-text---size--tag--list, var(--harvey-components-jan-25_font-rich-text---size--tag--list)));
+  line-height: var(--rt-lh, var(--_font-rich-text---height--tag--list, var(--harvey-components-jan-25_font-rich-text---height--tag--list)));
+  font-weight: var(--_font-rich-text---weight--tag--list, var(--harvey-components-jan-25_font-rich-text---weight--tag--list));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--list, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--list));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--list-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--list-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--list-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--list-margin-bottom));
+  padding-left: var(--_font-rich-text---spacing--list-padding-left, var(--harvey-components-jan-25_font-rich-text---spacing--list-padding-left));
+}
+
+.w-richtext[slot] blockquote {
+  font-family: var(--_font-rich-text---family--tag--block-quote, var(--harvey-components-jan-25_font-rich-text---family--tag--block-quote));
+  font-size: var(--_font-rich-text---size--tag--block-quote, var(--harvey-components-jan-25_font-rich-text---size--tag--block-quote));
+  line-height: var(--_font-rich-text---height--tag--block-quote, var(--harvey-components-jan-25_font-rich-text---height--tag--block-quote));
+  font-weight: var(--_font-rich-text---weight--tag--block-quote, var(--harvey-components-jan-25_font-rich-text---weight--tag--block-quote));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--block-quote, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--block-quote));
+  margin: 0;
+  margin-top: var(--_font-rich-text---spacing--block-quote-margin-top, var(--harvey-components-jan-25_font-rich-text---spacing--block-quote-margin-top));
+  margin-bottom: var(--_font-rich-text---spacing--block-quote-margin-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--block-quote-margin-bottom));
+  padding: var(--_font-rich-text---spacing--block-quote-padding-top, var(--harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-top))
+    var(--_font-rich-text---spacing--block-quote-padding-right, var(--harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-right))
+    var(--_font-rich-text---spacing--block-quote-padding-bottom, var(--harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-bottom))
+    var(--_font-rich-text---spacing--block-quote-padding-left, var(--harvey-components-jan-25_font-rich-text---spacing--block-quote-padding-left));
+}
+
+.w-richtext[slot] sup {
+  font-family: var(--_font-rich-text---family--tag--superscript, var(--harvey-components-jan-25_font-rich-text---family--tag--superscript));
+  font-size: var(--_font-rich-text---size--tag--superscript, var(--harvey-components-jan-25_font-rich-text---size--tag--superscript));
+  line-height: var(--_font-rich-text---height--tag--superscript, var(--harvey-components-jan-25_font-rich-text---height--tag--superscript));
+  font-weight: var(--_font-rich-text---weight--tag--superscript, var(--harvey-components-jan-25_font-rich-text---weight--tag--superscript));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--superscript, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--superscript));
+}
+
+.w-richtext[slot] sub {
+  bottom: unset;
+  font-family: var(--_font-rich-text---family--tag--subscript, var(--harvey-components-jan-25_font-rich-text---family--tag--subscript));
+  font-size: var(--_font-rich-text---size--tag--subscript, var(--harvey-components-jan-25_font-rich-text---size--tag--subscript));
+  line-height: var(--_font-rich-text---height--tag--subscript, var(--harvey-components-jan-25_font-rich-text---height--tag--subscript));
+  font-weight: var(--_font-rich-text---weight--tag--subscript, var(--harvey-components-jan-25_font-rich-text---weight--tag--subscript));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--subscript, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--subscript));
+}
+
+.w-richtext[slot] figcaption {
+  font-family: var(--_font-rich-text---family--tag--captions, var(--harvey-components-jan-25_font-rich-text---family--tag--captions));
+  font-size: var(--_font-rich-text---size--tag--captions, var(--harvey-components-jan-25_font-rich-text---size--tag--captions));
+  line-height: var(--_font-rich-text---height--tag--captions, var(--harvey-components-jan-25_font-rich-text---height--tag--captions));
+  font-weight: var(--_font-rich-text---weight--tag--captions, var(--harvey-components-jan-25_font-rich-text---weight--tag--captions));
+  letter-spacing: var(--_font-rich-text---letter-spacing--tag--captions, var(--harvey-components-jan-25_font-rich-text---letter-spacing--tag--captions));
+}
+
+/* Baseline content rules, mirroring the shadow RT_CSS for slotted content. */
+.w-richtext[slot] > :first-child {
+  margin-top: 0;
+}
+.w-richtext[slot] > :last-child {
+  margin-bottom: 0;
+}
+.w-richtext[slot] a:not(.button) {
+  color: currentColor;
+}
+/* hr styling: --rt-hr-* are set on .rt inside the shadow root, mode-aware
+   (standard vs article), and inherit across the slot boundary. */
+.w-richtext[slot] hr {
+  border: none;
+  border-top: var(--rt-hr-w) solid var(--rt-hr-c);
+  margin-top: var(--rt-hr-mt);
+  margin-bottom: var(--rt-hr-mb);
+}
