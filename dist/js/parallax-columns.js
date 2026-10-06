@@ -1,47 +1,49 @@
 /**
- * Work wall
+ * Parallax columns
  *
- * A hero of client work in the style of this.design. The heading sits at the
- * top of the screen and the wall's first row peeks in along the bottom, every
- * column top aligned. Both fade up into place on load. Scrolling, the heading
- * stays put and fades out while the wall rises over it. Each column starts
- * pushed away from the centre of the screen and eases back in as it rises,
- * and shorter columns drift down so the columns fall out of line and land
- * bottom aligned. Tiles are images or muted looping videos.
+ * A hero above a grid of items laid out in columns, in the style of
+ * this.design. The hero and grid fade up into place on load. Scrolling, the
+ * hero stays put and its fade element fades out while the grid rises over
+ * it. Each column starts pushed away from the centre of the screen and
+ * eases back in as it rises. Columns start at staggered heights and drift
+ * until their bottoms line up at the end of the grid. Items are images or
+ * muted looping videos.
  *
  * Load standalone on pages that need it (not part of main.js):
- *   <script src="https://webflow.teamharvey.co/js/work-wall.js" defer></script>
+ *   <script src="https://webflow.teamharvey.co/js/parallax-columns.js" defer></script>
  *
- * Markup:
- *   [data-wall]                      Section. Optional settings below.
- *     [data-wall-stage]              The hero, styled at its resting height
- *                                    (75svh suits). Stays pinned while the
- *                                    wall scrolls over it.
- *       [data-wall-heading]          Fades out over the hero's height.
- *                                    A grey backdrop starts below it and
- *                                    fades to nothing as the wall rises.
- *     [data-wall-grid]               Follows the hero. Style its padding and
- *                                    max width; the script builds columns
- *                                    inside it.
- *       CMS list                     Sorted by Order. Hidden once its tiles
- *                                    are moved into the columns.
- *         [data-wall-tile]           One tile (collection item). Add
- *                                    data-wall-video bound to the Video URL
- *                                    field to play an .mp4 over the image.
- *           img[data-wall-main]      Image, or the video's poster.
- *           [data-wall-client]       Optional client name. Hidden.
+ * Markup (attribute prefix data-parallax-columns):
+ *   [data-parallax-columns]            Section. Optional settings below.
+ *     [-hero]                          The hero, styled at its resting height
+ *                                      (75svh suits). Stays pinned while the
+ *                                      grid scrolls over it.
+ *       [-fade]                        Fades out over the hero's height. A
+ *                                      backdrop starts below it and fades
+ *                                      out with it.
+ *     [-grid]                          Follows the hero. Style its padding
+ *                                      and max width; the script builds
+ *                                      columns inside it.
+ *       CMS list                       In display order. Hidden once its
+ *                                      items are moved into the columns.
+ *         [-item]                      One collection item. Add -video
+ *                                      bound to a video URL field to play an
+ *                                      .mp4 over the image.
+ *           img[-media]                Image, or the video's poster.
  *
- * Settings on [data-wall]:
- *   data-wall-columns-mobile="2"     Columns under the first breakpoint.
- *   data-wall-breakpoints="768:3,1024:4,1280:5,1920:6,2560:7"
- *                                    Columns from each minimum screen width.
- *   data-wall-gap="20"               Gap between tiles in px (12 on mobile).
- *   data-wall-parallax="1"           Motion multiplier, 0 turns it off.
- *   data-wall-backdrop="#f5f5f5"     Backdrop colour, "none" turns it off.
- *   data-wall-backdrop-offset="56"   Gap between the heading and the
- *                                    backdrop in px.
+ * Settings on [data-parallax-columns]:
+ *   -mobile="2"                        Columns under the first breakpoint.
+ *   -breakpoints="768:3,1024:4,1280:5,1920:6,2560:7"
+ *                                      Columns from each minimum screen
+ *                                      width.
+ *   -gap="20"                          Gap between items in px (12 at the
+ *                                      mobile column count).
+ *   -ratio="25 / 34"                   Item aspect ratio, width / height.
+ *   -strength="1"                      Motion multiplier, 0 turns it off.
+ *   -backdrop="#f5f5f5"                Backdrop colour, "none" turns it off.
+ *   -backdrop-offset="56"              Gap between the fade element and the
+ *                                      backdrop in px.
  *
- * With reduced motion the wall is laid out the same but nothing moves, fades
+ * With reduced motion the grid is laid out the same but nothing moves, fades
  * or autoplays.
  */
 (function () {
@@ -49,9 +51,8 @@
 
   const debug = window.WebflowFramework?.debug || function () {};
 
-  const TILE_RATIO = "25 / 34"; // width / height
   const DEFAULT_BREAKPOINTS = "768:3,1024:4,1280:5,1920:6,2560:7";
-  // Space above the first tile of each column, as a share of the column
+  // Space above the first item of each column, as a share of the column
   // width, in a repeating pattern that reads as random. Columns start at
   // uneven heights and drift until their bottoms line up.
   const COLUMN_HEADS = [0.2, 0.55, 0, 0.35, 0.7, 0.1, 0.45, 0.25];
@@ -61,33 +62,32 @@
 
   const EASE_OUT = "cubic-bezier(.215,.61,.355,1)"; // power3.out
   const CSS = `
-[data-wall]{position:relative;overflow-x:clip}
-[data-wall-stage]{position:relative}
-.wall-backdrop{position:absolute;left:0;right:0;height:100lvh;pointer-events:none}
-[data-wall].is-wall-motion .wall-backdrop{will-change:opacity}
-[data-wall].is-wall-motion [data-wall-stage]{position:sticky;top:0}
-[data-wall].is-wall-motion [data-wall-heading]{will-change:opacity}
-[data-wall-grid]{position:relative;z-index:1}
-[data-wall].is-wall-motion [data-wall-stage],[data-wall].is-wall-motion [data-wall-grid]{opacity:0;transform:translate3d(0,40px,0)}
-[data-wall].is-wall-in [data-wall-stage],[data-wall].is-wall-in [data-wall-grid]{opacity:1;transform:none;transition:opacity 1s ${EASE_OUT},transform 1s ${EASE_OUT}}
-[data-wall].is-wall-in [data-wall-stage]{transition-delay:.25s}
-[data-wall].is-wall-in [data-wall-grid]{transition-delay:.5s}
-.wall-columns{display:grid;grid-template-columns:repeat(var(--wall-columns),minmax(0,1fr));gap:var(--wall-gap)}
-.wall-column{min-width:0}
-.wall-column-inner{display:flex;flex-direction:column;gap:var(--wall-gap)}
-[data-wall].is-wall-motion .wall-column,[data-wall].is-wall-motion .wall-column-inner{will-change:transform}
-.wall-column-head{flex:none}
-.wall-columns [data-wall-tile]{position:relative;margin:0;overflow:hidden;aspect-ratio:${TILE_RATIO};contain:layout paint}
-[data-wall-tile] img,[data-wall-tile] video{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-select:none}
-[data-wall-tile] video{position:absolute;inset:0}
-[data-wall-tile] [data-wall-client]{display:none!important}
-[data-wall].is-wall-motion [data-wall-main]{opacity:0;transition:opacity .4s ease}
-[data-wall].is-wall-motion [data-wall-main].is-wall-loaded{opacity:1}`;
+[data-parallax-columns]{position:relative;overflow-x:clip}
+[data-parallax-columns-hero]{position:relative}
+.parallax-columns-backdrop{position:absolute;left:0;right:0;height:100lvh;pointer-events:none}
+[data-parallax-columns].is-parallax-columns-motion .parallax-columns-backdrop{will-change:opacity}
+[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-hero]{position:sticky;top:0}
+[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-fade]{will-change:opacity}
+[data-parallax-columns-grid]{position:relative;z-index:1}
+[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-hero],[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-grid]{opacity:0;transform:translate3d(0,40px,0)}
+[data-parallax-columns].is-parallax-columns-in [data-parallax-columns-hero],[data-parallax-columns].is-parallax-columns-in [data-parallax-columns-grid]{opacity:1;transform:none;transition:opacity 1s ${EASE_OUT},transform 1s ${EASE_OUT}}
+[data-parallax-columns].is-parallax-columns-in [data-parallax-columns-hero]{transition-delay:.25s}
+[data-parallax-columns].is-parallax-columns-in [data-parallax-columns-grid]{transition-delay:.5s}
+.parallax-columns-track{display:grid;grid-template-columns:repeat(var(--parallax-columns-count),minmax(0,1fr));gap:var(--parallax-columns-gap)}
+.parallax-columns-column{min-width:0}
+.parallax-columns-column-inner{display:flex;flex-direction:column;gap:var(--parallax-columns-gap)}
+[data-parallax-columns].is-parallax-columns-motion .parallax-columns-column,[data-parallax-columns].is-parallax-columns-motion .parallax-columns-column-inner{will-change:transform}
+.parallax-columns-column-head{flex:none}
+.parallax-columns-track [data-parallax-columns-item]{position:relative;margin:0;overflow:hidden;aspect-ratio:var(--parallax-columns-ratio);contain:layout paint}
+[data-parallax-columns-item] img,[data-parallax-columns-item] video{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-select:none}
+[data-parallax-columns-item] video{position:absolute;inset:0}
+[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-media]{opacity:0;transition:opacity .4s ease}
+[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-media].is-parallax-columns-loaded{opacity:1}`;
 
   function injectStyles() {
-    if (document.getElementById("work-wall-styles")) return;
+    if (document.getElementById("parallax-columns-styles")) return;
     const style = document.createElement("style");
-    style.id = "work-wall-styles";
+    style.id = "parallax-columns-styles";
     style.textContent = CSS;
     document.head.appendChild(style);
   }
@@ -120,14 +120,14 @@
     return !!el && !el.classList.contains("w-condition-invisible") && !el.classList.contains("w-dyn-bind-empty");
   }
 
-  function prepareTile(el) {
-    const img = el.querySelector("img[data-wall-main]");
+  function prepareItem(el) {
+    const img = el.querySelector("img[data-parallax-columns-media]");
     el.querySelectorAll("img").forEach((image) => {
       image.alt = "";
       image.draggable = false;
     });
 
-    const videoUrl = (el.getAttribute("data-wall-video") || "").trim();
+    const videoUrl = (el.getAttribute("data-parallax-columns-video") || "").trim();
     if (videoUrl && !el.querySelector("video")) {
       const video = document.createElement("video");
       video.muted = true;
@@ -146,8 +146,8 @@
 
   // Fade each image in once it has loaded
   function revealWhenLoaded(img) {
-    if (!img || img.classList.contains("is-wall-loaded")) return;
-    const show = () => img.classList.add("is-wall-loaded");
+    if (!img || img.classList.contains("is-parallax-columns-loaded")) return;
+    const show = () => img.classList.add("is-parallax-columns-loaded");
     if (img.complete && img.naturalWidth) show();
     else {
       img.addEventListener("load", show, { once: true });
@@ -166,50 +166,52 @@
     return total;
   }
 
-  function createWall(section) {
-    const stage = section.querySelector("[data-wall-stage]");
-    const heading = section.querySelector("[data-wall-heading]");
-    const grid = section.querySelector("[data-wall-grid]");
+  function createParallaxColumns(section) {
+    const hero = section.querySelector("[data-parallax-columns-hero]");
+    const fader = section.querySelector("[data-parallax-columns-fade]");
+    const grid = section.querySelector("[data-parallax-columns-grid]");
     if (!grid) {
-      debug("work-wall", "init", "Missing [data-wall-grid]", "warn");
+      debug("parallax-columns", "init", "Missing [data-parallax-columns-grid]", "warn");
       return;
     }
 
-    const tiles = Array.from(grid.querySelectorAll("[data-wall-tile]")).map(prepareTile);
-    if (!tiles.length) {
-      debug("work-wall", "init", "No [data-wall-tile] items found", "warn");
+    const items = Array.from(grid.querySelectorAll("[data-parallax-columns-item]")).map(prepareItem);
+    if (!items.length) {
+      debug("parallax-columns", "init", "No [data-parallax-columns-item] items found", "warn");
       return;
     }
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const settings = {
-      columnsMobile: Math.max(1, Math.round(numberAttr(section, "data-wall-columns-mobile", 2))),
-      breakpoints: parseBreakpoints(section.getAttribute("data-wall-breakpoints") || DEFAULT_BREAKPOINTS),
-      gap: numberAttr(section, "data-wall-gap", null),
-      parallax: Math.max(0, numberAttr(section, "data-wall-parallax", 1)),
-      backdrop: (section.getAttribute("data-wall-backdrop") || "#f5f5f5").trim(),
-      backdropOffset: numberAttr(section, "data-wall-backdrop-offset", 56),
+      columnsMobile: Math.max(1, Math.round(numberAttr(section, "data-parallax-columns-mobile", 2))),
+      breakpoints: parseBreakpoints(section.getAttribute("data-parallax-columns-breakpoints") || DEFAULT_BREAKPOINTS),
+      gap: numberAttr(section, "data-parallax-columns-gap", null),
+      ratio: (section.getAttribute("data-parallax-columns-ratio") || "25 / 34").trim(),
+      strength: Math.max(0, numberAttr(section, "data-parallax-columns-strength", 1)),
+      backdrop: (section.getAttribute("data-parallax-columns-backdrop") || "#f5f5f5").trim(),
+      backdropOffset: numberAttr(section, "data-parallax-columns-backdrop-offset", 56),
     };
-    const motion = !reducedMotion && settings.parallax > 0;
+    const motion = !reducedMotion && settings.strength > 0;
 
     // The columns replace the CMS list, which stays in place but empty
-    const list = tiles[0].closest(".w-dyn-list") || tiles[0].parentElement;
+    const list = items[0].closest(".w-dyn-list") || items[0].parentElement;
     const container = document.createElement("div");
-    container.className = "wall-columns";
+    container.className = "parallax-columns-track";
+    container.style.setProperty("--parallax-columns-ratio", settings.ratio);
     container.setAttribute("aria-hidden", "true");
     list.parentNode.insertBefore(container, list);
     list.style.display = "none";
 
-    if (motion) section.classList.add("is-wall-motion");
+    if (motion) section.classList.add("is-parallax-columns-motion");
 
-    // Sits behind the wall, which rises over it
+    // Sits behind the grid, which rises over it
     let backdrop = null;
-    if (stage && settings.backdrop !== "none") {
+    if (hero && settings.backdrop !== "none") {
       backdrop = document.createElement("div");
-      backdrop.className = "wall-backdrop";
+      backdrop.className = "parallax-columns-backdrop";
       backdrop.setAttribute("aria-hidden", "true");
       backdrop.style.background = settings.backdrop;
-      stage.prepend(backdrop);
+      hero.prepend(backdrop);
     }
 
     // Videos play only while on screen, and never with reduced motion
@@ -227,9 +229,9 @@
             });
           })
         : null;
-    tiles.forEach((tile) => {
-      if (videoObserver) tile.querySelectorAll("video").forEach((video) => videoObserver.observe(video));
-      if (motion) revealWhenLoaded(tile.querySelector("[data-wall-main]"));
+    items.forEach((item) => {
+      if (videoObserver) item.querySelectorAll("video").forEach((video) => videoObserver.observe(video));
+      if (motion) revealWhenLoaded(item.querySelector("[data-parallax-columns-media]"));
     });
 
     let columns = [];
@@ -244,27 +246,27 @@
       return count;
     }
 
-    // Deal the tiles out like this.design: even columns first, then odd, so
-    // neighbouring tiles in Order land apart
+    // Deal the items out like this.design: even columns first, then odd, so
+    // neighbouring items in Order land apart
     function build(count) {
       const indices = Array.from({ length: count }, (_, i) => i);
       const order = [...indices.filter((i) => i % 2 === 0), ...indices.filter((i) => i % 2 !== 0)];
       container.textContent = "";
       columns = indices.map((i) => {
         const el = document.createElement("div");
-        el.className = "wall-column";
+        el.className = "parallax-columns-column";
         const inner = document.createElement("div");
-        inner.className = "wall-column-inner";
+        inner.className = "parallax-columns-column-inner";
         el.appendChild(inner);
         container.appendChild(el);
         return { el, inner, headShare: COLUMN_HEADS[i % COLUMN_HEADS.length] };
       });
-      tiles.forEach((tile, i) => columns[order[i % count]].inner.appendChild(tile));
+      items.forEach((item, i) => columns[order[i % count]].inner.appendChild(item));
       columns.forEach((column) => {
         // The first row shows on load
         const first = column.inner.firstElementChild?.querySelector("img");
         column.head = document.createElement("div");
-        column.head.className = "wall-column-head";
+        column.head.className = "parallax-columns-column-head";
         column.inner.prepend(column.head);
         if (first) first.loading = "eager";
       });
@@ -277,14 +279,14 @@
       if (count !== columns.length) build(count);
 
       const gap = settings.gap !== null ? settings.gap : count === settings.columnsMobile ? 12 : 20;
-      container.style.setProperty("--wall-columns", String(count));
-      container.style.setProperty("--wall-gap", `${gap}px`);
+      container.style.setProperty("--parallax-columns-count", String(count));
+      container.style.setProperty("--parallax-columns-gap", `${gap}px`);
 
       columns.forEach((column) => {
         column.head.style.height = `${column.el.offsetWidth * column.headShare}px`;
       });
       if (backdrop) {
-        const top = heading ? offsetWithin(heading, stage, "y") + heading.offsetHeight : 0;
+        const top = fader ? offsetWithin(fader, hero, "y") + fader.offsetHeight : 0;
         backdrop.style.top = `${top + settings.backdropOffset}px`;
       }
       const sectionLeft = section.getBoundingClientRect().left;
@@ -299,7 +301,7 @@
         });
       });
       render();
-      debug("work-wall", "layout", `${count} columns, ${tiles.length} tiles`, "info");
+      debug("parallax-columns", "layout", `${count} columns, ${items.length} items`, "info");
     }
 
     // Scroll-linked motion, same curves as this.design's ScrollTrigger setup
@@ -308,7 +310,7 @@
       const sectionTop = section.getBoundingClientRect().top;
       const vw = viewportWidth;
       const vh = viewportHeight;
-      const strength = settings.parallax;
+      const strength = settings.strength;
 
       columns.forEach((column) => {
         const top = sectionTop + column.top;
@@ -321,7 +323,7 @@
         const x = start * (1 - easeOut(spreadProgress));
 
         // From the column's top reaching halfway up the screen until its
-        // bottom reaches the bottom of the screen, its tiles drift down so
+        // bottom reaches the bottom of the screen, its items drift down so
         // every column ends flush with the bottom of the grid
         const driftDistance = Math.max(column.height - vh / 2, 1);
         const driftProgress = clamp((vh / 2 - top) / driftDistance, 0, 1);
@@ -331,11 +333,11 @@
         column.inner.style.transform = `translate3d(0,${y}px,0)`;
       });
 
-      if (stage) {
-        // Fades as the wall rises from the bottom of the hero to the top of
+      if (hero) {
+        // Fades as the grid rises from the bottom of the hero to the top of
         // the screen
-        const fade = 1 - easeOut(clamp(-sectionTop / stage.offsetHeight, 0, 1));
-        if (heading) heading.style.opacity = String(fade);
+        const fade = 1 - easeOut(clamp(-sectionTop / hero.offsetHeight, 0, 1));
+        if (fader) fader.style.opacity = String(fade);
         if (backdrop) backdrop.style.opacity = String(fade);
       }
     }
@@ -343,7 +345,7 @@
     if (motion) {
       window.addEventListener("scroll", render, { passive: true });
       // Lenis moves the page inside its own frame loop; follow it there so
-      // the wall never trails the page by a frame
+      // the grid never trails the page by a frame
       const followLenis = () => {
         const lenis = window.WebflowFramework?.lenis;
         if (lenis && typeof lenis.on === "function") lenis.on("scroll", render);
@@ -367,30 +369,30 @@
     });
 
     measure();
-    // Web fonts can change the hero's height and so where the wall starts
+    // Web fonts can change the hero's height and so where the grid starts
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
     window.addEventListener("load", measure, { once: true });
 
     // Fade in once the first layout has painted
     if (motion) {
-      requestAnimationFrame(() => requestAnimationFrame(() => section.classList.add("is-wall-in")));
+      requestAnimationFrame(() => requestAnimationFrame(() => section.classList.add("is-parallax-columns-in")));
     }
 
-    debug("work-wall", "init", `Wall ready with ${tiles.length} tiles`, "info");
+    debug("parallax-columns", "init", `Ready with ${items.length} items`, "info");
   }
 
   function init() {
     try {
       injectStyles();
-      document.querySelectorAll("[data-wall]").forEach((section) => {
+      document.querySelectorAll("[data-parallax-columns]").forEach((section) => {
         try {
-          createWall(section);
+          createParallaxColumns(section);
         } catch (error) {
-          console.error("Work wall failed to start:", error);
+          console.error("Parallax columns failed to start:", error);
         }
       });
     } catch (error) {
-      console.error("Work wall failed to load:", error);
+      console.error("Parallax columns failed to load:", error);
     }
   }
 
