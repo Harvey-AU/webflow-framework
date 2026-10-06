@@ -4,9 +4,9 @@
  * A hero above a grid of items laid out in columns, in the style of
  * this.design. The hero and grid fade up into place on load. Scrolling, the
  * hero stays put while the grid rises over it. Each column starts pushed
- * away from the centre of the screen and eases back in as it rises. Columns start at staggered heights and drift
- * until their bottoms line up at the end of the grid. Items are images or
- * muted looping videos.
+ * away from the centre of the screen and eases back in as it rises.
+ * Columns start at staggered heights and drift until their bottoms line up
+ * at the end of the grid. Items are images or muted looping videos.
  *
  * The layout lives in Webflow: style the CMS list as a CSS grid (columns and
  * gap per breakpoint) and the items with their aspect ratio, so the Designer
