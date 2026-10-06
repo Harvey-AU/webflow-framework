@@ -15,11 +15,11 @@
  * Markup (attribute prefix data-parallax-columns):
  *   [data-parallax-columns]            Section. Optional settings below.
  *     [-hero]                          The hero, styled at its resting height
- *                                      (75svh suits). Stays pinned while the
+ *                                      (40svh suits). Stays pinned while the
  *                                      grid scrolls over it.
- *       [-fade]                        Fades out over the hero's height. A
- *                                      backdrop starts below it and fades
- *                                      out with it.
+ *       [-fade]                        Fades out over the hero's height. An
+ *                                      optional backdrop starts below it and
+ *                                      fades out with it.
  *     [-grid]                          Follows the hero. Style its padding
  *                                      and max width; the script builds
  *                                      columns inside it.
@@ -39,7 +39,8 @@
  *                                      mobile column count).
  *   -ratio="25 / 34"                   Item aspect ratio, width / height.
  *   -strength="1"                      Motion multiplier, 0 turns it off.
- *   -backdrop="#f5f5f5"                Backdrop colour, "none" turns it off.
+ *   -backdrop="none"                   Backdrop colour, e.g. "#f5f5f5". Off
+ *                                      by default.
  *   -backdrop-offset="56"              Gap between the fade element and the
  *                                      backdrop in px.
  *
@@ -188,7 +189,7 @@
       gap: numberAttr(section, "data-parallax-columns-gap", null),
       ratio: (section.getAttribute("data-parallax-columns-ratio") || "25 / 34").trim(),
       strength: Math.max(0, numberAttr(section, "data-parallax-columns-strength", 1)),
-      backdrop: (section.getAttribute("data-parallax-columns-backdrop") || "#f5f5f5").trim(),
+      backdrop: (section.getAttribute("data-parallax-columns-backdrop") || "none").trim(),
       backdropOffset: numberAttr(section, "data-parallax-columns-backdrop-offset", 56),
     };
     const motion = !reducedMotion && settings.strength > 0;
