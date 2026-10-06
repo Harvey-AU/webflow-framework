@@ -9,6 +9,12 @@
  * until their bottoms line up at the end of the grid. Items are images or
  * muted looping videos.
  *
+ * The layout lives in Webflow: style the CMS list as a CSS grid (columns and
+ * gap per breakpoint) and the items with their aspect ratio, so the Designer
+ * canvas shows the grid as it ends up. The script never moves the items. It
+ * reads which column each item sits in and adds the stagger and motion with
+ * transforms.
+ *
  * Load standalone on pages that need it (not part of main.js):
  *   <script src="https://webflow.teamharvey.co/js/parallax-columns.js" defer></script>
  *
@@ -21,38 +27,31 @@
  *                                      optional backdrop starts below it and
  *                                      fades out with it.
  *     [-grid]                          Follows the hero. Style its padding
- *                                      and max width; the script builds
- *                                      columns inside it.
- *       CMS list                       In display order. Hidden once its
- *                                      items are moved into the columns.
- *         [-item]                      One collection item. Add -video
- *                                      bound to a video URL field to play an
- *                                      .mp4 over the image.
- *           img[-media]                Image, or the video's poster.
+ *                                      and max width.
+ *       CMS list                       Styled as a grid, in display order.
+ *                                      Items fill it row by row.
+ *         [-item]                      One collection item. Style its aspect
+ *                                      ratio and overflow. Add -video bound
+ *                                      to a video URL field to play an .mp4
+ *                                      over the image.
+ *           img[-media]                Image, or the video's poster. Style it
+ *                                      to cover the item.
  *
  * Settings on [data-parallax-columns]:
- *   -mobile="2"                        Columns under the first breakpoint.
- *   -breakpoints="768:3,1024:4,1280:5,1920:6,2560:7"
- *                                      Columns from each minimum screen
- *                                      width.
- *   -gap="20"                          Gap between items in px (12 at the
- *                                      mobile column count).
- *   -ratio="25 / 34"                   Item aspect ratio, width / height.
  *   -strength="1"                      Motion multiplier, 0 turns it off.
  *   -backdrop="none"                   Backdrop colour, e.g. "#f5f5f5". Off
  *                                      by default.
  *   -backdrop-offset="56"              Gap between the fade element and the
  *                                      backdrop in px.
  *
- * With reduced motion the grid is laid out the same but nothing moves, fades
- * or autoplays.
+ * With reduced motion the columns keep their stagger but nothing moves,
+ * fades or autoplays.
  */
 (function () {
   "use strict";
 
   const debug = window.WebflowFramework?.debug || function () {};
 
-  const DEFAULT_BREAKPOINTS = "768:3,1024:4,1280:5,1920:6,2560:7";
   // Space above the first item of each column, as a share of the column
   // width, in a repeating pattern that reads as random. Columns start at
   // uneven heights and drift until their bottoms line up.
@@ -74,14 +73,10 @@
 [data-parallax-columns].is-parallax-columns-in [data-parallax-columns-hero],[data-parallax-columns].is-parallax-columns-in [data-parallax-columns-grid]{opacity:1;transform:none;transition:opacity 1s ${EASE_OUT},transform 1s ${EASE_OUT}}
 [data-parallax-columns].is-parallax-columns-in [data-parallax-columns-hero]{transition-delay:.25s}
 [data-parallax-columns].is-parallax-columns-in [data-parallax-columns-grid]{transition-delay:.5s}
-.parallax-columns-track{display:grid;grid-template-columns:repeat(var(--parallax-columns-count),minmax(0,1fr));gap:var(--parallax-columns-gap)}
-.parallax-columns-column{min-width:0}
-.parallax-columns-column-inner{display:flex;flex-direction:column;gap:var(--parallax-columns-gap)}
-[data-parallax-columns].is-parallax-columns-motion .parallax-columns-column,[data-parallax-columns].is-parallax-columns-motion .parallax-columns-column-inner{will-change:transform}
-.parallax-columns-column-head{flex:none}
-.parallax-columns-track [data-parallax-columns-item]{position:relative;margin:0;overflow:hidden;aspect-ratio:var(--parallax-columns-ratio);contain:layout paint}
-[data-parallax-columns-item] img,[data-parallax-columns-item] video{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-select:none}
-[data-parallax-columns-item] video{position:absolute;inset:0}
+[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-item]{will-change:transform}
+[data-parallax-columns-item]{position:relative}
+[data-parallax-columns-item] img,[data-parallax-columns-item] video{pointer-events:none;-webkit-user-drag:none;user-select:none}
+[data-parallax-columns-item] video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
 [data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-media]{opacity:0;transition:opacity .4s ease}
 [data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-media].is-parallax-columns-loaded{opacity:1}`;
 
@@ -104,16 +99,6 @@
 
   function easeOut(t) {
     return 1 - Math.pow(1 - t, 3);
-  }
-
-  // "768:3,1024:4" -> [{ minWidth: 768, columns: 3 }, ...], narrowest first
-  function parseBreakpoints(value) {
-    return value
-      .split(",")
-      .map((pair) => pair.split(":").map((part) => parseInt(part, 10)))
-      .filter(([minWidth, columns]) => minWidth > 0 && columns > 0)
-      .map(([minWidth, columns]) => ({ minWidth, columns }))
-      .sort((a, b) => a.minWidth - b.minWidth);
   }
 
   // Webflow marks empty CMS bindings with a class rather than removing them
@@ -181,27 +166,15 @@
       debug("parallax-columns", "init", "No [data-parallax-columns-item] items found", "warn");
       return;
     }
+    const list = items[0].parentElement;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const settings = {
-      columnsMobile: Math.max(1, Math.round(numberAttr(section, "data-parallax-columns-mobile", 2))),
-      breakpoints: parseBreakpoints(section.getAttribute("data-parallax-columns-breakpoints") || DEFAULT_BREAKPOINTS),
-      gap: numberAttr(section, "data-parallax-columns-gap", null),
-      ratio: (section.getAttribute("data-parallax-columns-ratio") || "25 / 34").trim(),
       strength: Math.max(0, numberAttr(section, "data-parallax-columns-strength", 1)),
       backdrop: (section.getAttribute("data-parallax-columns-backdrop") || "none").trim(),
       backdropOffset: numberAttr(section, "data-parallax-columns-backdrop-offset", 56),
     };
     const motion = !reducedMotion && settings.strength > 0;
-
-    // The columns replace the CMS list, which stays in place but empty
-    const list = items[0].closest(".w-dyn-list") || items[0].parentElement;
-    const container = document.createElement("div");
-    container.className = "parallax-columns-track";
-    container.style.setProperty("--parallax-columns-ratio", settings.ratio);
-    container.setAttribute("aria-hidden", "true");
-    list.parentNode.insertBefore(container, list);
-    list.style.display = "none";
 
     if (motion) section.classList.add("is-parallax-columns-motion");
 
@@ -236,78 +209,80 @@
     });
 
     let columns = [];
+    let gridHeight = 0;
     let viewportWidth = 0;
     let viewportHeight = 0;
 
-    function columnCount(width) {
-      let count = settings.columnsMobile;
-      settings.breakpoints.forEach((bp) => {
-        if (width >= bp.minWidth) count = bp.columns;
+    // Group the items by the column the CSS grid put them in, left to right
+    function readColumns() {
+      const byLeft = new Map();
+      items.forEach((item) => {
+        if (!item.offsetParent) return;
+        const left = Math.round(item.offsetLeft);
+        if (!byLeft.has(left)) byLeft.set(left, []);
+        byLeft.get(left).push(item);
       });
-      return count;
-    }
-
-    // Deal the items out like this.design: even columns first, then odd, so
-    // neighbouring items in Order land apart
-    function build(count) {
-      const indices = Array.from({ length: count }, (_, i) => i);
-      const order = [...indices.filter((i) => i % 2 === 0), ...indices.filter((i) => i % 2 !== 0)];
-      container.textContent = "";
-      columns = indices.map((i) => {
-        const el = document.createElement("div");
-        el.className = "parallax-columns-column";
-        const inner = document.createElement("div");
-        inner.className = "parallax-columns-column-inner";
-        el.appendChild(inner);
-        container.appendChild(el);
-        return { el, inner, headShare: COLUMN_HEADS[i % COLUMN_HEADS.length] };
-      });
-      items.forEach((item, i) => columns[order[i % count]].inner.appendChild(item));
-      columns.forEach((column) => {
-        // The first row shows on load
-        const first = column.inner.firstElementChild?.querySelector("img");
-        column.head = document.createElement("div");
-        column.head.className = "parallax-columns-column-head";
-        column.inner.prepend(column.head);
-        if (first) first.loading = "eager";
-      });
+      return Array.from(byLeft.keys())
+        .sort((a, b) => a - b)
+        .map((left, i) => ({ items: byLeft.get(left), headShare: COLUMN_HEADS[i % COLUMN_HEADS.length] }));
     }
 
     function measure() {
       viewportWidth = window.innerWidth;
       viewportHeight = window.innerHeight;
-      const count = columnCount(viewportWidth);
-      if (count !== columns.length) build(count);
+      list.style.marginBottom = "";
+      columns = readColumns();
+      if (!columns.length) return;
 
-      const gap = settings.gap !== null ? settings.gap : count === settings.columnsMobile ? 12 : 20;
-      container.style.setProperty("--parallax-columns-count", String(count));
-      container.style.setProperty("--parallax-columns-gap", `${gap}px`);
-
+      const sectionLeft = section.getBoundingClientRect().left;
+      const listTop = offsetWithin(list, section, "y");
       columns.forEach((column) => {
-        column.head.style.height = `${column.el.offsetWidth * column.headShare}px`;
+        const first = column.items[0];
+        const last = column.items[column.items.length - 1];
+        column.width = first.offsetWidth;
+        column.top = offsetWithin(first, section, "y");
+        column.center = sectionLeft + offsetWithin(first, section, "x") + column.width / 2;
+        column.head = column.width * column.headShare;
+        // Height of the column's items, from its first item's top to its
+        // last item's bottom, plus the space above it
+        column.contentHeight = column.head + offsetWithin(last, section, "y") + last.offsetHeight - column.top;
+        // The first row shows on load
+        const img = first.querySelector("img");
+        if (img) img.loading = "eager";
+        column.items.forEach((item) => {
+          item.querySelectorAll("img[srcset]").forEach((image) => {
+            image.sizes = `${Math.ceil(column.width)}px`;
+          });
+        });
       });
+
+      // Columns end with their bottoms lined up at the tallest one. The grid
+      // grows by whatever the stagger adds below its own height.
+      gridHeight = Math.max(...columns.map((column) => column.contentHeight));
+      const extra = columns[0].top + gridHeight - (listTop + list.offsetHeight);
+      if (extra > 0) list.style.marginBottom = `${extra}px`;
+
       if (backdrop) {
         const top = fader ? offsetWithin(fader, hero, "y") + fader.offsetHeight : 0;
         backdrop.style.top = `${top + settings.backdropOffset}px`;
       }
-      const sectionLeft = section.getBoundingClientRect().left;
-      columns.forEach((column) => {
-        column.top = offsetWithin(column.el, section, "y");
-        column.width = column.el.offsetWidth;
-        column.center = sectionLeft + offsetWithin(column.el, section, "x") + column.width / 2;
-        column.height = column.el.offsetHeight;
-        column.innerHeight = column.inner.offsetHeight;
-        column.inner.querySelectorAll("img[srcset]").forEach((img) => {
-          img.sizes = `${Math.ceil(column.width)}px`;
-        });
-      });
       render();
-      debug("parallax-columns", "layout", `${count} columns, ${items.length} items`, "info");
+      debug("parallax-columns", "layout", `${columns.length} columns, ${items.length} items`, "info");
+    }
+
+    function place(column, x, y) {
+      const transform = `translate3d(${x}px,${y}px,0)`;
+      column.items.forEach((item) => {
+        item.style.transform = transform;
+      });
     }
 
     // Scroll-linked motion, same curves as this.design's ScrollTrigger setup
     function render() {
-      if (!motion) return;
+      if (!motion) {
+        columns.forEach((column) => place(column, 0, column.head));
+        return;
+      }
       const sectionTop = section.getBoundingClientRect().top;
       const vw = viewportWidth;
       const vh = viewportHeight;
@@ -326,12 +301,11 @@
         // From the column's top reaching halfway up the screen until its
         // bottom reaches the bottom of the screen, its items drift down so
         // every column ends flush with the bottom of the grid
-        const driftDistance = Math.max(column.height - vh / 2, 1);
+        const driftDistance = Math.max(gridHeight - vh / 2, 1);
         const driftProgress = clamp((vh / 2 - top) / driftDistance, 0, 1);
-        const y = (column.height - column.innerHeight) * driftProgress * strength;
+        const y = column.head + (gridHeight - column.contentHeight) * driftProgress * strength;
 
-        column.el.style.transform = `translate3d(${x}px,0,0)`;
-        column.inner.style.transform = `translate3d(0,${y}px,0)`;
+        place(column, x, y);
       });
 
       if (hero) {
@@ -356,6 +330,10 @@
     }
 
     let resizeFrame = null;
+    const scheduleMeasure = () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(measure);
+    };
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
     window.addEventListener("resize", () => {
@@ -365,9 +343,18 @@
       if (w === lastWidth && Math.abs(h - lastHeight) < 120) return;
       lastWidth = w;
       lastHeight = h;
-      cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(measure);
+      scheduleMeasure();
     });
+    // The grid can also change shape without the window resizing, e.g. when
+    // the hero above it reflows
+    if ("ResizeObserver" in window) {
+      let lastListWidth = list.offsetWidth;
+      new ResizeObserver(() => {
+        if (list.offsetWidth === lastListWidth) return;
+        lastListWidth = list.offsetWidth;
+        scheduleMeasure();
+      }).observe(list);
+    }
 
     measure();
     // Web fonts can change the hero's height and so where the grid starts
