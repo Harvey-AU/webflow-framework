@@ -46,10 +46,10 @@
 
   const TILE_RATIO = "25 / 34"; // width / height
   const DEFAULT_BREAKPOINTS = "768:3,1024:4,1280:5,1920:6,2560:7";
-  // Space left under the last tile of each column, as a share of the column
-  // width, in a repeating pattern. Columns end at different heights so they
-  // drift apart while scrolling.
-  const COLUMN_TAILS = [0.1, 0, 0.2, 0.1, 0, 0.1, 0.2, 0.1];
+  // Space above the first tile of each column, as a share of the column
+  // width, in a repeating pattern that reads as random. Columns start at
+  // uneven heights and drift until their bottoms line up.
+  const COLUMN_HEADS = [0.2, 0.55, 0, 0.35, 0.7, 0.1, 0.45, 0.25];
   // How far a column starts from its place, per unit of its distance from
   // the centre of the screen, in column widths
   const SPREAD = 1.5;
@@ -68,7 +68,7 @@
 .wall-column{min-width:0}
 .wall-column-inner{display:flex;flex-direction:column;gap:var(--wall-gap)}
 [data-wall].is-wall-motion .wall-column,[data-wall].is-wall-motion .wall-column-inner{will-change:transform}
-.wall-column-tail{flex:none}
+.wall-column-head{flex:none}
 .wall-columns [data-wall-tile]{position:relative;margin:0;overflow:hidden;aspect-ratio:${TILE_RATIO};contain:layout paint}
 [data-wall-tile] img,[data-wall-tile] video{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-select:none}
 [data-wall-tile] video{position:absolute;inset:0}
@@ -237,15 +237,15 @@
         inner.className = "wall-column-inner";
         el.appendChild(inner);
         container.appendChild(el);
-        return { el, inner, tailShare: COLUMN_TAILS[i % COLUMN_TAILS.length] };
+        return { el, inner, headShare: COLUMN_HEADS[i % COLUMN_HEADS.length] };
       });
       tiles.forEach((tile, i) => columns[order[i % count]].inner.appendChild(tile));
       columns.forEach((column) => {
-        column.tail = document.createElement("div");
-        column.tail.className = "wall-column-tail";
-        column.inner.appendChild(column.tail);
         // The first row shows on load
         const first = column.inner.firstElementChild?.querySelector("img");
+        column.head = document.createElement("div");
+        column.head.className = "wall-column-head";
+        column.inner.prepend(column.head);
         if (first) first.loading = "eager";
       });
     }
@@ -261,7 +261,7 @@
       container.style.setProperty("--wall-gap", `${gap}px`);
 
       columns.forEach((column) => {
-        column.tail.style.height = `${column.el.offsetWidth * column.tailShare}px`;
+        column.head.style.height = `${column.el.offsetWidth * column.headShare}px`;
       });
       const sectionLeft = section.getBoundingClientRect().left;
       columns.forEach((column) => {
@@ -296,9 +296,11 @@
         const start = ((vw / 2 - column.center) / vw) * column.width * -SPREAD * strength;
         const x = start * (1 - easeOut(spreadProgress));
 
-        // From the column's top reaching halfway up the screen until it has
-        // scrolled off, its tiles drift down to the bottom of the column
-        const driftProgress = clamp((vh / 2 - top) / (vh / 2 + column.innerHeight), 0, 1);
+        // From the column's top reaching halfway up the screen until its
+        // bottom reaches the bottom of the screen, its tiles drift down so
+        // every column ends flush with the bottom of the grid
+        const driftDistance = Math.max(column.height - vh / 2, 1);
+        const driftProgress = clamp((vh / 2 - top) / driftDistance, 0, 1);
         const y = (column.height - column.innerHeight) * driftProgress * strength;
 
         column.el.style.transform = `translate3d(${x}px,0,0)`;
