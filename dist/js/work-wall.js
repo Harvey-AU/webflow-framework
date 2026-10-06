@@ -41,7 +41,7 @@
  *                                    frame.
  *   data-wall-tile-width="160"       Minimum tile width in px on desktop.
  *   data-wall-gap="20"               Gap between tiles in px (12 on mobile).
- *   data-wall-scroll="250"           Pinned scroll length, in % of the
+ *   data-wall-scroll="350"           Pinned scroll length, in % of the
  *                                    screen height.
  *   data-wall-parallax="1"           Column parallax multiplier (halved on
  *                                    mobile), 0 turns it off.
@@ -61,16 +61,23 @@
   // columns stay cropped until the mouse pans to them
   const DESKTOP_OVERFLOW = 1.12;
   const MOBILE_BREAKPOINT = 768;
-  // Scroll phases, as fractions of the pinned scroll: grow, hold, shrink
-  const GROW_END = 0.4;
+  // Scroll phases, as fractions of the pinned scroll: rest, grow, hold,
+  // shrink, rest. The rests give a buffer before and after the motion.
+  const GROW_START = 0.1;
+  const GROW_END = 0.45;
   const SHRINK_START = 0.6;
+  const SHRINK_END = 0.9;
+  // Seconds for the frame to catch up with the scroll position (time
+  // constant), so it glides rather than tracking the wheel step for step.
+  // Skipped when smooth-scroll.js already eases the page.
+  const SCROLL_SMOOTHING = 0.45;
   const HEADING_FADED_OPACITY = 0.15;
   // Per column: share of the scroll it moves by, and how long it takes to
   // catch up (seconds). Neighbours differ so the columns drift apart.
   const COLUMN_SPEEDS = [0.15, 0.35, 0.25, 0.45, 0.2, 0.4, 0.3];
-  const COLUMN_LAGS = [0.5, 0.8, 0.2, 0.3, 0.6, 0.4, 0.7];
+  const COLUMN_LAGS = [1, 1.5, 0.7, 0.85, 1.2, 0.8, 1.35];
   // Share of the remaining pan distance covered per 60fps frame
-  const PAN_EASE = 0.05;
+  const PAN_EASE = 0.035;
 
   const CSS = `
 [data-wall].is-wall-pinned{position:relative;overflow:visible}
@@ -108,7 +115,12 @@
   }
 
   function easeInOut(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    return 0.5 - Math.cos(Math.PI * t) / 2;
+  }
+
+  // Eased 0-1 progress of value through [start, end]
+  function phase(value, start, end) {
+    return easeInOut(clamp((value - start) / (end - start), 0, 1));
   }
 
   // Webflow marks empty CMS bindings and hidden conditional elements with
@@ -200,7 +212,7 @@
       columnsMobile: Math.max(1, Math.round(numberAttr(section, "data-wall-columns-mobile", 2))),
       tileWidth: numberAttr(section, "data-wall-tile-width", 160),
       gap: numberAttr(section, "data-wall-gap", null),
-      scroll: Math.max(0, numberAttr(section, "data-wall-scroll", 250)),
+      scroll: Math.max(0, numberAttr(section, "data-wall-scroll", 350)),
       parallax: numberAttr(section, "data-wall-parallax", 1),
     };
 
@@ -373,19 +385,19 @@
       return ((value % size) + size) % size;
     }
 
-    // Read the scroll position and work out the frame for this moment
-    function updateFrame() {
-      scrolled = clamp(-section.getBoundingClientRect().top, 0, pinLength);
+    // Ease toward the scroll position and work out the frame for this moment
+    function updateFrame(dt, snap) {
+      const target = clamp(-section.getBoundingClientRect().top, 0, pinLength);
+      const smoothed = !snap && !document.documentElement.classList.contains("lenis");
+      scrolled = smoothed ? lerp(scrolled, target, 1 - Math.exp(-dt / SCROLL_SMOOTHING)) : target;
+      if (Math.abs(target - scrolled) < 0.1) scrolled = target;
       const progress = pinLength ? scrolled / pinLength : 0;
 
-      let grow;
-      if (progress < GROW_END) grow = easeInOut(progress / GROW_END);
-      else if (progress <= SHRINK_START) grow = 1;
-      else grow = easeInOut(1 - (progress - SHRINK_START) / (1 - SHRINK_START));
+      const rising = progress < GROW_END;
+      const grow = rising ? phase(progress, GROW_START, GROW_END) : 1 - phase(progress, SHRINK_START, SHRINK_END);
 
       // Growing, the frame rises from its resting place to the top. Shrinking,
       // it stays at the top and closes in by its side margin all round.
-      const rising = progress < GROW_END;
       const settle = rest.left;
       const top = rising ? lerp(rest.top, 0, grow) : lerp(settle, 0, grow);
       const bottom = rising ? lerp(rest.bottom, 0, grow) : lerp(settle, 0, grow);
@@ -397,7 +409,7 @@
       planeY = rising ? top : 0;
 
       if (heading) {
-        const fade = clamp(progress / GROW_END, 0, 1);
+        const fade = phase(progress, GROW_START, GROW_END);
         heading.style.opacity = String(lerp(1, HEADING_FADED_OPACITY, fade));
       }
     }
@@ -416,7 +428,7 @@
     function update(dt, snap) {
       if (!tiles.length) return;
       if (!reducedMotion) {
-        updateFrame();
+        updateFrame(dt, snap);
 
         const strength = settings.parallax * (mobile ? 0.5 : 1);
         for (let c = 0; c < columns.length; c++) {
