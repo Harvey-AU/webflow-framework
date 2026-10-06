@@ -1,9 +1,11 @@
 /**
  * Work wall
  *
- * An endless, drifting masonry wall of images for a hero background.
- * Tiles keep their own aspect ratio, can span one or two columns, drift on
- * their own, can be dragged with a mouse and react to page scroll.
+ * An endless, drifting wall of client work for a hero background. Each
+ * column belongs to one client and stacks that client's tiles. Tiles share
+ * one size (25:34), columns are staggered in a repeating pattern of three,
+ * and the wall drifts on its own, can be dragged with a mouse and reacts to
+ * page scroll. Tiles can be images or muted looping videos.
  *
  * Load standalone on pages that need it (not part of main.js):
  *   <script src="https://webflow.teamharvey.co/js/work-wall.js" defer></script>
@@ -13,18 +15,15 @@
  *
  * Markup:
  *   [data-wall]                      Section. Optional settings below.
- *     [data-wall-plane]              Layer behind. Holds the CMS list.
- *       [data-wall-tile]             One tile (collection item).
- *         img[data-wall-main]        Main image.
- *         img[data-wall-hover]       Optional image shown on hover.
- *         [data-wall-label]          Optional label shown on hover.
- *           [data-wall-client]       Client name inside the label, used to
- *                                    keep a client's tiles apart.
- *         [data-wall-size]           Text bound to the Size option, or put
- *                                    data-wall-size="2:1" on the tile itself.
- *         [data-wall-pin]            Present (and visible) when the tile is
- *                                    pinned to the first screen, or put
- *                                    data-wall-pin="true" on the tile.
+ *     [data-wall-plane]              Layer behind. Holds the CMS list,
+ *                                    sorted by Order.
+ *       [data-wall-tile]             One tile (collection item). Add
+ *                                    data-wall-video bound to the Video URL
+ *                                    field to play an .mp4 over the image.
+ *         img[data-wall-main]        Image, or the video's poster.
+ *         [data-wall-client]         Text bound to the client name. Tiles
+ *                                    with the same client share a column.
+ *                                    Hidden by this script.
  *     [data-wall-content]            Layer in front. Empty space lets the
  *                                    pointer through to the wall.
  *
@@ -32,35 +31,18 @@
  *   data-wall-speed="1"              Drift multiplier, 0 stops drift.
  *   data-wall-direction="212"        Drift direction in degrees, clockwise
  *                                    from right (212 = up and to the left).
- *   data-wall-gap="14"               Gap between tiles in px (10 under 640px).
- *   data-wall-columns="5.3"          Columns visible across the section.
- *   data-wall-column-min="170"       Column width limits in px (min 130 under 640px).
- *   data-wall-column-max="300"
+ *   data-wall-tile-width="250"       Tile width in px (150 under 640px).
+ *   data-wall-gap="20"               Gap between tiles in px (12 under 640px).
  *   data-wall-intro="true"           Pop tiles in on load.
- *   data-wall-seed="harvey"          Changes the shuffled layout.
  */
 (function () {
   "use strict";
 
   const debug = window.WebflowFramework?.debug || function () {};
 
-  // Size option value -> columns spanned and width / height ratio
-  const SIZES = {
-    "1:1": { span: 1, ratio: 1 },
-    "3:4": { span: 1, ratio: 3 / 4 },
-    "4:5": { span: 1, ratio: 4 / 5 },
-    "2:3": { span: 1, ratio: 2 / 3 },
-    "4:3": { span: 1, ratio: 4 / 3 },
-    "2:1": { span: 2, ratio: 2 },
-    "16:9": { span: 2, ratio: 16 / 9 },
-    "1:1 large": { span: 2, ratio: 1 },
-  };
-  const DEFAULT_SIZE = "1:1";
-
-  // After gaps are filled with whole tiles, a column's recent tiles may be
-  // stretched or squashed by this much to keep the wall seamless. Beyond it,
-  // a small gap is left instead.
-  const MAX_STRETCH = 0.04;
+  const TILE_RATIO = 25 / 34; // width / height
+  // Columns step down by a third of a tile in a repeating pattern of three
+  const STAGGER_STEPS = 3;
   const DRIFT_PX_PER_SECOND = 25;
   const SCROLL_NUDGE = 0.5;
 
@@ -68,23 +50,13 @@
 [data-wall]{position:relative;overflow:hidden;isolation:isolate}
 [data-wall-plane]{position:absolute;inset:0;z-index:0;overflow:hidden}
 [data-wall].is-wall-ready [data-wall-tile]{position:absolute;left:0;top:0;margin:0;overflow:hidden;will-change:transform;contain:layout paint}
-[data-wall-tile] img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-select:none}
-[data-wall-tile] [data-wall-hover]{position:absolute;inset:0;opacity:0}
-[data-wall-tile] [data-wall-label]{opacity:0}
-[data-wall-tile] [data-wall-size],[data-wall-tile] [data-wall-pin]{display:none!important}
+[data-wall-tile] img,[data-wall-tile] video{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-select:none}
+[data-wall-tile] video{position:absolute;inset:0}
+[data-wall-tile] [data-wall-client]{display:none!important}
 [data-wall-content]{position:relative;z-index:1;height:100%;pointer-events:none}
 [data-wall-content] > *{pointer-events:auto}
 [data-wall].is-wall-draggable{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
-[data-wall].is-wall-dragging{cursor:grabbing}
-@media (hover:hover) and (pointer:fine){
-  [data-wall-tile] img{transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .6s ease}
-  [data-wall-tile] [data-wall-label]{transition:opacity .3s ease,transform .4s cubic-bezier(.16,1,.3,1);transform:translateY(6px)}
-  [data-wall].is-wall-intro [data-wall-tile] img{transition:none}
-  [data-wall]:not(.is-wall-dragging):not(.is-wall-intro) [data-wall-tile]:hover [data-wall-main]{transform:scale(1.05)}
-  [data-wall]:not(.is-wall-dragging):not(.is-wall-intro) [data-wall-tile].has-wall-hover:hover [data-wall-main]{opacity:0}
-  [data-wall]:not(.is-wall-dragging):not(.is-wall-intro) [data-wall-tile]:hover [data-wall-hover]{opacity:1;transform:scale(1.05)}
-  [data-wall]:not(.is-wall-dragging):not(.is-wall-intro) [data-wall-tile]:hover [data-wall-label]{opacity:1;transform:none}
-}`;
+[data-wall].is-wall-dragging{cursor:grabbing}`;
 
   function injectStyles() {
     if (document.getElementById("work-wall-styles")) return;
@@ -109,77 +81,46 @@
     );
   }
 
-  function hashString(str) {
-    let h = 2166136261;
-    for (let i = 0; i < str.length; i++) {
-      h ^= str.charCodeAt(i);
-      h = Math.imul(h, 16777619);
-    }
-    return h >>> 0;
-  }
-
-  function seededRandom(seed) {
-    let a = seed;
-    return function () {
-      a = (a + 0x6d2b79f5) | 0;
-      let t = Math.imul(a ^ (a >>> 15), 1 | a);
-      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-  }
-
-  function shuffle(list, random) {
-    const out = list.slice();
-    for (let i = out.length - 1; i > 0; i--) {
-      const j = Math.floor(random() * (i + 1));
-      [out[i], out[j]] = [out[j], out[i]];
-    }
-    return out;
-  }
-
-  // Reorder so consecutive tiles come from different clients where possible.
-  function spreadClients(list) {
-    const pending = list.slice();
-    const out = [];
-    while (pending.length) {
-      const last = out[out.length - 1];
-      let index = pending.findIndex((t) => !last || !t.client || t.client !== last.client);
-      if (index === -1) index = 0;
-      out.push(pending.splice(index, 1)[0]);
-    }
-    return out;
-  }
-
   function readTile(el, index) {
-    const sizeEl = el.querySelector("[data-wall-size]");
-    const sizeName = (
-      el.getAttribute("data-wall-size") ||
-      (isPresent(sizeEl) ? sizeEl.textContent : "") ||
-      DEFAULT_SIZE
+    const clientEl = el.querySelector("[data-wall-client]");
+    const client = (
+      el.getAttribute("data-wall-client") ||
+      (isPresent(clientEl) ? clientEl.textContent : "") ||
+      `tile-${index}`
     ).trim();
-    const size = SIZES[sizeName] || SIZES[DEFAULT_SIZE];
-    if (!SIZES[sizeName]) debug("work-wall", "size", `Unknown size "${sizeName}", using ${DEFAULT_SIZE}`, "warn");
 
-    const pinEl = el.querySelector("[data-wall-pin]");
-    const pinAttr = el.getAttribute("data-wall-pin");
-    const pinned = pinAttr !== null ? pinAttr !== "false" : isPresent(pinEl);
-
-    const hoverImg = el.querySelector("img[data-wall-hover]");
-    if (isPresent(hoverImg) && hoverImg.getAttribute("src")) {
-      el.classList.add("has-wall-hover");
-    } else if (hoverImg) {
-      hoverImg.remove();
-    }
-
-    const clientEl = el.querySelector("[data-wall-client]") || el.querySelector("[data-wall-label]");
-    const client = (el.getAttribute("data-wall-client") || (clientEl ? clientEl.textContent : "")).trim();
-
-    el.querySelectorAll("img").forEach((img) => {
-      img.alt = "";
-      img.draggable = false;
+    const img = el.querySelector("img[data-wall-main]");
+    el.querySelectorAll("img").forEach((image) => {
+      image.alt = "";
+      image.draggable = false;
     });
 
-    return { el, index, span: size.span, ratio: size.ratio, pinned, client };
+    const videoUrl = (el.getAttribute("data-wall-video") || "").trim();
+    if (videoUrl && !el.querySelector("video")) {
+      const video = document.createElement("video");
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = "none";
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("aria-hidden", "true");
+      if (isPresent(img) && img.getAttribute("src")) video.poster = img.getAttribute("src");
+      video.src = videoUrl;
+      el.appendChild(video);
+    }
+
+    return { el, client };
+  }
+
+  // Group tiles into one column per client, in order of first appearance
+  function groupByClient(tiles) {
+    const groups = new Map();
+    tiles.forEach((tile) => {
+      if (!groups.has(tile.client)) groups.set(tile.client, []);
+      groups.get(tile.client).push(tile);
+    });
+    return Array.from(groups.values());
   }
 
   function createWall(section) {
@@ -194,6 +135,7 @@
       debug("work-wall", "init", "No [data-wall-tile] items found", "warn");
       return;
     }
+    const clients = groupByClient(sources);
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
@@ -202,30 +144,33 @@
     const settings = {
       speed: numberAttr(section, "data-wall-speed", 1),
       direction: numberAttr(section, "data-wall-direction", 212),
-      gap: section.hasAttribute("data-wall-gap") ? numberAttr(section, "data-wall-gap", 14) : null,
-      columns: numberAttr(section, "data-wall-columns", 5.3),
-      columnMin: numberAttr(section, "data-wall-column-min", null),
-      columnMax: numberAttr(section, "data-wall-column-max", 300),
+      tileWidth: numberAttr(section, "data-wall-tile-width", null),
+      gap: numberAttr(section, "data-wall-gap", null),
       intro: section.getAttribute("data-wall-intro") !== "false",
-      seed: section.getAttribute("data-wall-seed") || "harvey",
     };
-
-    // Pinned tiles first so they land on the first screen, the rest shuffled
-    // the same way on every load.
-    const random = seededRandom(hashString(settings.seed + sources.length));
-    const pinned = sources.filter((t) => t.pinned);
-    const rest = spreadClients(shuffle(sources.filter((t) => !t.pinned), random));
-    const sequence = pinned.concat(rest);
 
     plane.setAttribute("aria-hidden", "true");
     section.classList.add("is-wall-ready");
 
+    // Videos play only while on screen, and never with reduced motion
+    const videoObserver =
+      !reducedMotion && "IntersectionObserver" in window
+        ? new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              const video = entry.target;
+              if (entry.isIntersecting) {
+                if (video.preload === "none") video.preload = "auto";
+                video.play().catch(() => {});
+              } else {
+                video.pause();
+              }
+            });
+          })
+        : null;
+
     let tiles = [];
     let clones = [];
-    let columnWidth = 0;
-    let gap = 14;
     let planeWidth = 0;
-    let planeHeight = 0;
     let offsetX = 0;
     let offsetY = 0;
     let velocityX = 0;
@@ -239,120 +184,45 @@
       const vh = section.clientHeight;
       if (!vw || !vh) return;
 
-      gap = settings.gap !== null ? settings.gap : vw < 640 ? 10 : 14;
-      const columnMin = settings.columnMin !== null ? settings.columnMin : vw < 640 ? 130 : 170;
-      columnWidth = Math.max(columnMin, Math.min(settings.columnMax, vw / settings.columns));
-      const step = columnWidth + gap;
+      const small = vw < 640;
+      const width = settings.tileWidth !== null ? settings.tileWidth : small ? 150 : 250;
+      const gap = settings.gap !== null ? settings.gap : small ? 12 : 20;
+      const height = width / TILE_RATIO;
+      const stepX = width + gap;
+      const stepY = height + gap;
 
-      // Wide enough that a two-column tile is never on screen twice
-      const columnCount = Math.max(3, Math.ceil((vw + 2 * columnWidth + gap) / step) + 1);
-      planeWidth = columnCount * step;
+      // Enough columns to cover the screen with one to spare, in whole
+      // stagger patterns so the pattern carries across the wrap. Use every
+      // client at least once, repeating clients when there are too few,
+      // without the same client either side of the wrap.
+      const needed = Math.max(clients.length, Math.ceil((vw + width + gap) / stepX) + 1);
+      let columnCount = Math.ceil(needed / STAGGER_STEPS) * STAGGER_STEPS;
+      while (clients.length > 1 && (columnCount - 1) % clients.length === 0) columnCount += STAGGER_STEPS;
+      planeWidth = columnCount * stepX;
 
-      const tallest = Math.max(...sequence.map((t) => (columnWidth * t.span + gap * (t.span - 1)) / t.ratio));
-      const minHeight = vh + tallest + gap;
-
-      // Pack with the shortest column first. Repeat the sequence (as clones)
-      // until every tile has been used and every column reaches minHeight.
-      const heights = new Array(columnCount).fill(0);
-      const columns = Array.from({ length: columnCount }, () => []);
+      // Each column loops on its own: the client's tiles, repeated until
+      // the loop is taller than the screen plus one tile.
       const placed = [];
-      let i = 0;
-
-      const singles = sources.filter((t) => t.span === 1);
-      const uses = new Map();
-
-      function heightOf(source) {
-        return (columnWidth * source.span + gap * (source.span - 1)) / source.ratio;
-      }
-
-      function place(source, forcedColumn) {
-        const width = columnWidth * source.span + gap * (source.span - 1);
-        const height = width / source.ratio;
-        let column = forcedColumn;
-        let y;
-
-        if (source.span === 1) {
-          if (column === undefined) column = heights.indexOf(Math.min(...heights));
-          y = heights[column];
-        } else {
-          // Two columns side by side (never wrapping past the last column),
-          // choosing the pair with the smallest step between them.
-          let best = null;
-          for (let c = 0; c < columnCount - 1; c++) {
-            const top = Math.max(heights[c], heights[c + 1]);
-            const step = Math.abs(heights[c] - heights[c + 1]);
-            const score = top + step * 2;
-            if (!best || score < best.score) best = { c, top, score };
-          }
-          column = best.c;
-          y = best.top;
-          // Level the two columns before the wide tile sits across them
-          fillColumn(column, y);
-          fillColumn(column + 1, y);
-          y = Math.max(heights[column], heights[column + 1]);
+      for (let c = 0; c < columnCount; c++) {
+        const group = clients[c % clients.length];
+        const count = Math.max(group.length, Math.ceil((vh + stepY) / stepY) + 1);
+        const loopHeight = count * stepY;
+        const stagger = ((c % STAGGER_STEPS) * stepY) / STAGGER_STEPS;
+        for (let k = 0; k < count; k++) {
+          placed.push({
+            source: group[k % group.length],
+            baseX: c * stepX,
+            baseY: k * stepY + stagger,
+            loopHeight,
+          });
         }
-
-        const tile = { source, column, span: source.span, width, height, y };
-        for (let s = 0; s < source.span; s++) {
-          columns[column + s].push(tile);
-          heights[column + s] = y + height + gap;
-        }
-        uses.set(source, (uses.get(source) || 0) + 1);
-        placed.push(tile);
       }
 
-      // Bring a column down to targetY: first add the best-fitting
-      // one-column tiles (repeats), then stretch or squash the column's
-      // recent tiles for whatever is left, within MAX_STRETCH.
-      function fillColumn(c, targetY) {
-        for (;;) {
-          const remaining = targetY - heights[c];
-          const last = columns[c][columns[c].length - 1];
-          const fits = singles.filter((t) => heightOf(t) + gap <= remaining * (1 + MAX_STRETCH));
-          if (!fits.length) break;
-          // Tallest fit first; among near ties, the least used, then a
-          // different client from the tile above.
-          const tallest = Math.max(...fits.map(heightOf));
-          const pick = fits
-            .filter((t) => heightOf(t) >= tallest * 0.9)
-            .sort(
-              (a, b) =>
-                (uses.get(a) || 0) - (uses.get(b) || 0) ||
-                (last && a.client === last.source.client) - (last && b.client === last.source.client)
-            )[0];
-          place(pick, c);
-        }
-        closeColumn(c, targetY);
-      }
-
-      function closeColumn(c, targetY) {
-        const missing = targetY - heights[c];
-        if (Math.abs(missing) <= 0.5) return;
-        const free = [];
-        for (let k = columns[c].length - 1; k >= 0 && columns[c][k].span === 1; k--) free.unshift(columns[c][k]);
-        const freeHeight = free.reduce((sum, t) => sum + t.height, 0);
-        if (!freeHeight) return;
-        const limit = freeHeight * MAX_STRETCH;
-        const change = Math.max(-limit, Math.min(limit, missing));
-        let y = free[0].y;
-        free.forEach((t) => {
-          t.height += change * (t.height / freeHeight);
-          t.y = y;
-          y += t.height + gap;
-        });
-        heights[c] = y;
-      }
-
-      while (i < sequence.length || Math.min(...heights) < minHeight) {
-        place(sequence[i % sequence.length]);
-        i++;
-      }
-
-      planeHeight = Math.max(...heights);
-      for (let c = 0; c < columnCount; c++) fillColumn(c, planeHeight);
-
-      // Reuse existing elements, cloning only where the sequence repeats
-      clones.forEach((el) => el.remove());
+      // Reuse existing elements, cloning only where tiles repeat
+      clones.forEach((el) => {
+        el.querySelectorAll("video").forEach((video) => videoObserver && videoObserver.unobserve(video));
+        el.remove();
+      });
       clones = [];
       const used = new Set();
       tiles = placed.map((tile) => {
@@ -364,27 +234,32 @@
         }
         used.add(tile.source.el);
         tile.el = el;
-        tile.baseX = tile.column * step;
-        el.style.width = `${tile.width}px`;
-        el.style.height = `${tile.height}px`;
+        tile.width = width;
+        tile.height = height;
+        el.style.width = `${width}px`;
+        el.style.height = `${height}px`;
         el.querySelectorAll("img").forEach((img) => {
-          if (img.hasAttribute("srcset")) img.sizes = `${Math.ceil(tile.width)}px`;
+          if (img.hasAttribute("srcset")) img.sizes = `${Math.ceil(width)}px`;
+        });
+        el.querySelectorAll("video").forEach((video) => {
+          // Cloning does not carry the muted property, which autoplay needs
+          video.muted = true;
+          if (videoObserver) videoObserver.observe(video);
         });
         return tile;
       });
 
-      // Pinned tiles are in the top rows. Start with the first column
-      // slightly in from the left edge.
+      // Start with the first column part way off the left edge
       if (!started) {
-        offsetX = columnWidth * 0.3;
-        offsetY = gap;
+        offsetX = -width * 0.4;
+        offsetY = -height * 0.2;
         started = true;
       }
 
       // Eager-load what is on the first screen
       tiles.forEach((tile) => {
         const img = tile.el.querySelector("[data-wall-main]");
-        if (img && tile.y < vh && tile.baseX < vw) img.loading = "eager";
+        if (img && tile.baseY < vh && tile.baseX < vw) img.loading = "eager";
       });
 
       render();
@@ -399,7 +274,7 @@
       for (let k = 0; k < tiles.length; k++) {
         const t = tiles[k];
         const x = wrap(t.baseX + offsetX + t.width, planeWidth) - t.width;
-        const y = wrap(t.y + offsetY + t.height, planeHeight) - t.height;
+        const y = wrap(t.baseY + offsetY + t.height, t.loopHeight) - t.height;
         t.el.style.transform = `translate3d(${x}px,${y}px,0)`;
       }
     }
@@ -516,20 +391,21 @@
 
     // Intro
     if (gsap && settings.intro && !reducedMotion) {
-      section.classList.add("is-wall-intro");
-      const images = tiles.map((t) => t.el.querySelector("[data-wall-main]")).filter(Boolean);
-      gsap.from(images, {
+      const media = [];
+      tiles.forEach((t) => {
+        t.el.querySelectorAll("[data-wall-main], video").forEach((el) => media.push(el));
+      });
+      gsap.from(media, {
         scale: 1.3,
         opacity: 0,
         duration: 1.4,
         ease: "expo.out",
         stagger: { each: 0.012, from: "random" },
         clearProps: "transform,opacity",
-        onComplete: () => section.classList.remove("is-wall-intro"),
       });
     }
 
-    debug("work-wall", "init", `Wall ready with ${sources.length} tiles`, "info");
+    debug("work-wall", "init", `Wall ready with ${sources.length} tiles in ${clients.length} columns`, "info");
   }
 
   function init() {
