@@ -1,97 +1,80 @@
 /**
  * Work wall
  *
- * A hero of client work. A fixed set of columns, one client each, sits in a
- * container under the heading. Scrolling pins the hero: the wall rises over
- * the heading and grows to full bleed, holds, then shrinks back into a
- * container before the page scrolls on. While pinned, each column moves at
- * its own rate and settles with its own lag, and moving the mouse left or
- * right pans the wall to reveal the cropped edge columns. Tiles are images or
- * muted looping videos. Nothing moves until the page is scrolled or the mouse
- * is moved.
+ * A hero of client work in the style of this.design. The heading sits at the
+ * top of the screen and the wall's first row peeks in along the bottom, every
+ * column top aligned. Both fade up into place on load. Scrolling, the heading
+ * stays put and fades out while the wall rises over it. Each column starts
+ * pushed away from the centre of the screen and eases back in as it rises,
+ * and shorter columns drift down so the columns fall out of line and land
+ * bottom aligned. Tiles are images or muted looping videos.
  *
  * Load standalone on pages that need it (not part of main.js):
  *   <script src="https://webflow.teamharvey.co/js/work-wall.js" defer></script>
  *
- * Uses GSAP's ticker when present (Webflow site settings > GSAP, no plugins
- * needed) and falls back to requestAnimationFrame.
- *
  * Markup:
  *   [data-wall]                      Section. Optional settings below.
- *     [data-wall-stage]              Fills the screen. Style it as the
- *                                    resting layout: heading, then frame.
- *       [data-wall-heading]          Stays in place and fades back as the
- *                                    wall rises over it.
- *       [data-wall-frame]            The container. Its styled size and
- *                                    position are where the wall starts and
- *                                    ends; it grows to the screen between.
- *         [data-wall-plane]          Holds the CMS list, sorted by Order.
- *           [data-wall-tile]         One tile (collection item). Add
+ *     [data-wall-stage]              The hero, styled at its resting height
+ *                                    (75svh suits). Stays pinned while the
+ *                                    wall scrolls over it.
+ *       [data-wall-heading]          Fades out over the hero's height.
+ *     [data-wall-grid]               Follows the hero. Style its padding and
+ *                                    max width; the script builds columns
+ *                                    inside it.
+ *       CMS list                     Sorted by Order. Hidden once its tiles
+ *                                    are moved into the columns.
+ *         [data-wall-tile]           One tile (collection item). Add
  *                                    data-wall-video bound to the Video URL
  *                                    field to play an .mp4 over the image.
- *             img[data-wall-main]    Image, or the video's poster.
- *             [data-wall-client]     Text bound to the client name. Tiles
- *                                    with the same client share a column.
- *                                    Hidden by this script.
+ *           img[data-wall-main]      Image, or the video's poster.
+ *           [data-wall-client]       Optional client name. Hidden.
  *
  * Settings on [data-wall]:
- *   data-wall-columns="7"            Columns on desktop. The first clients
- *                                    in Order fill them, left to right.
- *   data-wall-columns-mobile="2"     Columns under 768px, sized to fill the
- *                                    frame.
- *   data-wall-tile-width="160"       Minimum tile width in px on desktop.
+ *   data-wall-columns-mobile="2"     Columns under the first breakpoint.
+ *   data-wall-breakpoints="768:3,1024:4,1280:5,1920:6,2560:7"
+ *                                    Columns from each minimum screen width.
  *   data-wall-gap="20"               Gap between tiles in px (12 on mobile).
- *   data-wall-scroll="350"           Pinned scroll length, in % of the
- *                                    screen height.
- *   data-wall-parallax="1"           Column parallax multiplier (halved on
- *                                    mobile), 0 turns it off.
+ *   data-wall-parallax="1"           Motion multiplier, 0 turns it off.
  *
- * With reduced motion the hero stays in its resting layout: no pin,
- * parallax, pan or video autoplay.
+ * With reduced motion the wall is laid out the same but nothing moves, fades
+ * or autoplays.
  */
 (function () {
   "use strict";
 
   const debug = window.WebflowFramework?.debug || function () {};
 
-  const TILE_RATIO = 25 / 34; // width / height
-  // Columns step down by a third of a tile in a repeating pattern of three
-  const STAGGER_STEPS = 3;
-  // The wall is this much wider than the screen on desktop, so the edge
-  // columns stay cropped until the mouse pans to them
-  const DESKTOP_OVERFLOW = 1.12;
-  const MOBILE_BREAKPOINT = 768;
-  // Scroll phases, as fractions of the pinned scroll: rest, grow, hold,
-  // shrink, rest. The rests give a buffer before and after the motion.
-  const GROW_START = 0.1;
-  const GROW_END = 0.45;
-  const SHRINK_START = 0.6;
-  const SHRINK_END = 0.9;
-  // Seconds for the frame to catch up with the scroll position (time
-  // constant), so it glides rather than tracking the wheel step for step.
-  // Skipped when smooth-scroll.js already eases the page.
-  const SCROLL_SMOOTHING = 0.45;
-  const HEADING_FADED_OPACITY = 0.15;
-  // Per column: share of the scroll it moves by, and how long it takes to
-  // catch up (seconds). Neighbours differ so the columns drift apart.
-  const COLUMN_SPEEDS = [0.15, 0.35, 0.25, 0.45, 0.2, 0.4, 0.3];
-  const COLUMN_LAGS = [1, 1.5, 0.7, 0.85, 1.2, 0.8, 1.35];
-  // Share of the remaining pan distance covered per 60fps frame
-  const PAN_EASE = 0.035;
+  const TILE_RATIO = "25 / 34"; // width / height
+  const DEFAULT_BREAKPOINTS = "768:3,1024:4,1280:5,1920:6,2560:7";
+  // Space left under the last tile of each column, as a share of the column
+  // width, in a repeating pattern. Columns end at different heights so they
+  // drift apart while scrolling.
+  const COLUMN_TAILS = [0.1, 0, 0.2, 0.1, 0, 0.1, 0.2, 0.1];
+  // How far a column starts from its place, per unit of its distance from
+  // the centre of the screen, in column widths
+  const SPREAD = 1.5;
 
+  const EASE_OUT = "cubic-bezier(.215,.61,.355,1)"; // power3.out
   const CSS = `
-[data-wall].is-wall-pinned{position:relative;overflow:visible}
-[data-wall].is-wall-pinned [data-wall-stage]{position:sticky;top:0;height:100svh;overflow:clip}
-[data-wall].is-wall-pinned [data-wall-frame]{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;aspect-ratio:auto!important;margin:0!important;max-width:none!important;min-height:0!important;max-height:none!important;will-change:clip-path}
-[data-wall].is-wall-pinned [data-wall-heading]{will-change:opacity}
-[data-wall-frame]{position:relative;overflow:hidden}
-[data-wall].is-wall-ready [data-wall-plane]{position:absolute;inset:0;overflow:visible}
-[data-wall].is-wall-ready [data-wall-tile]{position:absolute;left:0;top:0;margin:0;overflow:hidden;will-change:transform;contain:layout paint}
+[data-wall]{position:relative;overflow-x:clip}
+[data-wall].is-wall-motion [data-wall-stage]{position:sticky;top:0}
+[data-wall].is-wall-motion [data-wall-heading]{will-change:opacity}
+[data-wall-grid]{position:relative;z-index:1}
+[data-wall].is-wall-motion [data-wall-stage],[data-wall].is-wall-motion [data-wall-grid]{opacity:0;transform:translate3d(0,40px,0)}
+[data-wall].is-wall-in [data-wall-stage],[data-wall].is-wall-in [data-wall-grid]{opacity:1;transform:none;transition:opacity 1s ${EASE_OUT},transform 1s ${EASE_OUT}}
+[data-wall].is-wall-in [data-wall-stage]{transition-delay:.25s}
+[data-wall].is-wall-in [data-wall-grid]{transition-delay:.5s}
+.wall-columns{display:grid;grid-template-columns:repeat(var(--wall-columns),minmax(0,1fr));gap:var(--wall-gap)}
+.wall-column{min-width:0}
+.wall-column-inner{display:flex;flex-direction:column;gap:var(--wall-gap)}
+[data-wall].is-wall-motion .wall-column,[data-wall].is-wall-motion .wall-column-inner{will-change:transform}
+.wall-column-tail{flex:none}
+.wall-columns [data-wall-tile]{position:relative;margin:0;overflow:hidden;aspect-ratio:${TILE_RATIO};contain:layout paint}
 [data-wall-tile] img,[data-wall-tile] video{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-select:none}
 [data-wall-tile] video{position:absolute;inset:0}
 [data-wall-tile] [data-wall-client]{display:none!important}
-[data-wall].is-wall-fade [data-wall-main]{opacity:0;transition:opacity .4s ease}
-[data-wall].is-wall-fade [data-wall-main].is-wall-loaded{opacity:1}`;
+[data-wall].is-wall-motion [data-wall-main]{opacity:0;transition:opacity .4s ease}
+[data-wall].is-wall-motion [data-wall-main].is-wall-loaded{opacity:1}`;
 
   function injectStyles() {
     if (document.getElementById("work-wall-styles")) return;
@@ -110,37 +93,26 @@
     return Math.min(max, Math.max(min, value));
   }
 
-  function lerp(from, to, amount) {
-    return from + (to - from) * amount;
+  function easeOut(t) {
+    return 1 - Math.pow(1 - t, 3);
   }
 
-  function easeInOut(t) {
-    return 0.5 - Math.cos(Math.PI * t) / 2;
+  // "768:3,1024:4" -> [{ minWidth: 768, columns: 3 }, ...], narrowest first
+  function parseBreakpoints(value) {
+    return value
+      .split(",")
+      .map((pair) => pair.split(":").map((part) => parseInt(part, 10)))
+      .filter(([minWidth, columns]) => minWidth > 0 && columns > 0)
+      .map(([minWidth, columns]) => ({ minWidth, columns }))
+      .sort((a, b) => a.minWidth - b.minWidth);
   }
 
-  // Eased 0-1 progress of value through [start, end]
-  function phase(value, start, end) {
-    return easeInOut(clamp((value - start) / (end - start), 0, 1));
-  }
-
-  // Webflow marks empty CMS bindings and hidden conditional elements with
-  // classes rather than removing them.
+  // Webflow marks empty CMS bindings with a class rather than removing them
   function isPresent(el) {
-    return (
-      !!el &&
-      !el.classList.contains("w-condition-invisible") &&
-      !el.classList.contains("w-dyn-bind-empty")
-    );
+    return !!el && !el.classList.contains("w-condition-invisible") && !el.classList.contains("w-dyn-bind-empty");
   }
 
-  function readTile(el, index) {
-    const clientEl = el.querySelector("[data-wall-client]");
-    const client = (
-      el.getAttribute("data-wall-client") ||
-      (isPresent(clientEl) ? clientEl.textContent : "") ||
-      `tile-${index}`
-    ).trim();
-
+  function prepareTile(el) {
     const img = el.querySelector("img[data-wall-main]");
     el.querySelectorAll("img").forEach((image) => {
       image.alt = "";
@@ -161,18 +133,7 @@
       video.src = videoUrl;
       el.appendChild(video);
     }
-
-    return { el, client };
-  }
-
-  // Group tiles into one column per client, in order of first appearance
-  function groupByClient(tiles) {
-    const groups = new Map();
-    tiles.forEach((tile) => {
-      if (!groups.has(tile.client)) groups.set(tile.client, []);
-      groups.get(tile.client).push(tile);
-    });
-    return Array.from(groups.values());
+    return el;
   }
 
   // Fade each image in once it has loaded
@@ -186,39 +147,50 @@
     }
   }
 
+  // Distance from an element's top or left edge to its ancestor's, ignoring
+  // transforms
+  function offsetWithin(el, ancestor, axis) {
+    let total = 0;
+    while (el && el !== ancestor) {
+      total += axis === "x" ? el.offsetLeft : el.offsetTop;
+      el = el.offsetParent;
+    }
+    return total;
+  }
+
   function createWall(section) {
     const stage = section.querySelector("[data-wall-stage]");
-    const frame = section.querySelector("[data-wall-frame]");
-    const plane = section.querySelector("[data-wall-plane]");
     const heading = section.querySelector("[data-wall-heading]");
-    if (!stage || !frame || !plane) {
-      debug("work-wall", "init", "Missing [data-wall-stage], [data-wall-frame] or [data-wall-plane]", "warn");
+    const grid = section.querySelector("[data-wall-grid]");
+    if (!grid) {
+      debug("work-wall", "init", "Missing [data-wall-grid]", "warn");
       return;
     }
 
-    const sources = Array.from(plane.querySelectorAll("[data-wall-tile]")).map(readTile);
-    if (!sources.length) {
+    const tiles = Array.from(grid.querySelectorAll("[data-wall-tile]")).map(prepareTile);
+    if (!tiles.length) {
       debug("work-wall", "init", "No [data-wall-tile] items found", "warn");
       return;
     }
-    const clients = groupByClient(sources);
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
-    const gsap = window.gsap;
-
     const settings = {
-      columns: Math.max(1, Math.round(numberAttr(section, "data-wall-columns", 7))),
       columnsMobile: Math.max(1, Math.round(numberAttr(section, "data-wall-columns-mobile", 2))),
-      tileWidth: numberAttr(section, "data-wall-tile-width", 160),
+      breakpoints: parseBreakpoints(section.getAttribute("data-wall-breakpoints") || DEFAULT_BREAKPOINTS),
       gap: numberAttr(section, "data-wall-gap", null),
-      scroll: Math.max(0, numberAttr(section, "data-wall-scroll", 350)),
-      parallax: numberAttr(section, "data-wall-parallax", 1),
+      parallax: Math.max(0, numberAttr(section, "data-wall-parallax", 1)),
     };
+    const motion = !reducedMotion && settings.parallax > 0;
 
-    plane.setAttribute("aria-hidden", "true");
-    section.classList.add("is-wall-ready");
-    if (!reducedMotion) section.classList.add("is-wall-fade");
+    // The columns replace the CMS list, which stays in place but empty
+    const list = tiles[0].closest(".w-dyn-list") || tiles[0].parentElement;
+    const container = document.createElement("div");
+    container.className = "wall-columns";
+    container.setAttribute("aria-hidden", "true");
+    list.parentNode.insertBefore(container, list);
+    list.style.display = "none";
+
+    if (motion) section.classList.add("is-wall-motion");
 
     // Videos play only while on screen, and never with reduced motion
     const videoObserver =
@@ -235,253 +207,120 @@
             });
           })
         : null;
+    tiles.forEach((tile) => {
+      if (videoObserver) tile.querySelectorAll("video").forEach((video) => videoObserver.observe(video));
+      if (motion) revealWhenLoaded(tile.querySelector("[data-wall-main]"));
+    });
 
-    let tiles = [];
-    let clones = [];
     let columns = [];
-    let wallWidth = 0;
-    let mobile = false;
-    let visible = true;
+    let viewportWidth = 0;
+    let viewportHeight = 0;
 
-    // Frame insets from the stage edges at rest, and its corner radius
-    const rest = { top: 0, right: 0, bottom: 0, left: 0, radius: 0 };
-    let pinLength = 0;
-    let scrolled = 0;
-    let insetX = 0;
-    let planeY = 0;
-
-    let panning = false;
-    let pointerRatio = 0.5;
-    let panTarget = 0;
-    let panX = 0;
-
-    // Measure the frame where the page styles put it, then take it over
-    function measureRest() {
-      section.classList.remove("is-wall-pinned");
-      section.style.height = "";
-      const stageRect = stage.getBoundingClientRect();
-      const frameRect = frame.getBoundingClientRect();
-      rest.top = frameRect.top - stageRect.top;
-      rest.left = frameRect.left - stageRect.left;
-      rest.right = stageRect.right - frameRect.right;
-      rest.bottom = Math.max(0, stageRect.bottom - frameRect.bottom);
-      rest.radius = parseFloat(getComputedStyle(frame).borderTopLeftRadius) || 0;
-      rest.width = frameRect.width;
+    function columnCount(width) {
+      let count = settings.columnsMobile;
+      settings.breakpoints.forEach((bp) => {
+        if (width >= bp.minWidth) count = bp.columns;
+      });
+      return count;
     }
 
-    function pin() {
-      const vh = window.innerHeight;
-      pinLength = (vh * settings.scroll) / 100;
-      section.classList.add("is-wall-pinned");
-      section.style.height = `${stage.offsetHeight + pinLength}px`;
+    // Deal the tiles out like this.design: even columns first, then odd, so
+    // neighbouring tiles in Order land apart
+    function build(count) {
+      const indices = Array.from({ length: count }, (_, i) => i);
+      const order = [...indices.filter((i) => i % 2 === 0), ...indices.filter((i) => i % 2 !== 0)];
+      container.textContent = "";
+      columns = indices.map((i) => {
+        const el = document.createElement("div");
+        el.className = "wall-column";
+        const inner = document.createElement("div");
+        inner.className = "wall-column-inner";
+        el.appendChild(inner);
+        container.appendChild(el);
+        return { el, inner, tailShare: COLUMN_TAILS[i % COLUMN_TAILS.length] };
+      });
+      tiles.forEach((tile, i) => columns[order[i % count]].inner.appendChild(tile));
+      columns.forEach((column) => {
+        column.tail = document.createElement("div");
+        column.tail.className = "wall-column-tail";
+        column.inner.appendChild(column.tail);
+        // The first row shows on load
+        const first = column.inner.firstElementChild?.querySelector("img");
+        if (first) first.loading = "eager";
+      });
     }
 
-    function layout() {
-      if (reducedMotion) {
-        section.classList.remove("is-wall-pinned");
-      } else {
-        measureRest();
-      }
+    function measure() {
+      viewportWidth = window.innerWidth;
+      viewportHeight = window.innerHeight;
+      const count = columnCount(viewportWidth);
+      if (count !== columns.length) build(count);
 
-      const vw = stage.clientWidth;
-      const vh = stage.clientHeight;
-      if (!vw || !vh) return;
+      const gap = settings.gap !== null ? settings.gap : count === settings.columnsMobile ? 12 : 20;
+      container.style.setProperty("--wall-columns", String(count));
+      container.style.setProperty("--wall-gap", `${gap}px`);
 
-      mobile = vw < MOBILE_BREAKPOINT;
-      const count = mobile ? settings.columnsMobile : settings.columns;
-      const gap = settings.gap !== null ? settings.gap : mobile ? 12 : 20;
-      const frameWidth = reducedMotion ? frame.clientWidth : rest.width;
-      // Mobile columns fill the frame. Desktop columns scale with the screen
-      // and overflow it, so the edge columns peek in at every width (250px
-      // tiles on a 1680px screen, as designed).
-      const width = mobile
-        ? (frameWidth - (count - 1) * gap) / count
-        : Math.max(settings.tileWidth, (vw * DESKTOP_OVERFLOW - (count - 1) * gap) / count);
-      const height = width / TILE_RATIO;
-      const stepX = width + gap;
-      const stepY = height + gap;
-      wallWidth = count * width + (count - 1) * gap;
-
-      // Each column loops on its own: the client's tiles, repeated until
-      // the loop is taller than the screen plus one tile. The wall starts
-      // part way up so the columns enter staggered from the top.
-      const startY = -stepY * (5 / 9);
-      const placed = [];
-      const nextColumns = [];
-      for (let c = 0; c < count; c++) {
-        const group = clients[c % clients.length];
-        const rows = Math.max(group.length, Math.ceil((vh + stepY) / stepY) + 1);
-        const loopHeight = rows * stepY;
-        const stagger = ((c % STAGGER_STEPS) * stepY) / STAGGER_STEPS;
-        const previous = columns[c];
-        nextColumns.push({
-          speed: COLUMN_SPEEDS[c % COLUMN_SPEEDS.length],
-          lag: COLUMN_LAGS[c % COLUMN_LAGS.length],
-          offset: previous ? previous.offset : 0,
+      columns.forEach((column) => {
+        column.tail.style.height = `${column.el.offsetWidth * column.tailShare}px`;
+      });
+      const sectionLeft = section.getBoundingClientRect().left;
+      columns.forEach((column) => {
+        column.top = offsetWithin(column.el, section, "y");
+        column.width = column.el.offsetWidth;
+        column.center = sectionLeft + offsetWithin(column.el, section, "x") + column.width / 2;
+        column.height = column.el.offsetHeight;
+        column.innerHeight = column.inner.offsetHeight;
+        column.inner.querySelectorAll("img[srcset]").forEach((img) => {
+          img.sizes = `${Math.ceil(column.width)}px`;
         });
-        for (let k = 0; k < rows; k++) {
-          placed.push({
-            source: group[k % group.length],
-            column: c,
-            baseX: c * stepX,
-            baseY: startY + k * stepY + stagger,
-            loopHeight,
-          });
-        }
-      }
-      columns = nextColumns;
-
-      // Reuse existing elements, cloning only where tiles repeat
-      clones.forEach((el) => {
-        el.querySelectorAll("video").forEach((video) => videoObserver && videoObserver.unobserve(video));
-        el.remove();
       });
-      clones = [];
-      const used = new Set();
-      tiles = placed.map((tile) => {
-        let el = tile.source.el;
-        if (used.has(el)) {
-          el = el.cloneNode(true);
-          el.querySelectorAll(".is-wall-loaded").forEach((img) => img.classList.remove("is-wall-loaded"));
-          tile.source.el.parentNode.appendChild(el);
-          clones.push(el);
-        }
-        used.add(tile.source.el);
-        tile.el = el;
-        tile.width = width;
-        tile.height = height;
-        el.style.display = "";
-        el.style.width = `${width}px`;
-        el.style.height = `${height}px`;
-        el.querySelectorAll("img").forEach((img) => {
-          if (img.hasAttribute("srcset")) img.sizes = `${Math.ceil(width)}px`;
-        });
-        el.querySelectorAll("video").forEach((video) => {
-          // Cloning does not carry the muted property, which autoplay needs
-          video.muted = true;
-          if (videoObserver) videoObserver.observe(video);
-        });
-        return tile;
-      });
-      // Clients past the column count are not shown
-      sources.forEach((source) => {
-        if (!used.has(source.el)) source.el.style.display = "none";
-      });
-
-      // Eager-load what is on the first screen, fade everything in
-      tiles.forEach((tile) => {
-        const img = tile.el.querySelector("[data-wall-main]");
-        if (!img) return;
-        if (tile.baseY < vh) img.loading = "eager";
-        if (!reducedMotion) revealWhenLoaded(img);
-      });
-
-      if (!reducedMotion) pin();
-      update(0, true);
-      debug("work-wall", "layout", `${count} columns, ${tiles.length} tiles (${clones.length} repeats)`, "info");
-    }
-
-    function wrap(value, size) {
-      return ((value % size) + size) % size;
-    }
-
-    // Ease toward the scroll position and work out the frame for this moment
-    function updateFrame(dt, snap) {
-      const target = clamp(-section.getBoundingClientRect().top, 0, pinLength);
-      const smoothed = !snap && !document.documentElement.classList.contains("lenis");
-      scrolled = smoothed ? lerp(scrolled, target, 1 - Math.exp(-dt / SCROLL_SMOOTHING)) : target;
-      if (Math.abs(target - scrolled) < 0.1) scrolled = target;
-      const progress = pinLength ? scrolled / pinLength : 0;
-
-      const rising = progress < GROW_END;
-      const grow = rising ? phase(progress, GROW_START, GROW_END) : 1 - phase(progress, SHRINK_START, SHRINK_END);
-
-      // Growing, the frame rises from its resting place to the top. Shrinking,
-      // it stays at the top and closes in by its side margin all round.
-      const settle = rest.left;
-      const top = rising ? lerp(rest.top, 0, grow) : lerp(settle, 0, grow);
-      const bottom = rising ? lerp(rest.bottom, 0, grow) : lerp(settle, 0, grow);
-      insetX = lerp(rest.left, 0, grow);
-      const radius = lerp(rest.radius, 0, grow);
-      frame.style.clipPath = `inset(${top}px ${insetX}px ${bottom}px ${insetX}px round ${radius}px)`;
-
-      // The tiles ride up with the frame while it rises, then stay put
-      planeY = rising ? top : 0;
-
-      if (heading) {
-        const fade = phase(progress, GROW_START, GROW_END);
-        heading.style.opacity = String(lerp(1, HEADING_FADED_OPACITY, fade));
-      }
-    }
-
-    function render() {
-      const vw = stage.clientWidth;
-      const left = (vw - wallWidth) / 2 + panX;
-      for (let k = 0; k < tiles.length; k++) {
-        const t = tiles[k];
-        const x = left + t.baseX;
-        const y = wrap(t.baseY + columns[t.column].offset + planeY + t.height, t.loopHeight) - t.height;
-        t.el.style.transform = `translate3d(${x}px,${y}px,0)`;
-      }
-    }
-
-    function update(dt, snap) {
-      if (!tiles.length) return;
-      if (!reducedMotion) {
-        updateFrame(dt, snap);
-
-        const strength = settings.parallax * (mobile ? 0.5 : 1);
-        for (let c = 0; c < columns.length; c++) {
-          const column = columns[c];
-          const target = -scrolled * column.speed * strength;
-          column.offset = snap ? target : lerp(column.offset, target, 1 - Math.exp((-dt * 3) / column.lag));
-        }
-
-        // Pan reveals the cropped edges of whatever the frame shows now
-        const shown = stage.clientWidth - insetX * 2;
-        const maxPan = Math.max(0, (wallWidth - shown) / 2);
-        panTarget = panning ? (0.5 - pointerRatio) * 2 * maxPan : 0;
-        panX = snap ? panTarget : lerp(panX, panTarget, 1 - Math.pow(1 - PAN_EASE, dt * 60));
-        panX = clamp(panX, -maxPan, maxPan);
-      }
       render();
+      debug("work-wall", "layout", `${count} columns, ${tiles.length} tiles`, "info");
     }
 
-    function tick(dt) {
-      if (visible) update(dt, false);
-    }
+    // Scroll-linked motion, same curves as this.design's ScrollTrigger setup
+    function render() {
+      if (!motion) return;
+      const sectionTop = section.getBoundingClientRect().top;
+      const vw = viewportWidth;
+      const vh = viewportHeight;
+      const strength = settings.parallax;
 
-    if (!reducedMotion) {
-      if (gsap) {
-        gsap.ticker.add((time, deltaTime) => tick(Math.min(deltaTime, 100) / 1000));
-      } else {
-        let last = performance.now();
-        const frameLoop = (now) => {
-          tick(Math.min(now - last, 100) / 1000);
-          last = now;
-          requestAnimationFrame(frameLoop);
-        };
-        requestAnimationFrame(frameLoop);
+      columns.forEach((column) => {
+        const top = sectionTop + column.top;
+
+        // From the column's top entering the screen to a screen above it,
+        // it eases in from beside its place, further out the further it is
+        // from the centre
+        const spreadProgress = clamp((vh - top) / (2 * vh), 0, 1);
+        const start = ((vw / 2 - column.center) / vw) * column.width * -SPREAD * strength;
+        const x = start * (1 - easeOut(spreadProgress));
+
+        // From the column's top reaching halfway up the screen until it has
+        // scrolled off, its tiles drift down to the bottom of the column
+        const driftProgress = clamp((vh / 2 - top) / (vh / 2 + column.innerHeight), 0, 1);
+        const y = (column.height - column.innerHeight) * driftProgress * strength;
+
+        column.el.style.transform = `translate3d(${x}px,0,0)`;
+        column.inner.style.transform = `translate3d(0,${y}px,0)`;
+      });
+
+      if (heading && stage) {
+        const fade = clamp(-sectionTop / stage.offsetHeight, 0, 1);
+        heading.style.opacity = String(1 - easeOut(fade));
       }
     }
 
-    // Mouse position across the hero pans the wall (desktop mice only)
-    if (finePointer && !reducedMotion) {
-      section.addEventListener("pointermove", (e) => {
-        if (e.pointerType !== "mouse" || mobile) return;
-        panning = true;
-        pointerRatio = clamp(e.clientX / window.innerWidth, 0, 1);
-      });
-      section.addEventListener("pointerleave", () => {
-        panning = false;
-      });
-    }
-
-    // Pause while off screen
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver((entries) => {
-        visible = entries[0].isIntersecting;
-      }).observe(section);
+    if (motion) {
+      window.addEventListener("scroll", render, { passive: true });
+      // Lenis moves the page inside its own frame loop; follow it there so
+      // the wall never trails the page by a frame
+      const followLenis = () => {
+        const lenis = window.WebflowFramework?.lenis;
+        if (lenis && typeof lenis.on === "function") lenis.on("scroll", render);
+      };
+      if (window.WebflowFramework?.lenis) followLenis();
+      else document.addEventListener("smoothScrollReady", followLenis, { once: true });
     }
 
     let resizeFrame = null;
@@ -495,14 +334,20 @@
       lastWidth = w;
       lastHeight = h;
       cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(layout);
+      resizeFrame = requestAnimationFrame(measure);
     });
 
-    layout();
-    // Web fonts can move the heading and so the frame's resting place
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    measure();
+    // Web fonts can change the hero's height and so where the wall starts
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    window.addEventListener("load", measure, { once: true });
 
-    debug("work-wall", "init", `Wall ready with ${sources.length} tiles from ${clients.length} clients`, "info");
+    // Fade in once the first layout has painted
+    if (motion) {
+      requestAnimationFrame(() => requestAnimationFrame(() => section.classList.add("is-wall-in")));
+    }
+
+    debug("work-wall", "init", `Wall ready with ${tiles.length} tiles`, "info");
   }
 
   function init() {
