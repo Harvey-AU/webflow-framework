@@ -3,9 +3,8 @@
  *
  * A hero above a grid of items laid out in columns, in the style of
  * this.design. The hero and grid fade up into place on load. Scrolling, the
- * hero stays put and its fade element fades out while the grid rises over
- * it. Each column starts pushed away from the centre of the screen and
- * eases back in as it rises. Columns start at staggered heights and drift
+ * hero stays put while the grid rises over it. Each column starts pushed
+ * away from the centre of the screen and eases back in as it rises. Columns start at staggered heights and drift
  * until their bottoms line up at the end of the grid. Items are images or
  * muted looping videos.
  *
@@ -22,10 +21,8 @@
  *   [data-parallax-columns]            Section. Optional settings below.
  *     [-hero]                          The hero, styled at its resting height
  *                                      (40svh suits). Stays pinned while the
- *                                      grid scrolls over it.
- *       [-fade]                        Fades out over the hero's height. An
- *                                      optional backdrop starts below it and
- *                                      fades out with it.
+ *                                      grid scrolls over it. Fade it on
+ *                                      scroll with a Webflow interaction.
  *     [-grid]                          Follows the hero. Style its padding
  *                                      and max width.
  *       CMS list                       Styled as a grid, in display order.
@@ -39,10 +36,6 @@
  *
  * Settings on [data-parallax-columns]:
  *   -strength="1"                      Motion multiplier, 0 turns it off.
- *   -backdrop="none"                   Backdrop colour, e.g. "#f5f5f5". Off
- *                                      by default.
- *   -backdrop-offset="56"              Gap between the fade element and the
- *                                      backdrop in px.
  *
  * With reduced motion the columns keep their stagger but nothing moves,
  * fades or autoplays.
@@ -64,10 +57,7 @@
   const CSS = `
 [data-parallax-columns]{position:relative;overflow-x:clip}
 [data-parallax-columns-hero]{position:relative}
-.parallax-columns-backdrop{position:absolute;left:0;right:0;height:100lvh;pointer-events:none}
-[data-parallax-columns].is-parallax-columns-motion .parallax-columns-backdrop{will-change:opacity}
 [data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-hero]{position:sticky;top:0}
-[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-fade]{will-change:opacity}
 [data-parallax-columns-grid]{position:relative;z-index:1}
 [data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-hero],[data-parallax-columns].is-parallax-columns-motion [data-parallax-columns-grid]{opacity:0;transform:translate3d(0,40px,0)}
 [data-parallax-columns].is-parallax-columns-in [data-parallax-columns-hero],[data-parallax-columns].is-parallax-columns-in [data-parallax-columns-grid]{opacity:1;transform:none;transition:opacity 1s ${EASE_OUT},transform 1s ${EASE_OUT}}
@@ -153,8 +143,6 @@
   }
 
   function createParallaxColumns(section) {
-    const hero = section.querySelector("[data-parallax-columns-hero]");
-    const fader = section.querySelector("[data-parallax-columns-fade]");
     const grid = section.querySelector("[data-parallax-columns-grid]");
     if (!grid) {
       debug("parallax-columns", "init", "Missing [data-parallax-columns-grid]", "warn");
@@ -171,22 +159,10 @@
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const settings = {
       strength: Math.max(0, numberAttr(section, "data-parallax-columns-strength", 1)),
-      backdrop: (section.getAttribute("data-parallax-columns-backdrop") || "none").trim(),
-      backdropOffset: numberAttr(section, "data-parallax-columns-backdrop-offset", 56),
     };
     const motion = !reducedMotion && settings.strength > 0;
 
     if (motion) section.classList.add("is-parallax-columns-motion");
-
-    // Sits behind the grid, which rises over it
-    let backdrop = null;
-    if (hero && settings.backdrop !== "none") {
-      backdrop = document.createElement("div");
-      backdrop.className = "parallax-columns-backdrop";
-      backdrop.setAttribute("aria-hidden", "true");
-      backdrop.style.background = settings.backdrop;
-      hero.prepend(backdrop);
-    }
 
     // Videos play only while on screen, and never with reduced motion
     const videoObserver =
@@ -261,11 +237,6 @@
       gridHeight = Math.max(...columns.map((column) => column.contentHeight));
       const extra = columns[0].top + gridHeight - (listTop + list.offsetHeight);
       if (extra > 0) list.style.marginBottom = `${extra}px`;
-
-      if (backdrop) {
-        const top = fader ? offsetWithin(fader, hero, "y") + fader.offsetHeight : 0;
-        backdrop.style.top = `${top + settings.backdropOffset}px`;
-      }
       render();
       debug("parallax-columns", "layout", `${columns.length} columns, ${items.length} items`, "info");
     }
@@ -307,14 +278,6 @@
 
         place(column, x, y);
       });
-
-      if (hero) {
-        // Fades as the grid rises from the bottom of the hero to the top of
-        // the screen
-        const fade = 1 - easeOut(clamp(-sectionTop / hero.offsetHeight, 0, 1));
-        if (fader) fader.style.opacity = String(fade);
-        if (backdrop) backdrop.style.opacity = String(fade);
-      }
     }
 
     if (motion) {
