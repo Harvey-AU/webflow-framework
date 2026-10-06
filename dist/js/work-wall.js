@@ -18,6 +18,8 @@
  *                                    (75svh suits). Stays pinned while the
  *                                    wall scrolls over it.
  *       [data-wall-heading]          Fades out over the hero's height.
+ *                                    A grey backdrop starts below it and
+ *                                    fades to nothing as the wall rises.
  *     [data-wall-grid]               Follows the hero. Style its padding and
  *                                    max width; the script builds columns
  *                                    inside it.
@@ -35,6 +37,9 @@
  *                                    Columns from each minimum screen width.
  *   data-wall-gap="20"               Gap between tiles in px (12 on mobile).
  *   data-wall-parallax="1"           Motion multiplier, 0 turns it off.
+ *   data-wall-backdrop="#f5f5f5"     Backdrop colour, "none" turns it off.
+ *   data-wall-backdrop-offset="56"   Gap between the heading and the
+ *                                    backdrop in px.
  *
  * With reduced motion the wall is laid out the same but nothing moves, fades
  * or autoplays.
@@ -57,6 +62,9 @@
   const EASE_OUT = "cubic-bezier(.215,.61,.355,1)"; // power3.out
   const CSS = `
 [data-wall]{position:relative;overflow-x:clip}
+[data-wall-stage]{position:relative}
+.wall-backdrop{position:absolute;left:0;right:0;height:100lvh;pointer-events:none}
+[data-wall].is-wall-motion .wall-backdrop{will-change:opacity}
 [data-wall].is-wall-motion [data-wall-stage]{position:sticky;top:0}
 [data-wall].is-wall-motion [data-wall-heading]{will-change:opacity}
 [data-wall-grid]{position:relative;z-index:1}
@@ -179,6 +187,8 @@
       breakpoints: parseBreakpoints(section.getAttribute("data-wall-breakpoints") || DEFAULT_BREAKPOINTS),
       gap: numberAttr(section, "data-wall-gap", null),
       parallax: Math.max(0, numberAttr(section, "data-wall-parallax", 1)),
+      backdrop: (section.getAttribute("data-wall-backdrop") || "#f5f5f5").trim(),
+      backdropOffset: numberAttr(section, "data-wall-backdrop-offset", 56),
     };
     const motion = !reducedMotion && settings.parallax > 0;
 
@@ -191,6 +201,16 @@
     list.style.display = "none";
 
     if (motion) section.classList.add("is-wall-motion");
+
+    // Sits behind the wall, which rises over it
+    let backdrop = null;
+    if (stage && settings.backdrop !== "none") {
+      backdrop = document.createElement("div");
+      backdrop.className = "wall-backdrop";
+      backdrop.setAttribute("aria-hidden", "true");
+      backdrop.style.background = settings.backdrop;
+      stage.prepend(backdrop);
+    }
 
     // Videos play only while on screen, and never with reduced motion
     const videoObserver =
@@ -263,6 +283,10 @@
       columns.forEach((column) => {
         column.head.style.height = `${column.el.offsetWidth * column.headShare}px`;
       });
+      if (backdrop) {
+        const top = heading ? offsetWithin(heading, stage, "y") + heading.offsetHeight : 0;
+        backdrop.style.top = `${top + settings.backdropOffset}px`;
+      }
       const sectionLeft = section.getBoundingClientRect().left;
       columns.forEach((column) => {
         column.top = offsetWithin(column.el, section, "y");
@@ -307,9 +331,12 @@
         column.inner.style.transform = `translate3d(0,${y}px,0)`;
       });
 
-      if (heading && stage) {
-        const fade = clamp(-sectionTop / stage.offsetHeight, 0, 1);
-        heading.style.opacity = String(1 - easeOut(fade));
+      if (stage) {
+        // Fades as the wall rises from the bottom of the hero to the top of
+        // the screen
+        const fade = 1 - easeOut(clamp(-sectionTop / stage.offsetHeight, 0, 1));
+        if (heading) heading.style.opacity = String(fade);
+        if (backdrop) backdrop.style.opacity = String(fade);
       }
     }
 
