@@ -36,6 +36,23 @@
  *
  * Settings on [data-parallax-columns]:
  *   -strength="1"                      Motion multiplier, 0 turns it off.
+ *   -intro="loop"                      Motion while the page sits at the top,
+ *                                      so the grid is alive before anyone
+ *                                      scrolls. Scrolling settles the columns
+ *                                      back into line before the parallax
+ *                                      takes over; back at the top it resumes.
+ *                                        drift  Columns bob up and down.
+ *                                        loop   Columns run as endless
+ *                                               conveyors, alternating
+ *                                               directions.
+ *                                        step   Columns tick along one item
+ *                                               at a time, like a departure
+ *                                               board.
+ *                                        reels  Columns spin in like slot
+ *                                               machine reels on load, then
+ *                                               stop.
+ *                                      A ?parallax-intro= URL parameter
+ *                                      overrides it, for comparing them.
  *
  * With reduced motion the columns keep their stagger but nothing moves,
  * fades or autoplays.
@@ -52,6 +69,23 @@
   // How far a column starts from its place, per unit of its distance from
   // the centre of the screen, in column widths
   const SPREAD = 1.5;
+
+  const INTROS = ["drift", "loop", "step", "reels"];
+  // Scroll position, in pixels, still treated as the top of the page
+  const TOP_SLACK = 2;
+  // drift: how far each column sinks, in column widths, how long a bob
+  // takes, and where in it each column starts
+  const DRIFT_DEPTH = 0.35;
+  const DRIFT_PERIOD = 6;
+  const DRIFT_PHASES = [0, 0.5, 0.2, 0.7, 0.35, 0.85, 0.1, 0.6];
+  // loop: items per second, per column
+  const LOOP_SPEEDS = [0.16, -0.13, 0.19, -0.15, 0.14, -0.18, 0.17, -0.12];
+  // step: seconds between steps, and how long each takes
+  const STEP_EVERY = 2.6;
+  const STEP_DURATION = 0.9;
+  const STEP_STAGGER = 0.12;
+  // How long a moving column takes to glide into line once scrolling starts
+  const SETTLE_DURATION = 1.1;
 
   const EASE_OUT = "cubic-bezier(.215,.61,.355,1)"; // power3.out
   const CSS = `
@@ -89,6 +123,30 @@
 
   function easeOut(t) {
     return 1 - Math.pow(1 - t, 3);
+  }
+
+  function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function easeInOut(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  // Remainder that keeps the sign of the divisor
+  function mod(value, divisor) {
+    return ((value % divisor) + divisor) % divisor;
+  }
+
+  function introName(section) {
+    let fromUrl = null;
+    try {
+      fromUrl = new URLSearchParams(window.location.search).get("parallax-intro");
+    } catch (error) {
+      // Ignore
+    }
+    const name = (fromUrl || section.getAttribute("data-parallax-columns-intro") || "").trim().toLowerCase();
+    return INTROS.includes(name) ? name : null;
   }
 
   // Webflow marks empty CMS bindings with a class rather than removing them
@@ -189,6 +247,128 @@
     let viewportWidth = 0;
     let viewportHeight = 0;
 
+    // Intro motion while the page sits at the top. Column positions are
+    // counted in items rather than pixels, so they survive a re-measure.
+    const intro = motion ? introName(section) : null;
+    const wraps = intro === "loop" || intro === "step" || intro === "reels";
+    const introColumns = [];
+    // How much of the idle motion shows, eased in at the top and out once
+    // scrolling starts
+    let weight = 0;
+    let driftClock = 0;
+    // The first step comes soon after load
+    let stepClock = STEP_EVERY - 1.2;
+    let introFrame = null;
+    let lastTick = 0;
+
+    function introColumn(i) {
+      if (!introColumns[i]) introColumns[i] = { slots: 0, tween: null };
+      return introColumns[i];
+    }
+
+    function isAtTop() {
+      return window.scrollY <= TOP_SLACK;
+    }
+
+    // Move a column to a whole number of items along, starting at `start`.
+    // With a velocity it leaves at that speed and arrives at rest.
+    function tweenTo(state, to, start, duration, ease, velocity) {
+      state.tween = { from: state.slots, to, start, duration: duration * 1000, ease, velocity: velocity || 0 };
+    }
+
+    function advanceTween(state, now) {
+      const tween = state.tween;
+      if (!tween) return;
+      const t = clamp((now - tween.start) / tween.duration, 0, 1);
+      if (tween.velocity) {
+        // Hermite curve from the running speed to a stop
+        const seconds = tween.duration / 1000;
+        const t2 = t * t;
+        const t3 = t2 * t;
+        state.slots =
+          (2 * t3 - 3 * t2 + 1) * tween.from +
+          (t3 - 2 * t2 + t) * seconds * tween.velocity +
+          (3 * t2 - 2 * t3) * tween.to;
+      } else {
+        state.slots = tween.from + (tween.to - tween.from) * tween.ease(t);
+      }
+      if (t >= 1) {
+        state.slots = tween.to;
+        state.tween = null;
+      }
+    }
+
+    function tick(now) {
+      introFrame = null;
+      const dt = lastTick ? Math.min((now - lastTick) / 1000, 0.05) : 0;
+      lastTick = now;
+      const atTop = isAtTop();
+
+      const target = atTop ? 1 : 0;
+      weight += (target - weight) * (1 - Math.exp(-dt / (atTop ? 0.5 : 0.2)));
+      if (Math.abs(target - weight) < 0.001) weight = target;
+      if (weight > 0) driftClock += dt;
+
+      let stepDue = false;
+      if (intro === "step") {
+        if (atTop) {
+          stepClock += dt;
+          if (stepClock >= STEP_EVERY) {
+            stepClock = 0;
+            stepDue = true;
+          }
+        } else {
+          stepClock = STEP_EVERY - 1.2;
+        }
+      }
+
+      let moving = intro === "drift" ? weight > 0 : false;
+      columns.forEach((column, i) => {
+        const state = introColumn(i);
+        if (intro === "loop") {
+          const speed = LOOP_SPEEDS[i % LOOP_SPEEDS.length];
+          if (atTop && !state.tween) {
+            state.slots += speed * weight * dt;
+          } else if (!atTop && !state.tween && state.slots % 1 !== 0) {
+            // Glide on to the next whole item ahead, far enough along not
+            // to double back
+            const velocity = speed * weight;
+            const ahead = state.slots + (velocity * SETTLE_DURATION) / 3;
+            const to = velocity >= 0 ? Math.ceil(ahead) : Math.floor(ahead);
+            tweenTo(state, to, now, SETTLE_DURATION, null, velocity);
+          }
+        } else if (stepDue) {
+          const direction = i % 2 ? -1 : 1;
+          tweenTo(state, Math.round(state.slots) + direction, now + i * STEP_STAGGER * 1000, STEP_DURATION, easeInOut);
+        }
+        advanceTween(state, now);
+        if (state.tween) moving = true;
+      });
+
+      render();
+      if (moving || (atTop && intro !== "reels")) introFrame = requestAnimationFrame(tick);
+      else lastTick = 0;
+    }
+
+    function wakeIntro() {
+      if (intro && !introFrame && intro !== "reels" && isAtTop()) introFrame = requestAnimationFrame(tick);
+    }
+
+    function startIntro() {
+      if (!intro) return;
+      if (intro === "reels") {
+        const now = performance.now();
+        columns.forEach((column, i) => {
+          const state = introColumn(i);
+          const direction = i % 2 ? 1 : -1;
+          state.slots = direction * (8 + i * 3);
+          tweenTo(state, 0, now + 300 + i * 150, 1.8 + i * 0.3, easeOutQuart);
+        });
+      }
+      introFrame = requestAnimationFrame(tick);
+      debug("parallax-columns", "intro", intro, "info");
+    }
+
     // Group the items by the column the CSS grid put them in, left to right
     function readColumns() {
       const byLeft = new Map();
@@ -222,9 +402,18 @@
         // Height of the column's items, from its first item's top to its
         // last item's bottom, plus the space above it
         column.contentHeight = column.head + offsetWithin(last, section, "y") + last.offsetHeight - column.top;
-        // The first row shows on load
-        const img = first.querySelector("img");
-        if (img) img.loading = "eager";
+        // Distance from one item's top to the next, and the length of the
+        // loop the items wrap round in the intro
+        const count = column.items.length;
+        column.pitch = count > 1 ? (offsetWithin(last, section, "y") - column.top) / (count - 1) : 0;
+        column.loopHeight = column.pitch * count;
+        // The first row shows on load, and in an intro that wraps any item
+        // can come round
+        const eager = wraps ? column.items : [first];
+        eager.forEach((item) => {
+          const img = item.querySelector("img");
+          if (img) img.loading = "eager";
+        });
         column.items.forEach((item) => {
           item.querySelectorAll("img[srcset]").forEach((image) => {
             image.sizes = `${Math.ceil(column.width)}px`;
@@ -241,10 +430,21 @@
       debug("parallax-columns", "layout", `${columns.length} columns, ${items.length} items`, "info");
     }
 
-    function place(column, x, y) {
-      const transform = `translate3d(${x}px,${y}px,0)`;
-      column.items.forEach((item) => {
-        item.style.transform = transform;
+    function place(column, x, y, state) {
+      const slots = state ? state.slots : 0;
+      column.items.forEach((item, i) => {
+        let shift = 0;
+        let opacity = "";
+        if (slots && column.loopHeight) {
+          // Wrap the item round the column, with room above it for one item
+          // to fade out before it comes back in at the bottom
+          const home = i * column.pitch;
+          const position = mod(home + slots * column.pitch + column.pitch, column.loopHeight) - column.pitch;
+          shift = position - home;
+          if (position < 0) opacity = String(clamp(1 + position / (column.pitch * 0.5), 0, 1));
+        }
+        item.style.transform = `translate3d(${x}px,${y + shift}px,0)`;
+        item.style.opacity = opacity;
       });
     }
 
@@ -259,7 +459,7 @@
       const vh = viewportHeight;
       const strength = settings.strength;
 
-      columns.forEach((column) => {
+      columns.forEach((column, i) => {
         const top = sectionTop + column.top;
 
         // From the column's top entering the screen to a screen above it,
@@ -274,14 +474,26 @@
         // every column ends flush with the bottom of the grid
         const driftDistance = Math.max(gridHeight - vh / 2, 1);
         const driftProgress = clamp((vh / 2 - top) / driftDistance, 0, 1);
-        const y = column.head + (gridHeight - column.contentHeight) * driftProgress * strength;
+        let y = column.head + (gridHeight - column.contentHeight) * driftProgress * strength;
 
-        place(column, x, y);
+        if (intro === "drift" && weight > 0) {
+          const phase = driftClock / DRIFT_PERIOD + DRIFT_PHASES[i % DRIFT_PHASES.length];
+          y += ((weight * column.width * DRIFT_DEPTH * strength) / 2) * (1 - Math.cos(phase * 2 * Math.PI));
+        }
+
+        place(column, x, y, wraps ? introColumns[i] : null);
       });
     }
 
     if (motion) {
-      window.addEventListener("scroll", render, { passive: true });
+      window.addEventListener(
+        "scroll",
+        () => {
+          render();
+          wakeIntro();
+        },
+        { passive: true }
+      );
       // Lenis moves the page inside its own frame loop; follow it there so
       // the grid never trails the page by a frame
       const followLenis = () => {
@@ -320,6 +532,7 @@
     }
 
     measure();
+    startIntro();
     // Web fonts can change the hero's height and so where the grid starts
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
     window.addEventListener("load", measure, { once: true });
