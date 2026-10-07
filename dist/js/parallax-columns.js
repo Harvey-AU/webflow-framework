@@ -53,6 +53,18 @@
  *                                               stop.
  *                                      A ?parallax-intro= URL parameter
  *                                      overrides it, for comparing them.
+ *   -pan                               The mouse pans the grid left and
+ *                                      right. Style the CMS list wider than
+ *                                      the screen (e.g. 112%, with a negative
+ *                                      left margin of half the extra) so the
+ *                                      edge columns are cut off. The pointer's
+ *                                      place across the section sets how far
+ *                                      along the overflow the grid sits: at
+ *                                      its centre the grid is centred, at its
+ *                                      right edge the last column lines up
+ *                                      with the grid's padding.
+ *                                      Mouse only; touch screens see it
+ *                                      centred.
  *
  * With reduced motion the columns keep their stagger but nothing moves,
  * fades or autoplays.
@@ -79,13 +91,16 @@
   const DRIFT_PERIOD = 6;
   const DRIFT_PHASES = [0, 0.5, 0.2, 0.7, 0.35, 0.85, 0.1, 0.6];
   // loop: items per second, per column
-  const LOOP_SPEEDS = [0.16, -0.13, 0.19, -0.15, 0.14, -0.18, 0.17, -0.12];
+  const LOOP_SPEEDS = [0.22, -0.12, 0.3, -0.17, 0.14, -0.26, 0.19, -0.1];
   // step: seconds between steps, and how long each takes
   const STEP_EVERY = 2.6;
   const STEP_DURATION = 0.9;
   const STEP_STAGGER = 0.12;
   // How long a moving column takes to glide into line once scrolling starts
   const SETTLE_DURATION = 1.1;
+  // Seconds for the grid to catch up with the pointer when panning (time
+  // constant)
+  const PAN_LAG = 0.45;
 
   const EASE_OUT = "cubic-bezier(.215,.61,.355,1)"; // power3.out
   const CSS = `
@@ -383,10 +398,65 @@
         .map((left, i) => ({ items: byLeft.get(left), headShare: COLUMN_HEADS[i % COLUMN_HEADS.length] }));
     }
 
+    // Pan: the edges the outer columns line up with when panned to (the
+    // grid's padding inside the visible section), how far the columns run
+    // past them on each side, and where the grid sits now and is heading,
+    // in pixels
+    const pan =
+      motion && section.hasAttribute("data-parallax-columns-pan") && window.matchMedia("(hover: hover) and (pointer: fine)").matches
+        ? { edgeLeft: 0, edgeRight: 0, left: 0, right: 0, x: 0, target: 0, ratio: 0.5, frame: null, last: 0 }
+        : null;
+
+    function measurePan() {
+      if (!pan) return;
+      const sectionRect = section.getBoundingClientRect();
+      const gridStyle = getComputedStyle(grid);
+      pan.edgeLeft = Math.max(0, sectionRect.left) + parseFloat(gridStyle.paddingLeft);
+      pan.edgeRight = Math.min(window.innerWidth, sectionRect.right) - parseFloat(gridStyle.paddingRight);
+    }
+
+    // Left of the screen shows the first column in full, right the last,
+    // and anywhere between sits that far along. The overflow comes from
+    // where the columns are drawn, as the spread on scroll moves them.
+    function aimPan(leftmost, rightmost) {
+      pan.left = Math.max(0, pan.edgeLeft - leftmost);
+      pan.right = Math.max(0, rightmost - pan.edgeRight);
+      pan.target = pan.left - (pan.left + pan.right) * pan.ratio;
+      if (!pan.frame && pan.target !== pan.x) pan.frame = requestAnimationFrame(stepPan);
+    }
+
+    function stepPan(now) {
+      pan.frame = null;
+      const dt = pan.last ? Math.min((now - pan.last) / 1000, 0.05) : 0;
+      pan.last = now;
+      pan.x += (pan.target - pan.x) * (1 - Math.exp(-dt / PAN_LAG));
+      if (Math.abs(pan.target - pan.x) < 0.1) pan.x = pan.target;
+      list.style.transform = Math.abs(pan.x) > 0.05 ? `translate3d(${pan.x}px,0,0)` : "";
+      if (pan.x !== pan.target) pan.frame = requestAnimationFrame(stepPan);
+      else pan.last = 0;
+    }
+
+    if (pan) {
+      window.addEventListener(
+        "pointermove",
+        (event) => {
+          if (event.pointerType !== "mouse") return;
+          // Measured across the section, so its centre is the resting point
+          const rect = section.getBoundingClientRect();
+          const left = Math.max(0, rect.left);
+          const right = Math.min(window.innerWidth, rect.right);
+          pan.ratio = clamp((event.clientX - left) / Math.max(right - left, 1), 0, 1);
+          render();
+        },
+        { passive: true }
+      );
+    }
+
     function measure() {
       viewportWidth = window.innerWidth;
       viewportHeight = window.innerHeight;
       list.style.marginBottom = "";
+      measurePan();
       columns = readColumns();
       if (!columns.length) return;
 
@@ -465,6 +535,8 @@
       const vw = viewportWidth;
       const vh = viewportHeight;
       const strength = settings.strength;
+      let leftmost = Infinity;
+      let rightmost = -Infinity;
 
       columns.forEach((column, i) => {
         const top = sectionTop + column.top;
@@ -489,7 +561,10 @@
         }
 
         place(column, x, y, wraps ? introColumns[i] : null);
+        leftmost = Math.min(leftmost, column.center - column.width / 2 + x);
+        rightmost = Math.max(rightmost, column.center + column.width / 2 + x);
       });
+      if (pan && columns.length) aimPan(leftmost, rightmost);
     }
 
     if (motion) {
