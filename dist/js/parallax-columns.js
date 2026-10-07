@@ -434,17 +434,18 @@
       const slots = state ? state.slots : 0;
       column.items.forEach((item, i) => {
         let shift = 0;
-        let opacity = "";
+        let clip = "";
         if (slots && column.loopHeight) {
-          // Wrap the item round the column, with room above it for one item
-          // to fade out before it comes back in at the bottom
+          // Wrap the item round the column. Above the column's top it is cut
+          // off at that line, so items slide under it rather than over the
+          // hero, and once out of sight come back in at the bottom.
           const home = i * column.pitch;
           const position = mod(home + slots * column.pitch + column.pitch, column.loopHeight) - column.pitch;
           shift = position - home;
-          if (position < 0) opacity = String(clamp(1 + position / (column.pitch * 0.5), 0, 1));
+          if (position < 0) clip = `inset(${-position}px 0 0 0)`;
         }
         item.style.transform = `translate3d(${x}px,${y + shift}px,0)`;
-        item.style.opacity = opacity;
+        item.style.clipPath = clip;
       });
     }
 
