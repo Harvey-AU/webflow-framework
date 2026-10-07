@@ -93,12 +93,16 @@
   }
 
   // Sticky children misbehave inside a pinned element, so turn them off
-  // while pinned and hand back whatever inline value they had
+  // while pinned and hand back whatever inline values they had. They stay
+  // positioned (relative, offsets cleared) so absolute children such as
+  // the media frames keep them as their containing block.
+  const STICKY_PROPS = ["position", "top", "bottom"];
   function unstick(root) {
     const stuck = [...root.querySelectorAll("*")].filter((el) => getComputedStyle(el).position === "sticky");
-    const previous = stuck.map((el) => el.style.position);
-    stuck.forEach((el) => (el.style.position = "static"));
-    return () => stuck.forEach((el, i) => (el.style.position = previous[i]));
+    const previous = stuck.map((el) => STICKY_PROPS.map((prop) => el.style[prop]));
+    stuck.forEach((el) => Object.assign(el.style, { position: "relative", top: "auto", bottom: "auto" }));
+    return () =>
+      stuck.forEach((el, i) => STICKY_PROPS.forEach((prop, j) => (el.style[prop] = previous[i][j])));
   }
 
   function textsOf(step) {
