@@ -91,7 +91,7 @@
   const DRIFT_PERIOD = 6;
   const DRIFT_PHASES = [0, 0.5, 0.2, 0.7, 0.35, 0.85, 0.1, 0.6];
   // loop: items per second, per column
-  const LOOP_SPEEDS = [0.22, -0.12, 0.3, -0.17, 0.14, -0.26, 0.19, -0.1];
+  const LOOP_SPEEDS = [0.08, -0.055, 0.035, -0.04, 0.065, -0.05, 0.075, -0.045];
   // step: seconds between steps, and how long each takes
   const STEP_EVERY = 2.6;
   const STEP_DURATION = 0.9;
@@ -466,6 +466,10 @@
         const first = column.items[0];
         const last = column.items[column.items.length - 1];
         column.width = first.offsetWidth;
+        // Corners the cut at the column's top keeps, so an item sliding
+        // under it stays rounded
+        const radius = getComputedStyle(first).borderRadius;
+        column.round = radius && radius !== "0px" ? ` round ${radius}` : "";
         column.top = offsetWithin(first, section, "y");
         column.center = sectionLeft + offsetWithin(first, section, "x") + column.width / 2;
         column.head = column.width * column.headShare;
@@ -518,7 +522,7 @@
           if (column.loopHeight - back < 0.5) back = 0;
           const position = bottom - back;
           shift = position - home;
-          if (position < 0) clip = `inset(${-position}px 0 0 0)`;
+          if (position < 0) clip = `inset(${-position}px 0 0 0${column.round})`;
         }
         item.style.transform = `translate3d(${x}px,${y + shift}px,0)`;
         item.style.clipPath = clip;
