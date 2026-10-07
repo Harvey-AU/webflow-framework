@@ -440,7 +440,13 @@
           // off at that line, so items slide under it rather than over the
           // hero, and once out of sight come back in at the bottom.
           const home = i * column.pitch;
-          const position = mod(home + slots * column.pitch + column.pitch, column.loopHeight) - column.pitch;
+          // Positions run from just under one item above the top to the
+          // last slot, so whole steps always fill every slot. Rounding error
+          // just short of a full loop counts as none.
+          const bottom = column.loopHeight - column.pitch;
+          let back = mod(bottom - home - slots * column.pitch, column.loopHeight);
+          if (column.loopHeight - back < 0.5) back = 0;
+          const position = bottom - back;
           shift = position - home;
           if (position < 0) clip = `inset(${-position}px 0 0 0)`;
         }
