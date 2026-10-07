@@ -94,7 +94,7 @@
   const DRIFT_PERIOD = 6;
   const DRIFT_PHASES = [0, 0.5, 0.2, 0.7, 0.35, 0.85, 0.1, 0.6];
   // loop: items per second, per column
-  const LOOP_SPEEDS = [0.18, -0.124, 0.079, -0.09, 0.146, -0.113, 0.169, -0.101];
+  const LOOP_SPEEDS = [0.126, -0.087, 0.055, -0.063, 0.102, -0.079, 0.118, -0.071];
   // step: seconds between steps, and how long each takes
   const STEP_EVERY = 2.6;
   const STEP_DURATION = 0.9;
