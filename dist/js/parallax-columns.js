@@ -36,7 +36,8 @@
  *
  * Settings on [data-parallax-columns]:
  *   -strength="1"                      Motion multiplier, 0 turns it off.
- *   -intro="loop"                      Motion while the page sits at the top,
+ *   -intro="loop"                      Motion while the page sits at the top
+ *                                      (loop by default, "none" for none),
  *                                      so the grid is alive before anyone
  *                                      scrolls. Scrolling settles the columns
  *                                      back into line before the parallax
@@ -53,18 +54,20 @@
  *                                               stop.
  *                                      A ?parallax-intro= URL parameter
  *                                      overrides it, for comparing them.
- *   -pan                               The mouse pans the grid left and
- *                                      right. Style the CMS list wider than
- *                                      the screen (e.g. 112%, with a negative
- *                                      left margin of half the extra) so the
- *                                      edge columns are cut off. The pointer's
- *                                      place across the section sets how far
- *                                      along the overflow the grid sits: at
- *                                      its centre the grid is centred, at its
+ *   -pan="false"                      Turns off the mouse pan, on by
+ *                                      default. Once the columns run past
+ *                                      the grid's padding, the mouse pans
+ *                                      them left and right. Style the CMS
+ *                                      list wider than the screen (e.g.
+ *                                      112%, with a negative left margin of
+ *                                      half the extra) so the edge columns
+ *                                      are cut off. The pointer's place
+ *                                      across the section sets how far along
+ *                                      the overflow the grid sits: at its
+ *                                      centre the grid is centred, at its
  *                                      right edge the last column lines up
- *                                      with the grid's padding.
- *                                      Mouse only; touch screens see it
- *                                      centred.
+ *                                      with the grid's padding. Mouse only;
+ *                                      touch screens see it centred.
  *
  * With reduced motion the columns keep their stagger but nothing moves,
  * fades or autoplays.
@@ -160,7 +163,7 @@
     } catch (error) {
       // Ignore
     }
-    const name = (fromUrl || section.getAttribute("data-parallax-columns-intro") || "").trim().toLowerCase();
+    const name = (fromUrl || section.getAttribute("data-parallax-columns-intro") || "loop").trim().toLowerCase();
     return INTROS.includes(name) ? name : null;
   }
 
@@ -275,6 +278,37 @@
     let stepClock = STEP_EVERY - 1.2;
     let introFrame = null;
     let lastTick = 0;
+
+    // In an intro that wraps, the item part-way out at a column's top also
+    // shows part-way in at its bottom, as a copy, so the column never has a
+    // gap there for the item to pop into
+    const ghosts = new Map();
+    if (wraps && getComputedStyle(list).position === "static") list.style.position = "relative";
+
+    function ghostOf(item) {
+      let ghost = ghosts.get(item);
+      if (ghost) return ghost;
+      ghost = item.cloneNode(true);
+      [ghost, ...ghost.querySelectorAll("[id],[data-w-id]")].forEach((el) => {
+        el.removeAttribute("id");
+        el.removeAttribute("data-w-id");
+      });
+      ghost.setAttribute("aria-hidden", "true");
+      ghost.inert = true;
+      ghost.style.cssText = "position:absolute;margin:0;pointer-events:none";
+      if (videoObserver) ghost.querySelectorAll("video").forEach((video) => videoObserver.observe(video));
+      sizeGhost(item, ghost);
+      list.appendChild(ghost);
+      ghosts.set(item, ghost);
+      return ghost;
+    }
+
+    function sizeGhost(item, ghost) {
+      ghost.style.left = `${item.offsetLeft}px`;
+      ghost.style.top = `${item.offsetTop}px`;
+      ghost.style.width = `${item.offsetWidth}px`;
+      ghost.style.height = `${item.offsetHeight}px`;
+    }
 
     function introColumn(i) {
       if (!introColumns[i]) introColumns[i] = { slots: 0, tween: null };
@@ -403,7 +437,7 @@
     // past them on each side, and where the grid sits now and is heading,
     // in pixels
     const pan =
-      motion && section.hasAttribute("data-parallax-columns-pan") && window.matchMedia("(hover: hover) and (pointer: fine)").matches
+      motion && section.getAttribute("data-parallax-columns-pan") !== "false" && window.matchMedia("(hover: hover) and (pointer: fine)").matches
         ? { edgeLeft: 0, edgeRight: 0, left: 0, right: 0, x: 0, target: 0, ratio: 0.5, frame: null, last: 0 }
         : null;
 
@@ -462,10 +496,12 @@
 
       const sectionLeft = section.getBoundingClientRect().left;
       const listTop = offsetWithin(list, section, "y");
+      ghosts.forEach((ghost, item) => sizeGhost(item, ghost));
       columns.forEach((column) => {
         const first = column.items[0];
         const last = column.items[column.items.length - 1];
         column.width = first.offsetWidth;
+        column.itemHeight = first.offsetHeight;
         // Corners the cut at the column's top keeps, so an item sliding
         // under it stays rounded
         const radius = getComputedStyle(first).borderRadius;
@@ -509,6 +545,7 @@
       column.items.forEach((item, i) => {
         let shift = 0;
         let clip = "";
+        let ghostClip = "";
         if (slots && column.loopHeight) {
           // Wrap the item round the column. Above the column's top it is cut
           // off at that line, so items slide under it rather than over the
@@ -522,10 +559,25 @@
           if (column.loopHeight - back < 0.5) back = 0;
           const position = bottom - back;
           shift = position - home;
-          if (position < 0) clip = `inset(${-position}px 0 0 0${column.round})`;
+          if (position < 0) {
+            clip = `inset(${-position}px 0 0 0${column.round})`;
+            // The copy sits a loop further down, cut off at the bottom of
+            // the column's last slot
+            if (position + column.pitch < column.itemHeight) {
+              ghostClip = `inset(0 0 ${position + column.pitch}px 0${column.round})`;
+            }
+          }
         }
         item.style.transform = `translate3d(${x}px,${y + shift}px,0)`;
         item.style.clipPath = clip;
+        if (ghostClip) {
+          const ghost = ghostOf(item);
+          ghost.style.transform = `translate3d(${x}px,${y + shift + column.loopHeight}px,0)`;
+          ghost.style.clipPath = ghostClip;
+          ghost.style.visibility = "";
+        } else if (ghosts.has(item)) {
+          ghosts.get(item).style.visibility = "hidden";
+        }
       });
     }
 
