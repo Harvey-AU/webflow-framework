@@ -83,7 +83,7 @@
         }
 
         // Only add this event if it hasn't already been added.
-        if (!filterEvents.hasOwnProperty(filterName)) {
+        if (!Object.prototype.hasOwnProperty.call(filterEvents, filterName)) {
           filterEvents[filterName] = {
             debounceDelay: debounceDelay,
             timer: null,

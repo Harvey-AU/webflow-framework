@@ -74,6 +74,7 @@ function createLead(urlParams) {
 }
 
 // Check if current URL params match what's already stored
+// eslint-disable-next-line no-unused-vars -- unused here, but a page-level global a site could call
 function isCurrentParamsEqualToCookie(urlParams) {
   const cookieData = getParsedCookie();
   if (!cookieData.parameters) return false;

@@ -8,6 +8,9 @@ node_modules/
 dist/css/
 dist/v/
 dist/icons.html
+dist/_headers
+dist/_redirects
+dist/js/*.*-v*.js
 
 # IDE/Editor files
 .vscode/
